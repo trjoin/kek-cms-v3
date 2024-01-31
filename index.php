@@ -1,9 +1,16 @@
 <?php
+
+    //a fejlesztés idejére
+    ini_set("display_startup_errors", 1);
+    ini_set("display_errors", 1);
+    error_reporting(-1);
+
     session_start();
     include_once("config.inc.php");
     include_once("connect.php");
     include_once("functions.php");
     
+    $_SESSION["munkamenet"] = "van";
     if(isset($_SESSION["munkamenet"]) AND $_SESSION["munkamenet"]!="")
 	{
         if(isset($_REQUEST["action"]))
