@@ -1,9 +1,14 @@
+Boltom dashboard
+
+
+
+
 <?php
-session_start();
-if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
-{
-?>
-<script>
+//session_start();
+//if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
+//{
+//?>
+<!--<script>
 function fokepCsere(f)
 {
 	if(document.termekmodform.fkepetis.checked == true)
@@ -51,200 +56,128 @@ function PDFetismod(f)
 		document.getElementById('t_pdf').disabled=true;
 	}
 }
-</script>
-<?php
-/*** TÖRLÉSEK VÉGREHAJTÁSA ***/
-	//termék törlése
-	
-	
-	//gyártó törlése
-	if(isset($_GET["gyartotorol"]))
-	{
-		$torles=$pdo->query("delete from ".$elotag."_shop_gyartok where shop_gyartoid=".$_GET["gyartotorol"]);
-		if($torles)
-		{
-			echo "<h3 style='color:#00FF00;'>Sikeres gyártótörlés!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*300);
-				</script>";
-		}
-		else
-		{
-			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó törlése!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*300);
-				</script>";
-		}
-	}
-	//ügyfél törlése
-	elseif(isset($_GET["uftorol"]))
-	{
-		$torles=$pdo->query("delete from ".$elotag."_shop_vasarlok where vkod=".$_GET["uftorol"]);
-		if($torles)
-		{
-			echo "<h3 style='color:#00FF00;'>Sikeres ügyfél törlés!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*300);
-				</script>";
-		}
-		else
-		{
-			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó törlése!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*300);
-				</script>";
-		}
-	}
-	
-/*** ADATFELVÉTELEK VÉGREHAJTÁSA ***/
-	//ügyfél aktiválása
-	elseif(isset($_GET["ufakt"]))
-	{
-		$aktival=$pdo->query("update ".$elotag."_shop_vasarlok set vaktiv='igen' where vkod='".$_GET["ufakt"]."'");
-		if($aktival)
-		{
-			$hovamegy=$pdo->query("select * from ".$elotag."_shop_vasarlok where vkod='".$_GET["ufakt"]."'");
-			$idemegy=$hovamegy->fetch();
-			echo "<h3 style='color:#00FF00;'>Sikeres aktiválás!</h3>";
-				$reggelonek=$idemegy["vmail"];
-				$targy2="Vásárlói regisztráció aktiválás";
-				$headers  = "MIME-Version: 1.0" . "\r\n";    
-				$headers .= "Content-type:text/html;charset=iso-8859-2" . "\r\n";   
-				$headers .= "From: <webshop@turanium.com>" . "\r\n";    
-				$ido = ("Küldve: ".date("Y.m.d. H:i:s", time())."\r\n\r\n");
-				mail ($reggelonek, $targy2, "<font face='verdana' size='2' color='#00AEEF'><b>Welcome!</b><br /><br />Thank you for registration at the www.turanium.com . Your account has been accepted and activated.<br /><br /><b>Your Login datas:</b><br />Name: ".$idemegy["vnev"]."<br />E-mail: ".$idemegy["vmail"]."<br />Phone number: ".$idemegy["vtelefon"]."<br />Address: ".$idemegy["vlakcim"]."<br /><br />" .$ido. "</font><br />",$headers);
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*300);
-				</script>";
-		}
-		else
-		{
-			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült az aktiválás - SQL hiba!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*500);
-				</script>";
-		}
-	}
-	//termék hozzáadása végrehajtása
-	
-	//gyártó hozzáadása végrehajtása
-	elseif(isset($_POST["ujgyarto"]))
-	{
-		$gyartoment=$pdo->query("insert into ".$elotag."_shop_gyartok (shop_gyartonev) values('".$_POST["shop_gyartonev"]."')");
-		if($gyartoment)
-		{
-			echo "<h3 style='color:#00FF00;'>Sikeres gyártó felvétel!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*100);
-				</script>";
-		}
-		else
-		{
-			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó mentése!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*100);
-				</script>";
-		}
-	}
-	
-/*** ADAT SZERKESZTÉSEK VÉGREHAJTÁSAI ***/
-	elseif(isset($_POST["gyartomod"]))
-	{
-		$gyartofrissit=$pdo->query("update ".$elotag."_shop_gyartok set shop_gyartonev='".$_POST["shop_gyartonev"]."' where shop_gyartoid='".$_POST["gyartomod"]."'");
-		if($gyartofrissit)
-		{
-			echo "<h3 style='color:#00FF00;'>Sikeres gyártó frissítés!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*100);
-				</script>";
-		}
-		else
-		{
-			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó frissítése!</h3>";
-			echo "<script>
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
-					}
-					ID = window.setTimeout('atiranyit();', 1*100);
-				</script>";
-		}
-	}
-	
-	
-/*** ADATFELVÉTELEK ŰRLAPJAI ***/
-	//termék hozzáadás űrlap
-	
-	//gyártó hozzáadás űrlap
-	elseif(isset($_GET["ujgyarto"]))
-	{
-		echo "<h2>ÚJ GYÁRTÓ FELVÉTELE</h2>";
-		echo "<form name='ujgyarto' method='POST' action='index.php?lng=".$webaktlang."&page=shop' enctype='multipart/form-data'>
-					<input type='hidden' name='ujgyarto' id='ujgyarto' value='igen'>
-					<b>Új gyártó neve:</b><br /><input type='text' name='shop_gyartonev' id='shop_gyartonev' style='width:200px;' required><br /><br />
-					<input type='submit' id='gyartomentes' name='gyartomentes' value=' GYÁRTÓ MENTÉSE ' class='btn btn-large btn-secondary'><br />
-				</form>";
-	}
-	//kategória hozzáadás űrlap
-	
-/*** SZERKESZTÉSEK ŰRLAPJAI ***/
-	//gyártó szerkesztése űrlap
-	elseif(isset($_GET["gyartomod"]))
-	{
-		$gyarto=$pdo->query("select * from ".$elotag."_shop_gyartok where shop_gyartoid='".$_GET["gyartomod"]."'");
-		$adat=$gyarto->fetch();
-		echo "<h2>GYÁRTÓ MÓDOSÍTÁSA</h2>";
-		echo "<form name='gyartomod' method='POST' action='index.php?lng=".$webaktlang."&page=shop' enctype='multipart/form-data'>
-					<input type='hidden' name='gyartomod' id='gyartomod' value='".$_GET["gyartomod"]."'>
-					<b>Új gyártó neve:</b><br /><input type='text' name='shop_gyartonev' id='shop_gyartonev' style='width:200px;' value='".$adat["shop_gyartonev"]."' required><br /><br />
-					<input type='submit' id='gyartomentes' name='gyartomentes' value=' GYÁRTÓ FRISSÍTÉSE ' class='btn btn-large btn-secondary'><br />
-				</form>";
-	}
-	
-	//termék szerkesztése űrlap
-	
-/*** FŐ RENDSZERTÖLTŐ SCRIPT ***/
-	else
-	{
-		//jQ_Datatables script
-?>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+</script>-->
+//<?php
+///*** TÖRLÉSEK VÉGREHAJTÁSA ***/
+//	//termék törlése
+//	
+//	
+
+//	//ügyfél törlése
+//	elseif(isset($_GET["uftorol"]))
+//	{
+//		$torles=$pdo->query("delete from ".$elotag."_shop_vasarlok where vkod=".$_GET["uftorol"]);
+//		if($torles)
+//		{
+//			echo "<h3 style='color:#00FF00;'>Sikeres ügyfél törlés!</h3>";
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*300);
+//				</script>";
+//		}
+//		else
+//		{
+//			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó törlése!</h3>";
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*300);
+//				</script>";
+//		}
+//	}
+//	
+///*** ADATFELVÉTELEK VÉGREHAJTÁSA ***/
+//	//ügyfél aktiválása
+//	elseif(isset($_GET["ufakt"]))
+//	{
+//		$aktival=$pdo->query("update ".$elotag."_shop_vasarlok set vaktiv='igen' where vkod='".$_GET["ufakt"]."'");
+//		if($aktival)
+//		{
+//			$hovamegy=$pdo->query("select * from ".$elotag."_shop_vasarlok where vkod='".$_GET["ufakt"]."'");
+//			$idemegy=$hovamegy->fetch();
+//			echo "<h3 style='color:#00FF00;'>Sikeres aktiválás!</h3>";
+//				$reggelonek=$idemegy["vmail"];
+//				$targy2="Vásárlói regisztráció aktiválás";
+//				$headers  = "MIME-Version: 1.0" . "\r\n";    
+//				$headers .= "Content-type:text/html;charset=iso-8859-2" . "\r\n";   
+//				$headers .= "From: <webshop@turanium.com>" . "\r\n";    
+//				$ido = ("Küldve: ".date("Y.m.d. H:i:s", time())."\r\n\r\n");
+//				mail ($reggelonek, $targy2, "<font face='verdana' size='2' color='#00AEEF'><b>Welcome!</b><br /><br />Thank you for registration at the www.turanium.com . Your account has been accepted and activated.<br /><br /><b>Your Login datas:</b><br />Name: ".$idemegy["vnev"]."<br />E-mail: ".$idemegy["vmail"]."<br />Phone number: ".$idemegy["vtelefon"]."<br />Address: ".$idemegy["vlakcim"]."<br /><br />" .$ido. "</font><br />",$headers);
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*300);
+//				</script>";
+//		}
+//		else
+//		{
+//			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült az aktiválás - SQL hiba!</h3>";
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&ugyfelek=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*500);
+//				</script>";
+//		}
+//	}
+//	//termék hozzáadása végrehajtása
+//	
+
+//	
+///*** ADAT SZERKESZTÉSEK VÉGREHAJTÁSAI ***/
+//	elseif(isset($_POST["gyartomod"]))
+//	{
+//		$gyartofrissit=$pdo->query("update ".$elotag."_shop_gyartok set shop_gyartonev='".$_POST["shop_gyartonev"]."' where shop_gyartoid='".$_POST["gyartomod"]."'");
+//		if($gyartofrissit)
+//		{
+//			echo "<h3 style='color:#00FF00;'>Sikeres gyártó frissítés!</h3>";
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*100);
+//				</script>";
+//		}
+//		else
+//		{
+//			echo "<h3 style='color:#FF0000;'>Sajnos nem sikerült a gyártó frissítése!</h3>";
+//			echo "<script>
+//					function atiranyit()
+//					{
+//						location.href = 'index.php?lng=hun&page=shop&gyartok=y';
+//					}
+//					ID = window.setTimeout('atiranyit();', 1*100);
+//				</script>";
+//		}
+//	}
+//	
+//	
+///*** ADATFELVÉTELEK ŰRLAPJAI ***/
+//	//termék hozzáadás űrlap
+//	
+
+//	//kategória hozzáadás űrlap
+//	
+///*** SZERKESZTÉSEK ŰRLAPJAI ***/
+
+//	
+//	//termék szerkesztése űrlap
+//	
+///*** FŐ RENDSZERTÖLTŐ SCRIPT ***/
+//	else
+//	{
+//		//jQ_Datatables script
+//?>
+<!--	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/1.10.20/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -356,49 +289,20 @@ function PDFetismod(f)
 					.draw();
 			});
 		});
-	</script>
-<?php
-/*** MENÜNEK MEGFELELŐ TÁBLA BETÖLTÉSE ***/
-		
-	
-		if(isset($_GET["gyartok"])) //gyártók
-		{
-			$osszes=$pdo->query("select * from ".$elotag."_shop_gyartok");
-			echo "<h3>GYÁRTÓK LISTA</h3>
-					<a href='index.php?lng=".$webaktlang."&page=shop&ujgyarto=y' class='btn'> + új gyártó felvétele &raquo;</a>
-					<br /><br />
-					<table id='datatables' class='display'>
-						<thead>
-							<tr>
-								<th>Gyártó ID</th>
-								<th>Gyártó név</th>
-								<th>Művelet</th>
-							</tr>
-							<tr>
-								<th>Gyártó ID</th>
-								<th>Gyártó név</th>
-								<th>Művelet</th>
-							</tr>
-						</thead><tbody>";
-			while($row = $osszes->fetch())
-			{
-				echo "<tr>
-							<td>".$row['shop_gyartoid']."</td>
-							<td>".$row['shop_gyartonev']."</td>
-							<td><a href='index.php?lng=".$webaktlang."&page=shop&gyartomod=".$row["shop_gyartoid"]."' title='Gyártó módosítása'><b>MÓDOSÍT</b></a><br /><a href='index.php?lng=".$webaktlang."&page=shop&gyartotorol=".$row["shop_gyartoid"]."' title='Gyártó törlése' onclick='return confirm(\"Biztosan törlöd ezt a gyártót?\")'><b>TÖRÖL</b></a></td>
-					   </tr>";
-			}
-			echo "</tbody>
-				</table>";
-		}
-		else //termékek
-		{
-			
-		}
-	}
-}
-else
-{
-	echo "<br /><br /><center><b>Nem vagy bejelentkezve!</b></center><br />";
-}
+	</script>-->
+//<?php
+///*** MENÜNEK MEGFELELŐ TÁBLA BETÖLTÉSE ***/
+//		
+//	
+//		
+//		else //termékek
+//		{
+//			
+//		}
+//	}
+//}
+//else
+//{
+//	echo "<br /><br /><center><b>Nem vagy bejelentkezve!</b></center><br />";
+//}
 ?>
