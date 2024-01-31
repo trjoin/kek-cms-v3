@@ -276,6 +276,6 @@
           </ul>
         </nav>
 
-        <div class="main-panel"><!-- itt kezdődik a tartalom -->
-          
-		<?php include 'includes/dashboard.php'; ?>
+        <div class="main-panel">
+			<div class="content-wrapper">
+			<!-- itt kezdődik a tartalom -->
