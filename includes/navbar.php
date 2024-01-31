@@ -71,11 +71,11 @@
 	  </a>
 	  <div class="collapse" id="boltom">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="#">Csoportok</a></li>
+		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_csoportok">Csoportok</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_kategoriak">Kategóriák</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_gyartok">Gyártók</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_terkemek">Termékek</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="">Termék opciók</a></li>
+		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_termekek">Termékek</a></li>
+		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_termek_opciok">Termék opciók</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_akciok">Akció tervezés</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="/index.php?action=shop_arsavok">Ársávok</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="#">Letölthető elemek</a></li>
