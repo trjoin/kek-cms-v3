@@ -278,4 +278,4 @@
 
         <div class="main-panel"><!-- itt kezdődik a tartalom -->
           
-		
+		<?php include 'includes/dashboard.php'; ?>
