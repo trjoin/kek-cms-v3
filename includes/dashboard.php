@@ -1,4 +1,4 @@
-<div class="content-wrapper">
+
             <div class="d-xl-flex justify-content-between align-items-start">
               <h2 class="text-muted font-weight-bold mb-2"> MŰSZERFAL </h2>
               <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
@@ -73,4 +73,3 @@
                     </div>
 				</div>
 			</div>
-		</div>
