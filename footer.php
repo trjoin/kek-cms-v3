@@ -45,7 +45,7 @@ elseif(isset($_SESSION["php_err_notification"])){
 <script src="/assets/js/dashboard.js"></script>
 
 <!--saját js-ek-->
-<script src="/js/admin_script.js?v=<?php echo time(); ?>"></script>
+<script src="/assets/kekcms/js/admin_script.js?v=<?php echo time(); ?>"></script>
 
 
 </body>

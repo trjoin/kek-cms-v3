@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/assets/css/demo_2/style.css">
     
     <!-- saját css-ek -->
-    <link rel="stylesheet" href="/css/admin_style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/assets/kekcms/css/admin_style.css?v=<?php echo time(); ?>">
     
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
   </head>
