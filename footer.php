@@ -1,7 +1,4 @@
 </div>
-</div>
-
-
 
 <footer class="footer">
     <div class="footer-inner-wraper">
@@ -35,13 +32,9 @@ elseif(isset($_SESSION["php_err_notification"])){
 <!--vendor js -->
 <script src="/assets/vendors/js/vendor.bundle.base.js"></script>
 <script src="/assets/vendors/chart.js/Chart.min.js"></script>
-<script src="/assets/vendors/jquery-circle-progress/js/circle-progress.min.js"></script>
-<script src="/assets/js/jquery.cookie.js"></script>
 <script src="/assets/js/off-canvas.js"></script>
 <script src="/assets/js/hoverable-collapse.js"></script>
 <script src="/assets/js/misc.js"></script>
-<script src="/assets/js/settings.js"></script>
-<script src="/assets/js/todolist.js"></script>
 <script src="/assets/js/dashboard.js"></script>
 
 <!--saját js-ek-->

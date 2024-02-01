@@ -1,112 +1,3 @@
-/*-------------------------------------------------------------------
-  ===== Table of Contents =====
-
-  * Bootstrap functions
-  * Template variables
-  * SCSS Compass Functions
-  * Boostrap Main SCSS
-  * Template mixins
-    + Animation Mixins
-    + Background Mixins
-    + Badge Mixins
-    + Button Mixins
-    + Miscellaneous Mixins
-    + BlockQuote Mixins
-    + Cards Mixins
-    + Color Functions Mixins
-    + Tooltips
-    + popovers
-  * Core Styles
-    + Reset Styles
-    + Fonts
-    + Functions
-    + Backgrounds
-    + Typography
-    + Miscellaneous
-    + Footer
-    + Layouts
-    + Utilities
-    + Demo styles
-  * Components
-    + Accordions
-    + Badges
-    + Bootstrap Alerts
-    + Boostrap Progress
-    + Buttons
-    + Breadcrumbs
-    + Cards
-    + Checkboxes and Radios
-    + Dropdowns
-    + Forms
-    + Google maps
-    + Icons
-    + Loaders
-    + Lists
-    + Modals
-    + Pagination
-    + Popover
-    + Preview
-    + Tables
-    + Tabs
-    + Timeline
-    + Todo List
-    + Tooltips
-    + User Profile
-    + Pricing table
-  * Email
-    + Mail Sidebar
-    + Mail List Container
-    + Message Content
-  * Plugin Overrides
-    + Ace Editor
-    + Avgrund Popup
-    + Bootstrap Tour
-    + Chartist
-    + CodeMirror
-    + Colcade
-    + Colorpicker
-    + Context Menu
-    + Data Tables
-    + Datepicker
-    + Dropify
-    + Dropzone
-    + Flot chart
-    + Full Calendar
-    + Google Charts
-    + Icheck
-    + Jquery File Upload
-    + Js-grid
-    + Jvectormap
-    + Light Gallery
-    + Listify
-    + No-ui-slider
-    + Owl-carousel
-    + Progressbar-js
-    + Pws-tabs
-    + Quill Editor
-    + Rating
-    + Select2
-    + Summernote Editor
-    + SweetAlert
-    + Switchery
-    + Tags
-    + TinyMCE Editor
-    + Toast
-    + Typeahead
-    + Wysi Editor
-    + X-editable
-    + Wizard
-  * Landing screens
-    + Auth
-    + Lock Screen
--------------------------------------------------------------------*/
-/*-------------------------------------------------------------------*/
-/* === Import Bootstrap functions and variables === */
-/*-------------------------------------------------------------------*/
-/* === Import template variables === */
-/*-------------------------------------------------------------------*/
-/* === SCSS Compass Functions === */
-
 @-webkit-keyframes flash {
   0% {
     opacity: 1; }
@@ -1816,7 +1707,7 @@
   --bs-gray-900: #212529;
   --bs-primary: #b66dff;
   --bs-secondary: #0f3bba;
-  --bs-success: #3dd597;
+  --bs-success: #4aa3c5;
   --bs-info: #0062ff;
   --bs-warning: #ffc542;
   --bs-danger: #fc5a5a;
@@ -4574,8 +4465,8 @@ textarea.is-invalid.tt-hint {
 
 .btn-success {
   color: #000;
-  background-color: #3dd597;
-  border-color: #3dd597; }
+  background-color: #4aa3c5;
+  border-color: #4aa3c5; }
   .btn-success:hover {
     color: #000;
     background-color: #5adba7;
@@ -4599,8 +4490,8 @@ textarea.is-invalid.tt-hint {
       box-shadow: 0 0 0 0.25rem rgba(52, 181, 128, 0.5); }
   .btn-success:disabled, .btn-success.disabled {
     color: #000;
-    background-color: #3dd597;
-    border-color: #3dd597; }
+    background-color: #4aa3c5;
+    border-color: #4aa3c5; }
 
 .btn-info {
   color: #fff;
@@ -4803,12 +4694,12 @@ textarea.is-invalid.tt-hint {
     background-color: transparent; }
 
 .btn-outline-success, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit {
-  color: #3dd597;
-  border-color: #3dd597; }
+  color: #4aa3c5;
+  border-color: #4aa3c5; }
   .btn-outline-success:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:hover {
     color: #000;
-    background-color: #3dd597;
-    border-color: #3dd597; }
+    background-color: #4aa3c5;
+    border-color: #4aa3c5; }
   .btn-check:focus + .btn-outline-success, .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:focus + .editable-submit, .btn-outline-success:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:focus {
     -webkit-box-shadow: 0 0 0 0.25rem rgba(61, 213, 151, 0.5);
     box-shadow: 0 0 0 0.25rem rgba(61, 213, 151, 0.5); }
@@ -4816,15 +4707,15 @@ textarea.is-invalid.tt-hint {
   .btn-check:active + .btn-outline-success,
   .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:active + .editable-submit, .btn-outline-success:active, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:active, .btn-outline-success.active, .editable-container.editable-inline .editableform .control-group .editable-buttons .active.editable-submit, .btn-outline-success.dropdown-toggle.show, .editable-container.editable-inline .editableform .control-group .editable-buttons .dropdown-toggle.show.editable-submit {
     color: #000;
-    background-color: #3dd597;
-    border-color: #3dd597; }
+    background-color: #4aa3c5;
+    border-color: #4aa3c5; }
     .btn-check:checked + .btn-outline-success:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:checked + .editable-submit:focus,
     .btn-check:active + .btn-outline-success:focus,
     .editable-container.editable-inline .editableform .control-group .editable-buttons .btn-check:active + .editable-submit:focus, .btn-outline-success:active:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:active:focus, .btn-outline-success.active:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .active.editable-submit:focus, .btn-outline-success.dropdown-toggle.show:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .dropdown-toggle.show.editable-submit:focus {
       -webkit-box-shadow: 0 0 0 0.25rem rgba(61, 213, 151, 0.5);
       box-shadow: 0 0 0 0.25rem rgba(61, 213, 151, 0.5); }
   .btn-outline-success:disabled, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:disabled, .btn-outline-success.disabled, .editable-container.editable-inline .editableform .control-group .editable-buttons .disabled.editable-submit {
-    color: #3dd597;
+    color: #4aa3c5;
     background-color: transparent; }
 
 .btn-outline-info {
@@ -7919,7 +7810,7 @@ textarea.is-invalid.tt-hint {
     color: #0c2f95; }
 
 .link-success {
-  color: #3dd597; }
+  color: #4aa3c5; }
   .link-success:hover, .link-success:focus {
     color: #64ddac; }
 
@@ -8297,7 +8188,7 @@ textarea.is-invalid.tt-hint {
   border-color: #0f3bba !important; }
 
 .border-success, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm {
-  border-color: #3dd597 !important; }
+  border-color: #4aa3c5 !important; }
 
 .border-info {
   border-color: #0062ff !important; }
@@ -11787,9 +11678,9 @@ address p {
     color: #0f3bba; }
 
 .blockquote-success {
-  border-color: #3dd597; }
+  border-color: #4aa3c5; }
   .blockquote-success .blockquote-footer {
-    color: #3dd597; }
+    color: #4aa3c5; }
 
 .blockquote-info {
   border-color: #0062ff; }
@@ -12338,9 +12229,9 @@ code {
   background: #0f3bba; }
 
 .badge-success, .preview-list .preview-item .preview-thumbnail .badge.badge-online {
-  border: 1px solid #3dd597;
+  border: 1px solid #4aa3c5;
   color: #ffffff;
-  background: #3dd597; }
+  background: #4aa3c5; }
 
 .badge-info, .preview-list .preview-item .preview-thumbnail .badge.badge-offline {
   border: 1px solid #0062ff;
@@ -12417,8 +12308,8 @@ code {
   border: 1px solid #0f3bba; }
 
 .badge-outline-success {
-  color: #3dd597;
-  border: 1px solid #3dd597; }
+  color: #4aa3c5;
+  border: 1px solid #4aa3c5; }
 
 .badge-outline-info {
   color: #0062ff;
@@ -12451,7 +12342,7 @@ code {
 
 .badge-inverse-success {
   background: rgba(61, 213, 151, 0.3);
-  color: #3dd597; }
+  color: #4aa3c5; }
 
 .badge-inverse-info {
   background: rgba(0, 98, 255, 0.3);
@@ -12489,7 +12380,7 @@ code {
   color: #0f3bba; }
 
 .alert-success {
-  color: #3dd597; }
+  color: #4aa3c5; }
 
 .alert-info {
   color: #0062ff; }
@@ -12516,7 +12407,7 @@ code {
 
 .alert-fill-success {
   color: white;
-  background: #3dd597; }
+  background: #4aa3c5; }
 
 .alert-fill-info {
   color: white;
@@ -12884,30 +12775,30 @@ code {
   background-image: none;
   border-color: rgba(61, 213, 151, 0); }
   .btn-inverse-success:not(.btn-inverse-light) {
-    color: #3dd597; }
+    color: #4aa3c5; }
   .btn-inverse-success:hover {
     color: #ffffff;
-    background-color: #3dd597;
-    border-color: #3dd597; }
+    background-color: #4aa3c5;
+    border-color: #4aa3c5; }
   .btn-inverse-success.focus, .btn-inverse-success:focus {
     -webkit-box-shadow: 0 0 0 3px rgba(61, 213, 151, 0.5);
     box-shadow: 0 0 0 3px rgba(61, 213, 151, 0.5); }
   .btn-inverse-success.disabled, .btn-inverse-success:disabled {
-    color: #3dd597;
+    color: #4aa3c5;
     background-color: transparent; }
   .btn-inverse-success.active, .btn-inverse-success:active,
   .show > .btn-inverse-success.dropdown-toggle {
     color: #ffffff;
-    background-color: #3dd597;
-    border-color: #3dd597; }
+    background-color: #4aa3c5;
+    border-color: #4aa3c5; }
 
 .btn-success:not(.btn-light) {
   color: #ffffff; }
   .btn-success:not(.btn-light):hover, .btn-success:not(.btn-light):focus, .btn-success:not(.btn-light):active {
     color: #ffffff; }
   .btn-success:not(.btn-light):focus, .btn-success:not(.btn-light):active {
-    background: #3dd597;
-    border-color: #3dd597; }
+    background: #4aa3c5;
+    border-color: #4aa3c5; }
 
 .btn-inverse-info {
   background-color: rgba(0, 98, 255, 0.2);
@@ -13170,9 +13061,9 @@ code {
 
 .bg-inverse-success {
   background: #a6eccf;
-  border-color: #3dd597; }
+  border-color: #4aa3c5; }
   .bg-inverse-success .breadcrumb-item {
-    color: #3dd597; }
+    color: #4aa3c5; }
     .bg-inverse-success .breadcrumb-item:before {
       color: inherit; }
     .bg-inverse-success .breadcrumb-item a {
@@ -13182,12 +13073,12 @@ code {
     .bg-inverse-success.breadcrumb-custom .breadcrumb-item {
       background: #a6eccf; }
       .bg-inverse-success.breadcrumb-custom .breadcrumb-item a {
-        color: #3dd597;
+        color: #4aa3c5;
         border: none; }
         .bg-inverse-success.breadcrumb-custom .breadcrumb-item a:before {
           border-left-color: #a6eccf; }
       .bg-inverse-success.breadcrumb-custom .breadcrumb-item span {
-        color: #3dd597; }
+        color: #4aa3c5; }
       .bg-inverse-success.breadcrumb-custom .breadcrumb-item:last-child {
         background: transparent; }
 
@@ -13956,7 +13847,7 @@ code {
         left: 50%;
         top: 0;
         margin: 0 0 0 -.1em;
-        background: #3dd597;
+        background: #4aa3c5;
         -webkit-transform-origin: 50% 250%;
         transform-origin: 50% 250%;
         -webkit-animation: rota 1.13s linear infinite, opa 3.67s ease-in-out infinite alternate;
@@ -15220,20 +15111,20 @@ code {
   border-left-color: #0f3bba; }
 
 .tooltip-success .tooltip-inner {
-  background: #3dd597;
+  background: #4aa3c5;
   color: #ffffff; }
 
 .tooltip-success.bs-tooltip-top .arrow::before, .tooltip-success.bs-tooltip-auto[data-popper-placement^="top"] .arrow::before {
-  border-top-color: #3dd597; }
+  border-top-color: #4aa3c5; }
 
 .tooltip-success.bs-tooltip-right .arrow::before {
-  border-right-color: #3dd597; }
+  border-right-color: #4aa3c5; }
 
 .tooltip-success.bs-tooltip-bottom .arrow::before, .tooltip-success.bs-tooltip-auto[data-popper-placement^="bottom"] .arrow::before {
-  border-bottom-color: #3dd597; }
+  border-bottom-color: #4aa3c5; }
 
 .tooltip-success.bs-tooltip-left .arrow::before {
-  border-left-color: #3dd597; }
+  border-left-color: #4aa3c5; }
 
 .tooltip-info .tooltip-inner {
   background: #0062ff;
@@ -15434,7 +15325,7 @@ code {
       .email-wrapper .mail-sidebar .menu-bar .online-status .status.offline:after {
         content: "Offline"; }
     .email-wrapper .mail-sidebar .menu-bar .online-status .status.online {
-      background: #3dd597; }
+      background: #4aa3c5; }
       .email-wrapper .mail-sidebar .menu-bar .online-status .status.online:after {
         content: "Online"; }
   .email-wrapper .mail-sidebar .menu-bar .profile-list {
@@ -16024,7 +15915,7 @@ body.avgrund-active {
             content: "";
             width: 38px;
             height: 38px;
-            background: #3dd597;
+            background: #4aa3c5;
             border-radius: 100%;
             display: block;
             margin: auto;
@@ -16503,7 +16394,7 @@ body.avgrund-active {
   .fc-external-events .fc-event:nth-child(2) {
     border-color: #fc5a5a; }
   .fc-external-events .fc-event:nth-child(3) {
-    border-color: #3dd597; }
+    border-color: #4aa3c5; }
   .fc-external-events .fc-event:nth-child(4) {
     border-color: #0062ff; }
   .fc-external-events .fc-event:nth-child(4) {
@@ -16720,7 +16611,7 @@ body.avgrund-active {
       -webkit-box-shadow: none;
       box-shadow: none; }
     .noUi-target .noUi-base .noUi-origin {
-      background: #3dd597; }
+      background: #4aa3c5; }
   .noUi-target .noUi-pips .noUi-marker-horizontal,
   .noUi-target .noUi-pips .noUi-marker-vertical {
     background: rgba(58, 58, 67, 0.36); }
@@ -16759,14 +16650,14 @@ body.avgrund-active {
     color: #ffffff; }
 
 .slider-success .noUi-base .noUi-connect {
-  background: #3dd597; }
+  background: #4aa3c5; }
 
 .slider-success .noUi-base .noUi-origin {
-  background: #3dd597; }
+  background: #4aa3c5; }
   .slider-success .noUi-base .noUi-origin .noUi-handle:after {
-    background: #3dd597; }
+    background: #4aa3c5; }
   .slider-success .noUi-base .noUi-origin .noUi-handle .noUi-tooltip {
-    background: #3dd597;
+    background: #4aa3c5;
     color: #ffffff; }
 
 .slider-info .noUi-base .noUi-connect {
@@ -17054,7 +16945,7 @@ body.avgrund-active {
   .select2-container--default .select2-selection--multiple .select2-selection__choice:nth-child(5n+1) {
     background: #b66dff; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice:nth-child(5n+2) {
-    background: #3dd597; }
+    background: #4aa3c5; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice:nth-child(5n+3) {
     background: #0062ff; }
   .select2-container--default .select2-selection--multiple .select2-selection__choice:nth-child(5n+4) {
@@ -17267,7 +17158,7 @@ div.tagsinput {
   color: #fc5a5a; }
 
 .wysi-editor a[data-wysihtml-command-value="green"] {
-  color: #3dd597; }
+  color: #4aa3c5; }
 
 .wysi-editor a[data-wysihtml-command-value="blue"] {
   color: #0062ff; }
@@ -17325,7 +17216,7 @@ div.tagsinput {
   border: 1px solid rgba(58, 58, 67, 0.36); }
 
 .wysi-editor .wysihtml-editor table td.wysiwyg-tmp-selected-cell {
-  outline: 2px solid #3dd597; }
+  outline: 2px solid #4aa3c5; }
 
 .wysi-editor .editor-container-tag {
   padding: 5px 10px;
@@ -17778,7 +17669,7 @@ div.tagsinput {
         content: "\F140"; }
   .accordion.accordion-solid-content .card .card-body {
     padding: 2rem;
-    background: #3dd597;
+    background: #4aa3c5;
     color: #ffffff; }
 
 .accordion.accordion-multi-colored .card .card-header,
@@ -17790,7 +17681,7 @@ div.tagsinput {
   background: #b66dff; }
 
 .accordion.accordion-multi-colored .card:nth-child(2) {
-  background: #3dd597; }
+  background: #4aa3c5; }
 
 .accordion.accordion-multi-colored .card:nth-child(3) {
   background: #fc5a5a; }
@@ -17923,14 +17814,14 @@ select.tt-hint {
   .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm.tt-hint, select.border-success.typeahead,
   select.border-success.tt-query,
   select.border-success.tt-hint {
-    outline: 1px solid #3dd597; }
+    outline: 1px solid #4aa3c5; }
     select.form-control.border-success:focus, select.border-success.asColorPicker-input:focus, .swal2-modal .swal2-buttonswrapper select.asColorPicker-input.swal2-styled.swal2-confirm:focus, .dataTables_wrapper select.border-success:focus, .dataTables_wrapper .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper .dataTables_wrapper select.swal2-styled.swal2-confirm:focus,
     .jsgrid .jsgrid-table .jsgrid-filter-row select.border-success:focus, .jsgrid .jsgrid-table .jsgrid-filter-row .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper .jsgrid .jsgrid-table .jsgrid-filter-row select.swal2-styled.swal2-confirm:focus, .select2-container--default select.border-success.select2-selection--single:focus, .select2-container--default .swal2-modal .swal2-buttonswrapper select.select2-selection--single.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper .select2-container--default select.select2-selection--single.swal2-styled.swal2-confirm:focus, .select2-container--default .select2-selection--single select.border-success.select2-search__field:focus, .select2-container--default .select2-selection--single .swal2-modal .swal2-buttonswrapper select.select2-search__field.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper .select2-container--default .select2-selection--single select.select2-search__field.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper select.form-control.swal2-styled.swal2-confirm:focus, .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm.typeahead:focus,
     .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm.tt-query:focus,
     .swal2-modal .swal2-buttonswrapper select.swal2-styled.swal2-confirm.tt-hint:focus, select.border-success.typeahead:focus,
     select.border-success.tt-query:focus,
     select.border-success.tt-hint:focus {
-      outline: 1px solid #3dd597; }
+      outline: 1px solid #4aa3c5; }
   select.form-control.border-info, select.border-info.asColorPicker-input, .dataTables_wrapper select.border-info,
   .jsgrid .jsgrid-table .jsgrid-filter-row select.border-info, .select2-container--default select.border-info.select2-selection--single, .select2-container--default .select2-selection--single select.border-info.select2-search__field, select.border-info.typeahead,
   select.border-info.tt-query,
@@ -18064,7 +17955,7 @@ dl {
 
 .list-arrow li:before {
   content: '\F142';
-  color: #3dd597; }
+  color: #4aa3c5; }
 
 .list-star li:before {
   content: '\F4CE';
@@ -18301,13 +18192,13 @@ dl {
 .pagination-success .page-item.active .page-link, .pagination-success .jsgrid .jsgrid-pager .active.jsgrid-pager-nav-button .page-link, .jsgrid .jsgrid-pager .pagination-success .active.jsgrid-pager-nav-button .page-link, .pagination-success .jsgrid .jsgrid-pager .active.jsgrid-pager-page .page-link, .jsgrid .jsgrid-pager .pagination-success .active.jsgrid-pager-page .page-link, .pagination-success .page-item.active .jsgrid .jsgrid-pager .jsgrid-pager-nav-button a, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button .pagination-success .page-item.active a, .pagination-success .jsgrid .jsgrid-pager .active.jsgrid-pager-nav-button a, .jsgrid .jsgrid-pager .pagination-success .active.jsgrid-pager-nav-button a,
 .pagination-success .page-item.active .jsgrid .jsgrid-pager .jsgrid-pager-page a, .jsgrid .jsgrid-pager .jsgrid-pager-page .pagination-success .page-item.active a,
 .pagination-success .jsgrid .jsgrid-pager .active.jsgrid-pager-page a, .jsgrid .jsgrid-pager .pagination-success .active.jsgrid-pager-page a {
-  background: #3dd597;
-  border-color: #3dd597; }
+  background: #4aa3c5;
+  border-color: #4aa3c5; }
 
 .pagination-success .page-item .page-link:hover, .pagination-success .jsgrid .jsgrid-pager .jsgrid-pager-nav-button .page-link:hover, .jsgrid .jsgrid-pager .pagination-success .jsgrid-pager-nav-button .page-link:hover, .pagination-success .jsgrid .jsgrid-pager .jsgrid-pager-page .page-link:hover, .jsgrid .jsgrid-pager .pagination-success .jsgrid-pager-page .page-link:hover, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button .pagination-success .page-item a:hover, .pagination-success .jsgrid .jsgrid-pager .jsgrid-pager-nav-button a:hover, .jsgrid .jsgrid-pager .pagination-success .jsgrid-pager-nav-button a:hover, .jsgrid .jsgrid-pager .jsgrid-pager-page .pagination-success .page-item a:hover,
 .pagination-success .jsgrid .jsgrid-pager .jsgrid-pager-page a:hover, .jsgrid .jsgrid-pager .pagination-success .jsgrid-pager-page a:hover {
   background: #52daa2;
-  border-color: #3dd597;
+  border-color: #4aa3c5;
   color: #ffffff; }
 
 .pagination-info .page-item.active .page-link, .pagination-info .jsgrid .jsgrid-pager .active.jsgrid-pager-nav-button .page-link, .jsgrid .jsgrid-pager .pagination-info .active.jsgrid-pager-nav-button .page-link, .pagination-info .jsgrid .jsgrid-pager .active.jsgrid-pager-page .page-link, .jsgrid .jsgrid-pager .pagination-info .active.jsgrid-pager-page .page-link, .pagination-info .page-item.active .jsgrid .jsgrid-pager .jsgrid-pager-nav-button a, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button .pagination-info .page-item.active a, .pagination-info .jsgrid .jsgrid-pager .active.jsgrid-pager-nav-button a, .jsgrid .jsgrid-pager .pagination-info .active.jsgrid-pager-nav-button a,
@@ -18607,7 +18498,7 @@ dl {
       content: '';
       width: 100%;
       height: 2px;
-      background: #3dd597;
+      background: #4aa3c5;
       position: absolute;
       left: 0;
       bottom: 0; }
@@ -18887,7 +18778,7 @@ dl {
         -webkit-transition-timing-function: ease;
         transition-timing-function: ease; }
       .calendar-aside .list .count.online:before {
-        background: #3dd597; }
+        background: #4aa3c5; }
       .calendar-aside .list .count.offline:before {
         background: #fc5a5a; }
       .calendar-aside .list .count .close {
@@ -19383,7 +19274,7 @@ dl {
           border-radius: 100px;
           margin: 0 auto 5px auto; }
         .auth.multi-step-login .step-form .step-progress li.active:before {
-          background: #3dd597;
+          background: #4aa3c5;
           color: #fff; }
         .auth.multi-step-login .step-form .step-progress li:first-child:after {
           content: none; }
@@ -19923,7 +19814,7 @@ dl {
             margin-left: 1rem;
             margin-right: 0; }
           .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon {
-            color: #33c92d; }
+            color: #4aa3c5; }
             .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon:after, .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon:before {
               font-size: 1rem;
               color: inherit; }
@@ -19933,7 +19824,7 @@ dl {
             font-size: 1.125rem;
             line-height: 1;
             margin-right: 0;
-            color: #33c92d; }
+            color: #4aa3c5; }
             .rtl .sidebar .nav .nav-item .nav-link i.menu-icon {
               margin-left: 0;
               margin-right: 0; }
@@ -19976,7 +19867,7 @@ dl {
           left: 0;
           top: .5rem;
           bottom: 0;
-          background: #3dd597;
+          background: #4aa3c5;
           height: 24px;
           width: 4px; }
           .rtl .sidebar .nav .nav-item.active > .nav-link:before {
@@ -19986,7 +19877,7 @@ dl {
           color: #b3b3b3;
           font-family: "nunito-medium", sans-serif; }
         .sidebar .nav .nav-item.active > .nav-link i {
-          color: #3dd597; }
+          color: #4aa3c5; }
       .sidebar .nav .nav-item:hover {
         background: transparent; }
       .sidebar .nav .nav-item.nav-profile .nav-link {
@@ -20080,7 +19971,7 @@ dl {
                 margin-right: 0;
                 margin-left: 12px; }
     .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-category):not(.nav-profile) > .nav-link {
-      color: #3dd597; }
+      color: #4aa3c5; }
     .sidebar .nav.sub-menu {
       margin-bottom: 20px;
       margin-top: 0;
@@ -20111,10 +20002,10 @@ dl {
               left: auto;
               right: 0; }
           .sidebar .nav.sub-menu .nav-item .nav-link.active {
-            color: #3dd597;
+            color: #4aa3c5;
             background: transparent; }
             .sidebar .nav.sub-menu .nav-item .nav-link.active:before {
-              color: #3dd597; }
+              color: #4aa3c5; }
           .sidebar .nav.sub-menu .nav-item .nav-link:hover {
             color: #44495a; }
         .sidebar .nav.sub-menu .nav-item:hover {

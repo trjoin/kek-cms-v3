@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <ul class="nav">
 	<li class="nav-item nav-category">Vezérlőpult</li>
-	<li class="nav-item">
+	<li class="nav-item active">
 	  <a class="nav-link" href="index.php">
 		<span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
 		<span class="menu-title">Műszerfal</span>

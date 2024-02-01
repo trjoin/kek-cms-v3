@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>K.E.K. ADMIN V3.0 dev.</title>
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/assets/css/demo_2/style.css">
     
     <!-- saját css-ek -->
@@ -99,7 +97,7 @@
           </button>
         </div>
       </nav>
-	</div>
+
       <div class="container-fluid page-body-wrapper">
 <?php
 	include("includes/navbar.php");
