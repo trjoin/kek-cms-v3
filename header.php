@@ -99,7 +99,7 @@
           </button>
         </div>
       </nav>
-
+	</div>
       <div class="container-fluid page-body-wrapper">
 <?php
 	include("includes/navbar.php");

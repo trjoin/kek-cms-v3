@@ -10,7 +10,9 @@
     include_once("connect.php");
     include_once("functions.php");
     
+	//only for debugging, start session
     $_SESSION["munkamenet"] = "van";
+	
     if(isset($_SESSION["munkamenet"]) AND $_SESSION["munkamenet"]!="")
 	{
         if(isset($_REQUEST["action"]))
