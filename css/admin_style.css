@@ -1,0 +1,54 @@
+/************ ÁLTALÁNOS CSS BEÁLLÍTÁSOK **********/
+
+:root{
+    --vilagosabb-szurke: #181824; /*sidebar háttér*/
+    --sotetebb-szurke: #111118; /*body háttér*/
+    --text-zold: #3dd597; /*menu szöveg szín*/
+    --ikon-zold: #33c92d; /*menu ikon szín*/
+}
+
+.fadeout { opacity: 0; transition: opacity 1000ms;}
+
+.fadein {
+    opacity: 1;
+    animation: fade_in 1.5s linear;
+}
+
+@keyframes fade_in {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
+
+/*********** NOTIFICATION ***********/
+
+.notification{
+    position: fixed; 
+    bottom: 5%; right: 1%; 
+    background-color: var(--vilagosabb-szurke);
+    border: 1px solid var(--text-zold);
+    border-radius: 8px;
+}
+
+.noti-success{
+    color: var(--text-zold);
+}
+
+.noti-error{
+    border: 1px solid red;
+    color: red;
+}
+
+#notification_close{
+    border: 1px solid var(--text-zold);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-zold);
+    transition: all 0.4s;
+}
+
+#notification_close:hover{
+    color: var(--vilagosabb-szurke);
+    background-color: var(--text-zold);
+}
+

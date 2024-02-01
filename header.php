@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/assets/css/demo_2/style.css">
+    
+    <!-- saját css-ek -->
+    <link rel="stylesheet" href="/css/admin_style.css?v=<?php echo time(); ?>">
+    
     <link rel="shortcut icon" href="/assets/images/favicon.png" />
   </head>
   <body>
