@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>K.E.K. ADMIN V3.0 dev.</title>
     <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/assets/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/css/demo_2/style.css">
-    
+    <link rel="stylesheet" href="/assets/css/style.css">
     <!-- saját css-ek -->
     <link rel="stylesheet" href="/assets/kekcms/css/admin_style.css?v=<?php echo time(); ?>">
-    
-    <link rel="shortcut icon" href="/assets/images/favicon.png" />
   </head>
   <body>
     <div class="container-scroller">
@@ -33,9 +30,6 @@
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="index.php#" data-bs-toggle="dropdown" aria-expanded="false">
-                <div class="nav-profile-img">
-                  <img src="/assets/images/faces/face28.png" alt="">
-                </div>
                 <div class="nav-profile-text">
                   <p class="mb-1">Adlép Omed</p>
                 </div>

@@ -11456,27 +11456,27 @@ input:focus {
 /* Fonts */
 @font-face {
   font-family: 'nunito-light';
-  src: url("../../fonts/Nunito/Nunito-Light.eot");
+  src: url("../fonts/Nunito/Nunito-Light.eot");
   /* IE9 Compat Modes */
-  src: url("../../fonts/Nunito/Nunito-Light.woff2") format("woff2"), url("../../fonts/Nunito/Nunito-Light.woff") format("woff"), url("../../fonts/Nunito/Nunito-Light.ttf") format("truetype"); }
+  src: url("../fonts/Nunito/Nunito-Light.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Light.woff") format("woff"), url("../fonts/Nunito/Nunito-Light.ttf") format("truetype"); }
 
 @font-face {
   font-family: 'nunito-regular';
-  src: url("../../fonts/Nunito/Nunito-Regular.eot");
+  src: url("../fonts/Nunito/Nunito-Regular.eot");
   /* IE9 Compat Modes */
-  src: url("../../fonts/Nunito/Nunito-Regular.woff2") format("woff2"), url("../../fonts/Nunito/Nunito-Regular.woff") format("woff"), url("../../fonts/Nunito/Nunito-Regular.ttf") format("truetype"); }
+  src: url("../fonts/Nunito/Nunito-Regular.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Regular.woff") format("woff"), url("../fonts/Nunito/Nunito-Regular.ttf") format("truetype"); }
 
 @font-face {
   font-family: 'nunito-medium';
-  src: url("../../fonts/Nunito/Nunito-SemiBold.eot");
+  src: url("../fonts/Nunito/Nunito-SemiBold.eot");
   /* IE9 Compat Modes */
-  src: url("../../fonts/Nunito/Nunito-SemiBold.woff2") format("woff2"), url("../../fonts/Nunito/Nunito-SemiBold.woff") format("woff"), url("../../fonts/Nunito/Nunito-SemiBold.ttf") format("truetype"); }
+  src: url("../fonts/Nunito/Nunito-SemiBold.woff2") format("woff2"), url("../fonts/Nunito/Nunito-SemiBold.woff") format("woff"), url("../fonts/Nunito/Nunito-SemiBold.ttf") format("truetype"); }
 
 @font-face {
   font-family: 'nunito-bold';
-  src: url("../../fonts/Nunito/Nunito-Bold.eot");
+  src: url("../fonts/Nunito/Nunito-Bold.eot");
   /* IE9 Compat Modes */
-  src: url("../../fonts/Nunito/Nunito-Bold.woff2") format("woff2"), url("../../fonts/Nunito/Nunito-Bold.woff") format("woff"), url("../../fonts/Nunito/Nunito-Bold.ttf") format("truetype"); }
+  src: url("../fonts/Nunito/Nunito-Bold.woff2") format("woff2"), url("../fonts/Nunito/Nunito-Bold.woff") format("woff"), url("../fonts/Nunito/Nunito-Bold.ttf") format("truetype"); }
 
 .text-twitter {
   color: #2caae1; }
