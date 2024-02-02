@@ -57,13 +57,29 @@ function view_webshop_kategoria_index() {
 }
 
 function view_uj_kategoria_page() {
-    echo '<div class="">'
-    . '<h2>Új kategória hozzáadása</h2>'
-    . '<form action="" method="post" enctype="multipart/formdata">'
-    . '<input type="text" name="fkatnev" value="" />'
-    . '</form>'
-    . '</div>';
-}
+    ?>
+    <div class="">
+        <h2>Új kategória hozzáadása</h2>
+        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
+            <div class="mb-2">
+                <label class="form-label" for="fkatnev">Megnevezés</label>
+                <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="" maxlength="200" required />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="fkatleiras">Leírás</label>
+                <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5"></textarea>
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="fthumbnail">Kategória kép</label>
+                <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" />
+            </div>
+            <div>
+                <input type="hidden" name="csoportid" value="1" />
+                <button class="btn btn-primary">Mentés</button>
+            </div>
+        </form>
+    </div>
+<?php }
 
 //
 ////kategória törlése
