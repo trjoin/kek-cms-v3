@@ -8,14 +8,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>K.E.K. ADMIN V3.0 dev.</title>
-    <link rel="stylesheet" href="/assets/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/assets/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="./assets/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="./assets/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="./assets/vendors/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css">
 	<link rel="shortcut icon" href="/favicon.png">
 	<link rel="apple-touch-icon" href="/favicon.png">
     <!-- saját css-ek -->
-    <link rel="stylesheet" href="/assets/kekcms/css/admin_style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="./assets/kekcms/css/admin_style.css?v=<?php echo time(); ?>">
   </head>
   <body>
     <div class="container-scroller">
