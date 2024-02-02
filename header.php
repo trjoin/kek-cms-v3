@@ -1,3 +1,7 @@
+<?php
+	if(isset($_SESSION["munkamenet"]) AND $_SESSION["munkamenet"]!="")
+	{
+?>
 <!DOCTYPE html>
 <html lang="hu">
   <head>
@@ -8,6 +12,8 @@
     <link rel="stylesheet" href="/assets/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="/assets/vendors/font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/assets/css/style.css">
+	<link rel="shortcut icon" href="/favicon.png">
+	<link rel="apple-touch-icon" href="/favicon.png">
     <!-- saját css-ek -->
     <link rel="stylesheet" href="/assets/kekcms/css/admin_style.css?v=<?php echo time(); ?>">
   </head>
@@ -15,7 +21,7 @@
     <div class="container-scroller">
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.php" style="color:#fff;">KEK ADMIN</a>
+          <a class="navbar-brand brand-logo" href="index.php" style="color:#fff;">KEK CMS</a>
           <a class="navbar-brand brand-logo-mini" href="index.php" style="color:#fff;">KEK</a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -31,7 +37,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="index.php#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-text">
-                  <p class="mb-1">Adlép Omed</p>
+                  <p class="mb-1"><?php echo $_SESSION["userlogged"]; ?></p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-end p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
@@ -45,7 +51,7 @@
                     <i class="mdi mdi-account-group"></i>
                   </a>
 				<?php
-					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]=="0")
+					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]=="3")
 					{
 				?>
 				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="index.php?action=modules">
@@ -98,3 +104,6 @@
 ?>
         <div class="main-panel">
 			<div class="content-wrapper">
+<?php
+	}
+?>

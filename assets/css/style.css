@@ -7871,7 +7871,9 @@ textarea.is-invalid.tt-hint {
   right: 0;
   left: 0;
   z-index: 1030; }
-
+.white-bg {
+	background-color:#fff !important;
+}
 .fixed-bottom {
   position: fixed;
   right: 0;
@@ -20348,7 +20350,6 @@ dl {
     .main-panel {
       margin-left: 0;
       width: 100%; } }
-
 .content-wrapper {
   background: #111118;
   padding: 2.875rem 2.875rem 0 2.875rem;
@@ -20356,6 +20357,10 @@ dl {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1; }
+ .loginbg {
+	background:url('../images/kek-background.jpg') no-repeat bottom center;
+	background-size:cover;
+}
   @media (max-width: 991px) {
     .content-wrapper {
       padding: 2rem 1rem; } }

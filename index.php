@@ -4,14 +4,20 @@
     ini_set("display_startup_errors", 1);
     ini_set("display_errors", 1);
     error_reporting(-1);
-
+	//default load/start
     session_start();
     include_once("config.inc.php");
     include_once("connect.php");
     include_once("functions.php");
+	
+	if(isset($_REQUEST["out"]))
+	{
+		session_unset();
+		header("Location: /index.php");
+	}
     
 	//only for debugging, start session
-    $_SESSION["munkamenet"] = "van";
+    //$_SESSION["munkamenet"] = "van";
 	
     if(isset($_SESSION["munkamenet"]) AND $_SESSION["munkamenet"]!="")
 	{

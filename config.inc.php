@@ -13,10 +13,19 @@ DEFINE("USER_NAME", 'rzvgdubh_trsadmin');
 DEFINE("PASSWD", 'koju;te89(z(');
 DEFINE("DB_NAME", 'rzvgdubh_trsadmin');
 
-ini_set('session.bug_compat_warn',0);
+global $prefix;
+$prefix="trs";
 
 global $domain;
 $domain="dev.adlepomed.hu";
+
+global $defaultmail;
+$defaultmail="noreply@adlepomed.hu";
+
+$absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
+$fullurl=$absp.$_SERVER["REQUEST_URI"];
+
+ini_set('session.bug_compat_warn',0);
 
 //éles környezet változó beállítása
 if($_SERVER["SERVER_NAME"] == "akarmi.hu")
