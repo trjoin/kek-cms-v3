@@ -15,10 +15,10 @@ else {
 }
 
 function view_webshop_kategoria_index() {
-
+    
     //adatok lekérdezése
     //nézet megjelenítése
-    echo '<div class="">
+    echo '<div class="card"><div class="card-body">
     <h2>Termék kategóriák listája</h2>
     <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új kategória</a>
 </div>
@@ -53,27 +53,26 @@ function view_webshop_kategoria_index() {
             <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
         </div>
     </div>
-</div>';
+</div></div>';
 }
 
-function view_uj_kategoria_page() {
-    ?>
+function view_uj_kategoria_page() { ?>
     <h2 class="text-muted font-weight-bold mb-2"> Új kategória hozzáadása </h2>
     <div class="card">
         <div class="card-body">
         
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
+        <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
             <div class="form-group">
                 <label for="fkatnev">Megnevezés</label>
-                <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="" maxlength="200" required />
+                <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="<?php (isset($_SESSION["new_product_category"]["fkatnev"]) ? $_SESSION["new_product_category"]["fkatnev"] : ""); ?>" maxlength="200" required />
             </div>
             <div class="form-group">
                 <label for="fkatleiras">Leírás</label>
-                <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5"></textarea>
+                <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5" required><?php (isset($_SESSION["new_product_category"]["fkatleiras"]) ? $_SESSION["new_product_category"]["fkatleiras"] : ""); ?></textarea>
             </div>
             <div class="form-group">
                 <label for="fthumbnail">Kategória kép</label>
-                <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" />
+                <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
             </div>
             <div>
                 <input type="hidden" name="csoportid" value="1" />
@@ -82,7 +81,57 @@ function view_uj_kategoria_page() {
         </form>
     </div>
     </div>
-<?php }
+<?php 
+}
+
+function save_uj_kategoria(){
+    $db = NULL;
+    try{
+        //adatok tisztítása és ellenőrzése
+        $form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
+        $_SESSION["new_product_category"] = $form_data;
+        
+        if(!isset($form_data["fkatnev"]) || empty($form_data["fkatnev"]))
+            throw new Exception("A megnevezés kitöltése kötelező!");
+        if(!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
+            throw new Exception("A leírás kitöltése kötelező!");
+        
+        //adatok bejegyzése
+        $db = connect();
+        
+        $sql = "INSERT INTO trs_shop_fokategoria_hun (fkatnev, fkatleiras, fkatfurl, fthumbnail, csoportid) VALUES (:fkatnev, :fkatleiras, :fkatfurl, :fthumbnail, :csoportid)";
+        
+        $sth = $db->prepare($sql);
+        
+        if(!$sth)
+            throw new Exception("Adatbázis hiba történt, sikertelen kategória bejegyzés!");
+        
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
+        $sth->bindValue(":fkatfurl", '1');
+        $sth->bindValue(":fthumbnail", '1');
+        $sth->bindValue(":csoportid", 1);
+        
+        $res = $sth->execute();
+        
+        if(!$res)
+            throw new Exception("Adatbázis hiba történt, sikertelen kategória bejegyzés!");
+        
+        $db = NULL;
+        
+        //átirányítás
+        unset($_SESSION["new_product_category"]);
+        $_SESSION["php_notification"] = 'Termék kategória sikeresen hozzáadva!';
+        
+        echo '<script>window.location.replace("/wp-admin/index.php?action=webshop&thing=kategoriak");</script>';
+        die(); //lefutott a program további része, ami gondot okozott
+    }
+    catch (Exception $e) {
+        $db = NULL;
+        $_SESSION["php_err_notification"] = $e->getMessage();
+        view_uj_kategoria_page();
+    }
+}
 
 //
 ////kategória törlése
