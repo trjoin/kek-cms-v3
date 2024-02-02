@@ -1,19 +1,68 @@
 <?php
 
-if(isset($_REQUEST["opt"])){
-    
+if (isset($_REQUEST["opt"])) {
+
+    if ($_REQUEST["opt"] == "ujkategoria")
+        view_uj_kategoria_page();
+    elseif ($_REQUEST["opt"] == "ujkategoriamentes")
+        save_uj_kategoria();
+    else
+        view_webshop_kategoria_index();
 }
-else{
+else {
     //default működés hívása
     view_webshop_kategoria_index();
 }
 
-function view_webshop_kategoria_index(){
-    
+function view_webshop_kategoria_index() {
+
     //adatok lekérdezése
-    
     //nézet megjelenítése
-    include_once 'includes/webshop/view_kategoriak_index.php';
+    echo '<div class="">
+    <h2>Termék kategóriák listája</h2>
+    <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új kategória</a>
+</div>
+<div class="">
+    <h2>Jelenlegi főkategóriák</h2>
+    <div class="row mx-0">
+        <div class="col-lg-4">Kép</div>
+        <div class="col-lg-4">Megnevezés</div>
+        <div class="col-lg-4">Műveletek</div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-lg-4">a</div>
+        <div class="col-lg-4">hgfadhfadhafd</div>
+        <div class="col-lg-4">
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-lg-4">a</div>
+        <div class="col-lg-4">hgfadhfadhafd</div>
+        <div class="col-lg-4">
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
+        </div>
+    </div>
+    <div class="row mx-0">
+        <div class="col-lg-4">a</div>
+        <div class="col-lg-4">hgfadhfadhafd</div>
+        <div class="col-lg-4">
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
+            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
+        </div>
+    </div>
+</div>';
+}
+
+function view_uj_kategoria_page() {
+    echo '<div class="">'
+    . '<h2>Új kategória hozzáadása</h2>'
+    . '<form action="" method="post" enctype="multipart/formdata">'
+    . '<input type="text" name="fkatnev" value="" />'
+    . '</form>'
+    . '</div>';
 }
 
 //
