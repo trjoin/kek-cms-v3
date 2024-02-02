@@ -145,8 +145,8 @@
 			echo '<title>ELFEJELTETT JELSZÓ PÓTLÁSA - K.E.K. ADMIN V3.0 dev.</title>';
 		}
 	?>
-    <link rel="stylesheet" href="../assets/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 	<link rel="shortcut icon" href="/favicon.png">
 	<link rel="apple-touch-icon" href="/favicon.png">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -157,7 +157,7 @@
         <div class="content-wrapper d-flex align-items-center auth loginbg">
           <div class="row flex-grow mx-auto">
             <div class="col-lg-4 p-5 d-flex justify-content-center align-items-center">
-				<img src="../assets/images/trjoin.png" class="img-fluid" draggable="false" alt="webes tartalom kezelés könnyedén" loading="lazy">
+				<img src="./assets/images/trjoin.png" class="img-fluid" draggable="false" alt="webes tartalom kezelés könnyedén" loading="lazy">
 			</div>
 		<?php
 			/*** LOGIN SECTION ***/
@@ -167,7 +167,7 @@
 			<div class="col-lg-4 my-2">
               <div class="auth-form-light text-left p-5">
                 <div class="brand-logo">
-                  <img src="../assets/images/logo.png" draggable="false" class="img-fluid" alt="KEK CMS webes tartalomkezelő rendszer" loading="lazy">
+                  <img src="./assets/images/logo.png" draggable="false" class="img-fluid" alt="KEK CMS webes tartalomkezelő rendszer" loading="lazy">
                 </div>
                 <h3 class="text-dark">Hello! Készen állsz?</h3>
                 <h4 class="font-weight-light text-dark">Jelentkezz be a munka megkezdéséhez.</h4>
@@ -209,7 +209,7 @@
 			<div class="col-lg-4 my-2">
               <div class="auth-form-light text-left p-5">
                 <div class="brand-logo">
-                  <img src="../assets/images/logo.png" draggable="false" class="img-fluid" alt="KEK CMS webes tartalomkezelő rendszer">
+                  <img src="./assets/images/logo.png" draggable="false" class="img-fluid" alt="KEK CMS webes tartalomkezelő rendszer">
                 </div>
                 <h3 class="text-dark">Elfelejtetted a jelszavad?</h3>
                 <h4 class="font-weight-light text-dark">Kérd itt a pótlását.</h4>
