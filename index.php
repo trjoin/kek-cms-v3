@@ -13,7 +13,7 @@
 	if(isset($_REQUEST["out"]))
 	{
 		session_unset();
-		header("Location: /index.php");
+		header("Location: /wp-admin/index.php");
 	}
     
 	//only for debugging, start session

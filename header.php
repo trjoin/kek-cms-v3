@@ -21,8 +21,8 @@
     <div class="container-scroller">
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="index.php" style="color:#fff;">KEK CMS</a>
-          <a class="navbar-brand brand-logo-mini" href="index.php" style="color:#fff;">KEK</a>
+          <a class="navbar-brand brand-logo" href="./index.php" style="color:#fff;">KEK CMS</a>
+          <a class="navbar-brand brand-logo-mini" href="./index.php" style="color:#fff;">KEK</a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -35,18 +35,18 @@
           </div>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" id="profileDropdown" href="index.php#" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" id="profileDropdown" href="./index.php#" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-text">
                   <p class="mb-1"><?php echo $_SESSION["userlogged"]; ?></p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-end p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
                 <div class="p-2">
-                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="index.php?action=profile">
+                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=profile">
                     <span>Profil</span><!-- ide kerül az aktuális felhasználó adatainak kezelése (név, email, tel, pwd, profilkép) -->
                     <i class="mdi mdi-account-outline ms-1"></i>
                   </a>
-				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="index.php?action=users">
+				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=users">
                     <span>Felhasználók</span><!-- ide kerül majd a felhasználó lista kezeléssel és az újak létrehozása -->
                     <i class="mdi mdi-account-group"></i>
                   </a>
@@ -54,7 +54,7 @@
 					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]=="3")
 					{
 				?>
-				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="index.php?action=modules">
+				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=modules">
                     <span>Modulok</span><!-- ide kerül a modul lista, alap modulok telepitője, egyéni modulok irása, listázója -->
                     <i class="mdi mdi-view-module"></i>
                   </a>
@@ -62,7 +62,7 @@
 					}
 				?>
                   <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="index.php?out">
+                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?out">
                     <span>Kilépés</span>
                     <i class="mdi mdi-logout ms-1"></i>
                   </a>
@@ -70,7 +70,7 @@
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="index.php#" data-bs-toggle="dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="./index.php#" data-bs-toggle="dropdown">
                 <i class="mdi mdi-bell-outline"></i>
                 <span class="count-symbol bg-danger"></span>
               </a>

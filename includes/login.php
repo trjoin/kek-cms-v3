@@ -180,13 +180,13 @@
 						echo '<script>
 								function atiranyit()
 								{
-									location.href = "/index.php";
+									location.href = "/wp-admin/index.php";
 								}
 								ID = window.setTimeout("atiranyit();", 1*3000);
 							</script>';
 					}
 				?>
-                <form class="pt-3" method="POST" action="/" autocomplete="off">
+                <form class="pt-3" method="POST" action="./index.php" autocomplete="off">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="loginUsername" name="username" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
@@ -195,7 +195,7 @@
                   </div>
                   <div class="mt-3">
                     <button class="btn btn-block d-flex w-100 justify-content-center align-items-center btn-secondary btn-lg font-weight-medium auth-form-btn" type="submit" aria-label="Belépés a rendszerbe">BELÉPÉS</button><br>
-					<a class="btn btn-block d-flex btn-success justify-content-center align-items-center btn-lg font-weight-medium auth-form-btn" href="/index.php?lost" aria-label="Elfelejtett jelszó pótlása">Elfelejtetted jelszavad?</a>
+					<a class="btn btn-block d-flex btn-success justify-content-center align-items-center btn-lg font-weight-medium auth-form-btn" href="./index.php?lost" aria-label="Elfelejtett jelszó pótlása">Elfelejtetted jelszavad?</a>
                   </div>
                 </form>
               </div>
@@ -237,7 +237,7 @@
 					else
 					{
 				?>
-                <form class="pt-3" method="POST" action="/index.php?lost">
+                <form class="pt-3" method="POST" action="./index.php?lost">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="lostUsername" name="lostusername" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
