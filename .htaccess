@@ -1,3 +1,4 @@
+AddHandler application/x-httpd-lsphp81 .php .php8
 <IfModule mod_rewrite.c>
 Options -Indexes
 RewriteEngine on
