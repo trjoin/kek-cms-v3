@@ -29,7 +29,7 @@ $fullurl=$absp.$_SERVER["REQUEST_URI"];
 ini_set('session.bug_compat_warn',0);
 
 //éles környezet változó beállítása
-if($_SERVER["SERVER_NAME"] == "akarmi.hu")
+if($_SERVER["SERVER_NAME"] == "adlepomed.hu")
     define("PROD", false);
 else
     define("PROD", true);
