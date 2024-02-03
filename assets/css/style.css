@@ -3476,7 +3476,8 @@ progress {
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1;
-  color: #212529;
+  /*color: #212529;*/
+  color: #FFF; /*módosítva, mert olvashatatlan megjelenést okozott*/
   background-color: #111118;
   background-clip: padding-box;
   border: 1px solid rgba(58, 58, 67, 0.36);
