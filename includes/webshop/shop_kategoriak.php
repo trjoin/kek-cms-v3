@@ -75,7 +75,20 @@ function webshop_kategoria_index() {
 }
 
 function shop_uj_kategoria_nezet() {
+    $DB = NULL;
+    try{
+    //adatok lekérdezése
+    $DB = connect(true);
+    $sth = $DB->query("SELECT csopid, csoportnev FROM trs_shop_csoport_hun");
+    $csoportok = $sth->fetchAll();
+    $DB = NULL;
+    
+    if(empty($csoportok))
+       throw new Exception("Adatbázis hiba történt a csoportok lekérdezése során, kérem próbálja újra!"); 
+    
+    //nézet megjelenítése
     ?>
+    
     <h2 class="text-muted font-weight-bold mb-2"> Új kategória hozzáadása </h2>
     <div class="card">
         <div class="card-body">
@@ -90,17 +103,43 @@ function shop_uj_kategoria_nezet() {
                     <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["new_product_category"]["fkatleiras"]) ? $_SESSION["new_product_category"]["fkatleiras"] : ""); ?></textarea>
                 </div>
                 <div class="form-group">
+                    <label for="csoportid">Csoport</label>
+                    <select name="csoportid" id="csoportid"  class="form-control">
+                        <?php
+                        
+                        $out = "";
+                        
+                        foreach($csoportok as $csoport){
+                            $out .= '<option value="' . $csoport["csopid"] . '"';
+                            
+                            if(isset($_SESSION["new_product_category"]["csoportid"]) && $_SESSION["new_product_category"]["csoportid"] == $csoport["csopid"])
+                                $out .= " selected";
+                                
+                            $out .= '>' . $csoport["csoportnev"] . '</option>';
+                        }
+                        
+                        echo $out;
+                        
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="fthumbnail">Kategória kép</label>
                     <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
                 </div>
                 <div>
-                    <input type="hidden" name="csoportid" value="1" />
+                    
                     <button class="btn btn-primary">Mentés</button>
                 </div>
             </form>
         </div>
     </div>
     <?php
+    }
+    catch(Exception $e){
+        $DB = NULL;
+        echo '<p class="text-danger">' . $e->getMessage() . '</p>';
+    }
 }
 
 function shop_uj_kategoria_mentes() {
@@ -114,7 +153,14 @@ function shop_uj_kategoria_mentes() {
             throw new Exception("A megnevezés kitöltése kötelező!");
         if (!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
             throw new Exception("A leírás kitöltése kötelező!");
+        if (!isset($form_data["csoportid"]) || empty($form_data["csoportid"]))
+            throw new Exception("A csoport kiválasztása kötelező!");
 
+        $form_data["csoportid"] = (int) $form_data["csoportid"];
+        
+        if(!preg_match("/^[0-9]+$/", $form_data["csoportid"]))
+            throw new Exception("Nem megfelelő csoport azonosító!");
+        
         //adatok előkészítése
         global $mirol, $mire;
         $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
@@ -144,7 +190,7 @@ function shop_uj_kategoria_mentes() {
         $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
         $sth->bindValue(":fkatfurl", $fkatfurl);
         $sth->bindValue(":fthumbnail", '1');
-        $sth->bindValue(":csoportid", 1);
+        $sth->bindValue(":csoportid", $form_data["csoportid"]);
 
         $res = $sth->execute();
 
