@@ -166,7 +166,7 @@ function shop_uj_kategoria_mentes() {
             throw new Exception("Hiányzó főkategória bélyegkép!");
         
         if($_FILES["fthumbnail"]["type"] != "image/jpeg" && $_FILES["fthumbnail"]["type"] != "image/png")
-            throw new Exception("Nem megengedett képrformátum, kérem válasszon jpg vagy png képet!");
+            throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
         
         //adatok előkészítése
         global $mirol, $mire;
@@ -192,7 +192,7 @@ function shop_uj_kategoria_mentes() {
         $file_ext = substr($_FILES["fthumbnail"]['name'], strripos($_FILES["fthumbnail"]['name'], '.'));
         $fthumbnail =  $fkatfurl . uniqid("-") . $file_ext;
         
-        if(!move_uploaded_file($_FILES["fthumbnail"]['tmp_name'], "../../uploads/" . $fthumbnail))
+        if(!move_uploaded_file($_FILES["fthumbnail"]['tmp_name'], "../uploads/" . $fthumbnail))
             throw new Exception("Hiba történt a képfeltöltés során!");
 
         $sql = "INSERT INTO trs_shop_fokategoria_hun (fkatnev, fkatleiras, fkatfurl, fthumbnail, csoportid) VALUES (:fkatnev, :fkatleiras, :fkatfurl, :fthumbnail, :csoportid)";
@@ -271,7 +271,7 @@ function shop_kategoria_szerkesz_form($db_data = false){ ?>
     <h2 class="text-muted font-weight-bold mb-2"> Kategória szerkesztése </h2>
     <div class="card">
         <div class="card-body">
-            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=szerkesztesmentes" method="post" enctype="multipart/formdata">
+            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=szerkesztesmentes" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="fkatnev">Megnevezés</label>
                     <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="<?php echo (isset($_SESSION["edit_product_category"]["fkatnev"]) ? $_SESSION["edit_product_category"]["fkatnev"] : $db_data["fkatnev"]); ?>" maxlength="200" required />
@@ -389,6 +389,31 @@ function shop_kategoria_szerkeszt_mentes(){
         $sth->bindValue(":csoportid", $form_data["csoportid"]);
         $sth->bindValue(":fkatid", $id);
         $sth->execute();
+        
+        //kép feltöltése, opcionális adat
+        if(isset($_FILES["fthumbnail"]) && $_FILES["fthumbnail"]["size"] > 0){
+            
+            if($_FILES["fthumbnail"]["type"] != "image/jpeg" && $_FILES["fthumbnail"]["type"] != "image/png")
+                throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
+            
+            $fthumbnail = "";
+            $file_ext = substr($_FILES["fthumbnail"]['name'], strripos($_FILES["fthumbnail"]['name'], '.'));
+            $fthumbnail =  $fkatfurl . uniqid("-") . $file_ext;
+
+            if(!move_uploaded_file($_FILES["fthumbnail"]['tmp_name'], "../uploads/" . $fthumbnail))
+                throw new Exception("Hiba történt a képfeltöltés során!");
+
+            //korábbi kép törlése
+            $success = unlink("../uploads/" . $db_data[0]["fthumbnail"]);
+
+            if(!$success)
+                throw new Exception("A korábbi kategória kép (" . $db_data[0]["fthumbnail"] . ") törlése sikertelen!");
+            
+            $sth = $DB->prepare("UPDATE trs_shop_fokategoria_hun SET fthumbnail=:fthumbnail WHERE fkatid = :fkatid LIMIT 1");
+            $sth->bindValue(":fthumbnail", $fthumbnail);
+            $sth->bindValue(":fkatid", $id);
+            $sth->execute();
+        }
         
         $DB = NULL;
         unset($_SESSION["edit_product_category"]);
