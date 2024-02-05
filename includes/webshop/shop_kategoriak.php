@@ -125,7 +125,7 @@ function shop_uj_kategoria_nezet() {
                 </div>
                 <div class="form-group">
                     <label for="fthumbnail">Kategória kép</label>
-                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" accept=".jpg, .jpeg, .png" />
+                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" accept=".jpg, .jpeg, .png" required />
                 </div>
                 <div>
                     
@@ -303,32 +303,15 @@ function shop_kategoria_szerkesz_form($db_data = false){ ?>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="csoportid">Csoport</label>
-                    <select name="csoportid" id="csoportid" class="form-control">
-                        <?php
-                        
-                        $out = "";
-                        
-                        foreach($csoportok as $csoport){
-                            $out .= '<option value="' . $csoport["csopid"] . '"';
-                            
-                            if((isset($_SESSION["edit_product_category"]["csoportid"]) && $_SESSION["edit_product_category"]["csoportid"] == $csoport["csopid"])
-                                || (isset($res[0]["csoportid"]) && $res[0]["csoportid"] == $csoport["csopid"]))
-                                $out .= " selected";
-                                
-                            $out .= '>' . $csoport["csoportnev"] . '</option>';
-                        }
-                        
-                        echo $out;
-                        
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="fthumbnail">Kategória kép</label>
-                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
+                    <label for="fthumbnail">Kategória kép cseréje</label>
+                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" accept=".jpg, .jpeg, .png" />
                 </div>
                 <div>
+                    <p>Jelenlegi kategória kép</p>
+                    <img src="/uploads/<?php echo (isset($_SESSION["edit_product_category"]["current_image"]) ? $_SESSION["edit_product_category"]["current_image"] : $db_data["fthumbnail"]); ?>" class="col-lg-4 img-fluid" />
+                </div>
+                <div class="mt-2">
+                    <input type="hidden" name="current_image" value="/<?php echo (isset($_SESSION["edit_product_category"]["current_image"]) ? $_SESSION["edit_product_category"]["current_image"] : $db_data["fthumbnail"]); ?>" />
                     <input type="hidden" name="fkatid" value="<?php echo (isset($_SESSION["edit_product_category"]["fkatid"]) ? $_SESSION["edit_product_category"]["fkatid"] : $db_data["fkatid"]); ?>" />
                     <button class="btn btn-primary">Mentés</button>
                 </div>
