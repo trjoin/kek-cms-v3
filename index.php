@@ -4,11 +4,12 @@
     ini_set("display_startup_errors", 1);
     ini_set("display_errors", 1);
     error_reporting(-1);
-	//default load/start
-    session_start();
+    
+    //default load/start
     include_once("config.inc.php");
     include_once("connect.php");
     include_once("functions.php");
+    session_start();
 	
 	if(isset($_REQUEST["out"]))
 	{

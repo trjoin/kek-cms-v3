@@ -1,85 +1,382 @@
 <?php
-
 if (isset($_REQUEST["opt"])) {
 
     if ($_REQUEST["opt"] == "ujkategoria")
-        view_uj_kategoria_page();
+        shop_uj_kategoria_nezet();
     elseif ($_REQUEST["opt"] == "ujkategoriamentes")
-        save_uj_kategoria();
+        shop_uj_kategoria_mentes();
+    elseif ($_REQUEST["opt"] == "szerkesztes")
+        shop_kategoria_szerkeszt_nezet();
+    elseif ($_REQUEST["opt"] == "szerkesztesmentes")
+        shop_kategoria_szerkeszt_mentes();
     else
-        view_webshop_kategoria_index();
+        webshop_kategoria_index();
 }
 else {
     //default működés hívása
-    view_webshop_kategoria_index();
+    webshop_kategoria_index();
 }
 
-function view_webshop_kategoria_index() {
-
+function webshop_kategoria_index() {
+    $DB = NULL;
+    try{
     //adatok lekérdezése
+    $DB = connect(true);
+    $sth = $DB->query("SELECT * FROM trs_shop_fokategoria_hun LEFT JOIN trs_shop_csoport_hun ON (trs_shop_fokategoria_hun.csoportid = trs_shop_csoport_hun.csopid)");
+    $res = $sth->fetchAll();
+    $DB = NULL;
+    
     //nézet megjelenítése
-    echo '<div class="">
-    <h2>Termék kategóriák listája</h2>
-    <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új kategória</a>
-</div>
-<div class="">
-    <h2>Jelenlegi főkategóriák</h2>
-    <div class="row mx-0">
-        <div class="col-lg-4">Kép</div>
-        <div class="col-lg-4">Megnevezés</div>
-        <div class="col-lg-4">Műveletek</div>
-    </div>
-    <div class="row mx-0">
-        <div class="col-lg-4">a</div>
-        <div class="col-lg-4">hgfadhfadhafd</div>
-        <div class="col-lg-4">
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
+    ?>
+    <div class="card">
+        <div class="card-body">
+            <h2>Termék kategóriák listája</h2>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új kategória</a>
+
+            <div class="mt-3">
+                <h2>Jelenlegi főkategóriák</h2>
+                <?php
+                if(empty($res)){
+                    echo '<p class="text-danger">Jelenleg nem található egyetlen főkategória sem!</p>';
+                }
+                else{ 
+                ?>
+                <div class="row mx-0 fw-bolder mb-2">
+                    <div class="col-lg-3">Kép</div>
+                    <div class="col-lg-3">Megnevezés</div>
+                    <div class="col-lg-3">Csoport</div>
+                    <div class="col-lg-3">Műveletek</div>
+                </div>
+                <?php 
+                $out = "";
+                foreach($res as $row){ 
+                    $out .= '<div class="row mx-0">';
+                    $out .= '<div class="col-lg-3">a</div>';
+                    $out .= '<div class="col-lg-3">' . $row["fkatnev"] . '</div>';
+                    $out .= '<div class="col-lg-3">' . (!empty($row["csoportnev"]) ? $row["csoportnev"] : "-") . '</div>';
+                    $out .= '<div class="col-lg-3">';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=kategoriak&opt=szerkesztes&id=' . $row["fkatid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["fkatid"] . '">Törlés</button>';
+                    $out .= '</div>';
+                    $out .= '</div>';
+                }
+                echo $out;
+                ?>
+            </div>
         </div>
     </div>
-    <div class="row mx-0">
-        <div class="col-lg-4">a</div>
-        <div class="col-lg-4">hgfadhfadhafd</div>
-        <div class="col-lg-4">
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
-        </div>
-    </div>
-    <div class="row mx-0">
-        <div class="col-lg-4">a</div>
-        <div class="col-lg-4">hgfadhfadhafd</div>
-        <div class="col-lg-4">
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=szerkesztes" class="btn btn-primary px-2 py-1">Szerkesztés</a>
-            <a href="' . $_SERVER["php_self"] . '?action=webshop&thing=kategoriak&opt=torles" class="btn btn-danger px-2 py-1">Törlés</a>
-        </div>
-    </div>
-</div>';
+    <?php 
+       }
+    }
+    catch(Exception $e){
+        $DB = NULL;
+        echo '<p class="text-danger">' . $e->getMessage() . '</p>';
+    }
 }
 
-function view_uj_kategoria_page() {
+function shop_uj_kategoria_nezet() {
+    $DB = NULL;
+    try{
+    //adatok lekérdezése
+    $DB = connect(true);
+    $sth = $DB->query("SELECT csopid, csoportnev FROM trs_shop_csoport_hun");
+    $csoportok = $sth->fetchAll();
+    $DB = NULL;
+    
+    if(empty($csoportok))
+       throw new Exception("Adatbázis hiba történt a csoportok lekérdezése során, kérem próbálja újra!"); 
+    
+    //nézet megjelenítése
     ?>
-    <div class="">
-        <h2>Új kategória hozzáadása</h2>
-        <form action="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
-            <div class="mb-2">
-                <label class="form-label" for="fkatnev">Megnevezés</label>
-                <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="" maxlength="200" required />
-            </div>
-            <div class="mb-2">
-                <label class="form-label" for="fkatleiras">Leírás</label>
-                <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5"></textarea>
-            </div>
-            <div class="mb-2">
-                <label class="form-label" for="fthumbnail">Kategória kép</label>
-                <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" />
-            </div>
-            <div>
-                <input type="hidden" name="csoportid" value="1" />
-                <button class="btn btn-primary">Mentés</button>
-            </div>
-        </form>
+    
+    <h2 class="text-muted font-weight-bold mb-2"> Új kategória hozzáadása </h2>
+    <div class="card">
+        <div class="card-body">
+
+            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
+                <div class="form-group">
+                    <label for="fkatnev">Megnevezés</label>
+                    <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_product_category"]["fkatnev"]) ? $_SESSION["new_product_category"]["fkatnev"] : ""); ?>" maxlength="200" required />
+                </div>
+                <div class="form-group">
+                    <label for="fkatleiras">Leírás</label>
+                    <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["new_product_category"]["fkatleiras"]) ? $_SESSION["new_product_category"]["fkatleiras"] : ""); ?></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="csoportid">Csoport</label>
+                    <select name="csoportid" id="csoportid"  class="form-control">
+                        <?php
+                        
+                        $out = "";
+                        
+                        foreach($csoportok as $csoport){
+                            $out .= '<option value="' . $csoport["csopid"] . '"';
+                            
+                            if(isset($_SESSION["new_product_category"]["csoportid"]) && $_SESSION["new_product_category"]["csoportid"] == $csoport["csopid"])
+                                $out .= " selected";
+                                
+                            $out .= '>' . $csoport["csoportnev"] . '</option>';
+                        }
+                        
+                        echo $out;
+                        
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fthumbnail">Kategória kép</label>
+                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
+                </div>
+                <div>
+                    
+                    <button class="btn btn-primary">Mentés</button>
+                </div>
+            </form>
+        </div>
     </div>
-<?php }
+    <?php
+    }
+    catch(Exception $e){
+        $DB = NULL;
+        echo '<p class="text-danger">' . $e->getMessage() . '</p>';
+    }
+}
+
+function shop_uj_kategoria_mentes() {
+    $DB = NULL;
+    try {
+        //adatok tisztítása és ellenőrzése
+        $form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
+        $_SESSION["new_product_category"] = $form_data;
+
+        if (!isset($form_data["fkatnev"]) || empty($form_data["fkatnev"]))
+            throw new Exception("A megnevezés kitöltése kötelező!");
+        if (!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
+            throw new Exception("A leírás kitöltése kötelező!");
+        if (!isset($form_data["csoportid"]) || empty($form_data["csoportid"]))
+            throw new Exception("A csoport kiválasztása kötelező!");
+
+        $form_data["csoportid"] = (int) $form_data["csoportid"];
+        
+        if(!preg_match("/^[0-9]+$/", $form_data["csoportid"]))
+            throw new Exception("Nem megfelelő csoport azonosító!");
+        
+        //adatok előkészítése
+        global $mirol, $mire;
+        $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
+        $fkatfurl = to_linknew($fkatfurl);
+        
+        //kép feltöltése
+        
+        //adatok bejegyzése
+        $DB = connect(true);
+        
+        //megnevezés egyediségének ellenőrzése
+        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE fkatnev = :fkatnev");
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->execute();
+        
+        $megnevezes_count = $sth->fetchAll();
+        
+        if($megnevezes_count[0]["count(*)"] > 0){
+            throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
+        }
+            
+
+        $sql = "INSERT INTO trs_shop_fokategoria_hun (fkatnev, fkatleiras, fkatfurl, fthumbnail, csoportid) VALUES (:fkatnev, :fkatleiras, :fkatfurl, :fthumbnail, :csoportid)";
+        $sth = $DB->prepare($sql);
+
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
+        $sth->bindValue(":fkatfurl", $fkatfurl);
+        $sth->bindValue(":fthumbnail", '1');
+        $sth->bindValue(":csoportid", $form_data["csoportid"]);
+
+        $res = $sth->execute();
+
+        $DB = NULL;
+
+        //átirányítás
+        unset($_SESSION["new_product_category"]);
+        $_SESSION["php_notification"] = 'Termék kategória sikeresen hozzáadva!';
+
+        echo '<script>window.location.replace("/wp-admin/index.php?action=webshop&thing=kategoriak");</script>';
+        die(); //lefutott a program további része, ami gondot okozott
+    }
+    catch (Exception $e) {
+        $DB = NULL;
+        $_SESSION["php_err_notification"] = $e->getMessage();
+        shop_uj_kategoria_nezet();
+    }
+}
+
+function shop_kategoria_szerkeszt_nezet(){
+    $DB = NULL;
+    try{
+        if(!isset($_GET["id"]) || empty($_GET["id"]))
+            throw new Exception("Hiányzó főkategória azonosító!");
+        
+        $id = (int)$_GET["id"];
+        
+        if(!preg_match("/^[0-9]+$/", $id))
+            throw new Exception("Nem megfelelő főkategória azonosító!");
+        
+        $DB = connect(true);
+        
+        $sth = $DB->prepare("SELECT * FROM trs_shop_fokategoria_hun WHERE fkatid = :fkatid LIMIT 1");
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        
+        $res = $sth->fetchAll();
+        
+        if(empty($res))
+            throw new Exception("Nem található adatok a megadott főkategória azonosító alapján!");
+        
+        $sth = $DB->query("SELECT csopid, csoportnev FROM trs_shop_csoport_hun");
+        $csoportok = $sth->fetchAll();
+    
+        if(empty($csoportok))
+            throw new Exception("Adatbázis hiba történt a csoportok lekérdezése során, kérem próbálja újra!"); 
+        
+        $DB = NULL;
+        
+        //form megjelenítése
+        shop_kategoria_szerkesz_form($res);
+        
+    }
+    catch(Exception $e){
+        $DB = NULL;
+        $_SESSION["php_err_notification"] = $e->getMessage();
+        webshop_kategoria_index();
+    }
+    
+}
+
+function shop_kategoria_szerkesz_form($res = false){ ?>
+    <h2 class="text-muted font-weight-bold mb-2"> Kategória szerkesztése </h2>
+    <div class="card">
+        <div class="card-body">
+            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=szerkesztesmentes" method="post" enctype="multipart/formdata">
+                <div class="form-group">
+                    <label for="fkatnev">Megnevezés</label>
+                    <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="<?php echo (isset($_SESSION["edit_product_category"]["fkatnev"]) ? $_SESSION["edit_product_category"]["fkatnev"] : $res[0]["fkatnev"]); ?>" maxlength="200" required />
+                </div>
+                <div class="form-group">
+                    <label for="fkatleiras">Leírás</label>
+                    <textarea name="fkatleiras" id="fkatleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["edit_product_category"]["fkatleiras"]) ? $_SESSION["edit_product_category"]["fkatleiras"] : $res[0]["fkatleiras"]); ?></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="csoportid">Csoport</label>
+                    <select name="csoportid" id="csoportid" class="form-control">
+                        <?php
+                        
+                        $out = "";
+                        
+                        foreach($csoportok as $csoport){
+                            $out .= '<option value="' . $csoport["csopid"] . '"';
+                            
+                            if((isset($_SESSION["edit_product_category"]["csoportid"]) && $_SESSION["edit_product_category"]["csoportid"] == $csoport["csopid"])
+                                || (isset($res[0]["csoportid"]) && $res[0]["csoportid"] == $csoport["csopid"]))
+                                $out .= " selected";
+                                
+                            $out .= '>' . $csoport["csoportnev"] . '</option>';
+                        }
+                        
+                        echo $out;
+                        
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fthumbnail">Kategória kép</label>
+                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
+                </div>
+                <div>
+                    <input type="hidden" name="fkatid" value="<?php echo (isset($_SESSION["edit_product_category"]["fkatid"]) ? $_SESSION["edit_product_category"]["fkatid"] : $res[0]["fkatid"]); ?>" />
+                    <button class="btn btn-primary">Mentés</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php
+}
+
+function shop_kategoria_szerkeszt_mentes(){
+    $DB = NULL;
+    try {
+        
+        //adatok ellenőrzése és tisztítása
+        $form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
+        $_SESSION["edit_product_category"] = $form_data;
+        
+        if(!isset($form_data["fkatid"]) || empty($form_data["fkatid"]))
+            throw new Exception("Hiányzó kategória azonosító!");
+        
+        if(!isset($form_data["fkatnev"]) || empty($form_data["fkatnev"]))
+            throw new Exception("Hiányzó kategória megnevezés!");
+        
+        if(!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
+            throw new Exception("Hiányzó kategória leírás!");
+        
+        
+        //adatok előkészítése
+        $id = (int)$form_data["fkatid"];
+        
+        if(!preg_match("/^[0-9]+$/", $id))
+            throw new Exception("Nem megfelelő kategória azonosító!");
+        
+        global $mirol, $mire;
+        $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
+        $fkatfurl = to_linknew($fkatfurl);
+        
+        
+        //adatbázis műveletek
+        $DB = connect(true);
+        
+        //ellenőrzés
+        $sth = $DB->prepare("SELECT * FROM trs_shop_fokategoria_hun WHERE fkatid = :fkatid LIMIT 1");
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        $db_data = $sth->fetchAll();
+        
+        if(empty($db_data))
+            throw new Exception("Nem található a módosítani kívánt kategória!");
+        
+        
+        //megnevezés egyediségének ellenőrzése
+        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE fkatnev = :fkatnev AND fkatid <> :fkatid");
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        
+        $megnevezes_count = $sth->fetchAll();
+        
+        if($megnevezes_count[0]["count(*)"] > 0){
+            throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
+        }
+        
+        //adatbázis adatok frissítése
+        $sth = $DB->prepare("UPDATE trs_shop_fokategoria_hun SET fkatnev=:fkatnev, fkatleiras=:fkatleiras, fkatfurl=:fkatfurl   WHERE fkatid = :fkatid LIMIT 1");
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
+        $sth->bindValue(":fkatfurl", $fkatfurl);
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        
+        $DB = NULL;
+        unset($_SESSION["edit_product_category"]);
+        
+        //átirányítás a lista oldalra
+        $_SESSION["php_notification"] = 'Termék kategória sikeresen módosítva!';
+        echo '<script>window.location.replace("/wp-admin/index.php?action=webshop&thing=kategoriak");</script>';
+        die();
+    }
+    catch (Exception $e) {
+        $DB = NULL;
+        $_SESSION["php_err_notification"] = $e->getMessage();
+        shop_kategoria_szerkesz_form();
+    }   
+}
 
 //
 ////kategória törlése
