@@ -93,7 +93,7 @@ function shop_uj_kategoria_nezet() {
     <div class="card">
         <div class="card-body">
 
-            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/formdata">
+            <form action="/wp-admin/index.php?action=webshop&thing=kategoriak&opt=ujkategoriamentes" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="fkatnev">Megnevezés</label>
                     <input type="text" name="fkatnev" id="fkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_product_category"]["fkatnev"]) ? $_SESSION["new_product_category"]["fkatnev"] : ""); ?>" maxlength="200" required />
@@ -125,7 +125,7 @@ function shop_uj_kategoria_nezet() {
                 </div>
                 <div class="form-group">
                     <label for="fthumbnail">Kategória kép</label>
-                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
+                    <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" accept=".jpg, .jpeg, .png" />
                 </div>
                 <div>
                     
@@ -161,12 +161,18 @@ function shop_uj_kategoria_mentes() {
         if(!preg_match("/^[0-9]+$/", $form_data["csoportid"]))
             throw new Exception("Nem megfelelő csoport azonosító!");
         
+        //kép adatok ellenőrzése
+        if(!isset($_FILES["fthumbnail"]) || $_FILES["fthumbnail"]["size"] == 0)
+            throw new Exception("Hiányzó főkategória bélyegkép!");
+        
+        if($_FILES["fthumbnail"]["type"] != "image/jpeg" && $_FILES["fthumbnail"]["type"] != "image/png")
+            throw new Exception("Nem megengedett képrformátum, kérem válasszon jpg vagy png képet!");
+        
         //adatok előkészítése
         global $mirol, $mire;
         $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
         $fkatfurl = to_linknew($fkatfurl);
         
-        //kép feltöltése
         
         //adatok bejegyzése
         $DB = connect(true);
@@ -181,7 +187,13 @@ function shop_uj_kategoria_mentes() {
         if($megnevezes_count[0]["count(*)"] > 0){
             throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
         }
-            
+        
+        //kép feltöltése, ha sikeresek voltak az ellenőrzések
+        $file_ext = substr($_FILES["fthumbnail"]['name'], strripos($_FILES["fthumbnail"]['name'], '.'));
+        $fthumbnail =  $fkatfurl . uniqid("-") . $file_ext;
+        
+        if(!move_uploaded_file($_FILES["fthumbnail"]['tmp_name'], "../../uploads/" . $fthumbnail))
+            throw new Exception("Hiba történt a képfeltöltés során!");
 
         $sql = "INSERT INTO trs_shop_fokategoria_hun (fkatnev, fkatleiras, fkatfurl, fthumbnail, csoportid) VALUES (:fkatnev, :fkatleiras, :fkatfurl, :fthumbnail, :csoportid)";
         $sth = $DB->prepare($sql);
@@ -189,7 +201,7 @@ function shop_uj_kategoria_mentes() {
         $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
         $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
         $sth->bindValue(":fkatfurl", $fkatfurl);
-        $sth->bindValue(":fthumbnail", '1');
+        $sth->bindValue(":fthumbnail", $fthumbnail);
         $sth->bindValue(":csoportid", $form_data["csoportid"]);
 
         $res = $sth->execute();
