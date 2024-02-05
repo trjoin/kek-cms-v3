@@ -236,12 +236,30 @@ function shop_kategoria_szerkeszt_mentes(){
         if(!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
             throw new Exception("Hiányzó kategória leírás!");
         
+        
+        //adatok előkészítése
         $id = (int)$form_data["fkatid"];
         
         if(!preg_match("/^[0-9]+$/", $id))
             throw new Exception("Nem megfelelő kategória azonosító!");
         
+        global $mirol, $mire;
+        $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
+        $fkatfurl = to_linknew($fkatfurl);
+        
+        
+        //adatbázis műveletek
         $DB = connect(true);
+        
+        //ellenőrzés
+        $sth = $DB->prepare("SELECT * FROM trs_shop_fokategoria_hun WHERE fkatid = :fkatid LIMIT 1");
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        $db_data = $sth->fetchAll();
+        
+        if(empty($db_data))
+            throw new Exception("Nem található a módosítani kívánt kategória!");
+        
         
         //megnevezés egyediségének ellenőrzése
         $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE fkatnev = :fkatnev AND fkatid <> :fkatid");
@@ -255,18 +273,11 @@ function shop_kategoria_szerkeszt_mentes(){
             throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
         }
         
-        $sth = $DB->prepare("SELECT * FROM trs_shop_fokategoria_hun WHERE fkatid = :fkatid LIMIT 1");
-        $sth->bindValue(":fkatid", $id);
-        $sth->execute();
-        $db_data = $sth->fetchAll();
-        
-        if(empty($db_data))
-            throw new Exception("Nem található a módosítani kívánt kategória!");
-        
         //adatbázis adatok frissítése
-        $sth = $DB->prepare("UPDATE trs_shop_fokategoria_hun SET fkatnev=:fkatnev, fkatleiras=:fkatleiras   WHERE fkatid = :fkatid LIMIT 1");
+        $sth = $DB->prepare("UPDATE trs_shop_fokategoria_hun SET fkatnev=:fkatnev, fkatleiras=:fkatleiras, fkatfurl=:fkatfurl   WHERE fkatid = :fkatid LIMIT 1");
         $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
         $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
+        $sth->bindValue(":fkatfurl", $fkatfurl);
         $sth->bindValue(":fkatid", $id);
         $sth->execute();
         
