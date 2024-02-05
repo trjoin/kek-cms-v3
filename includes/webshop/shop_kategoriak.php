@@ -95,7 +95,7 @@ function shop_uj_kategoria_nezet() {
 }
 
 function shop_uj_kategoria_mentes() {
-    $db = NULL;
+    $DB = NULL;
     try {
         //adatok tisztítása és ellenőrzése
         $form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
@@ -106,31 +106,40 @@ function shop_uj_kategoria_mentes() {
         if (!isset($form_data["fkatleiras"]) || empty($form_data["fkatleiras"]))
             throw new Exception("A leírás kitöltése kötelező!");
 
-        //adatok bejegyzése
-        $db = connect();
+        //adatok előkészítése
+        global $mirol, $mire;
+        $fkatfurl = str_replace($mirol, $mire, $form_data["fkatnev"]);
+        $fkatfurl = to_linknew($fkatfurl);
         
-        if(!$db)
-            throw new Exception("Adatbázis hiba történt, sikertelen kategória bejegyzés!");
+        //kép feltöltése
+        
+        //adatok bejegyzése
+        $DB = connect(true);
+        
+        //megnevezés egyediségének ellenőrzése
+        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE fkatnev = :fkatnev");
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->execute();
+        
+        $megnevezes_count = $sth->fetchAll();
+        
+        if($megnevezes_count[0]["count(*)"] > 0){
+            throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
+        }
+            
 
         $sql = "INSERT INTO trs_shop_fokategoria_hun (fkatnev, fkatleiras, fkatfurl, fthumbnail, csoportid) VALUES (:fkatnev, :fkatleiras, :fkatfurl, :fthumbnail, :csoportid)";
-
-        $sth = $db->prepare($sql);
-
-        if (!$sth)
-            throw new Exception("Adatbázis hiba történt, sikertelen kategória bejegyzés!");
+        $sth = $DB->prepare($sql);
 
         $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
         $sth->bindValue(":fkatleiras", $form_data["fkatleiras"]);
-        $sth->bindValue(":fkatfurl", '1');
+        $sth->bindValue(":fkatfurl", $fkatfurl);
         $sth->bindValue(":fthumbnail", '1');
         $sth->bindValue(":csoportid", 1);
 
         $res = $sth->execute();
 
-        if (!$res)
-            throw new Exception("Adatbázis hiba történt, sikertelen kategória bejegyzés!");
-
-        $db = NULL;
+        $DB = NULL;
 
         //átirányítás
         unset($_SESSION["new_product_category"]);
@@ -140,7 +149,7 @@ function shop_uj_kategoria_mentes() {
         die(); //lefutott a program további része, ami gondot okozott
     }
     catch (Exception $e) {
-        $db = NULL;
+        $DB = NULL;
         $_SESSION["php_err_notification"] = $e->getMessage();
         shop_uj_kategoria_nezet();
     }
@@ -233,6 +242,18 @@ function shop_kategoria_szerkeszt_mentes(){
             throw new Exception("Nem megfelelő kategória azonosító!");
         
         $DB = connect(true);
+        
+        //megnevezés egyediségének ellenőrzése
+        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE fkatnev = :fkatnev AND fkatid <> :fkatid");
+        $sth->bindValue(":fkatnev", $form_data["fkatnev"]);
+        $sth->bindValue(":fkatid", $id);
+        $sth->execute();
+        
+        $megnevezes_count = $sth->fetchAll();
+        
+        if($megnevezes_count[0]["count(*)"] > 0){
+            throw new Exception("Már létezik ilyen nevű főkategória, kérem válasszon másikat!");
+        }
         
         $sth = $DB->prepare("SELECT * FROM trs_shop_fokategoria_hun WHERE fkatid = :fkatid LIMIT 1");
         $sth->bindValue(":fkatid", $id);
