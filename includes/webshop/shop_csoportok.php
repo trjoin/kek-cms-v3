@@ -41,15 +41,16 @@ function webshop_csoport_index() {
                 else{ 
                 ?>
                 <div class="row mx-0 fw-bolder mb-2">
-                    <div class="col-lg-4">Kép</div>
+                    <div class="col-lg-4">Azonosító</div>
                     <div class="col-lg-4">Megnevezés</div>
                     <div class="col-lg-4">Műveletek</div>
                 </div>
                 <?php 
                 $out = "";
+                
                 foreach($res as $row){ 
                     $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-4">a</div>';
+                    $out .= '<div class="col-lg-4">' . $row["csopid"] . '</div>';
                     $out .= '<div class="col-lg-4">' . $row["csoportnev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=csoportok&opt=szerkesztes&id=' . $row["csopid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
