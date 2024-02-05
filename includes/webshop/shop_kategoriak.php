@@ -18,14 +18,16 @@ else {
 }
 
 function webshop_kategoria_index() {
+    $DB = NULL;
+    try{
     //adatok lekérdezése
-    $db = connect();
-    $res = $db->query("SELECT * FROM trs_shop_fokategoria_hun");
-    $db = NULL;
+    $DB = connect(true);
+    $sth = $DB->query("SELECT * FROM trs_shop_fokategoria_hun LEFT JOIN trs_shop_csoport_hun ON (trs_shop_fokategoria_hun.csoportid = trs_shop_csoport_hun.csopid)");
+    $res = $sth->fetchAll();
+    $DB = NULL;
+    
     //nézet megjelenítése
     ?>
-
-    
     <div class="card">
         <div class="card-body">
             <h2>Termék kategóriák listája</h2>
@@ -40,17 +42,19 @@ function webshop_kategoria_index() {
                 else{ 
                 ?>
                 <div class="row mx-0 fw-bolder mb-2">
-                    <div class="col-lg-4">Kép</div>
-                    <div class="col-lg-4">Megnevezés</div>
-                    <div class="col-lg-4">Műveletek</div>
+                    <div class="col-lg-3">Kép</div>
+                    <div class="col-lg-3">Megnevezés</div>
+                    <div class="col-lg-3">Csoport</div>
+                    <div class="col-lg-3">Műveletek</div>
                 </div>
                 <?php 
                 $out = "";
                 foreach($res as $row){ 
                     $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-4">a</div>';
-                    $out .= '<div class="col-lg-4">' . $row["fkatnev"] . '</div>';
-                    $out .= '<div class="col-lg-4">';
+                    $out .= '<div class="col-lg-3">a</div>';
+                    $out .= '<div class="col-lg-3">' . $row["fkatnev"] . '</div>';
+                    $out .= '<div class="col-lg-3">' . (!empty($row["csoportnev"]) ? $row["csoportnev"] : "-") . '</div>';
+                    $out .= '<div class="col-lg-3">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=kategoriak&opt=szerkesztes&id=' . $row["fkatid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
                     $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["fkatid"] . '">Törlés</button>';
                     $out .= '</div>';
@@ -63,6 +67,11 @@ function webshop_kategoria_index() {
     </div>
     <?php 
        }
+    }
+    catch(Exception $e){
+        $DB = NULL;
+        echo '<p class="text-danger">' . $e->getMessage() . '</p>';
+    }
 }
 
 function shop_uj_kategoria_nezet() {
