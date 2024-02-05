@@ -147,8 +147,8 @@
 	?>
     <link rel="stylesheet" href="./assets/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="./assets/css/style.css">
-	<link rel="shortcut icon" href="/favicon.png">
-	<link rel="apple-touch-icon" href="/favicon.png">
+	<link rel="shortcut icon" href="./favicon.png">
+	<link rel="apple-touch-icon" href="./favicon.png">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -175,7 +175,7 @@
 					echo $error;
 					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]!="")
 					{
-						echo '<center><img src="/assets/images/preloader.gif"></center>';
+						echo '<center><img src="./assets/images/preloader.gif"></center>';
 						//bejelentkeztetve átirányitjuk a főoldalra ahol már a dashboard fogja fogadni a login helyett.
 						echo '<script>
 								function atiranyit()
@@ -246,7 +246,7 @@
                   </div>
                   <div class="mt-3">
                     <button class="btn btn-block d-flex w-100 justify-content-center align-items-center btn-secondary btn-lg font-weight-medium auth-form-btn" type="submit" aria-label="Elfelejtett jelszó pótlásának kérése">KÉREM</button><br>
-					<a class="btn btn-block d-flex btn-success justify-content-center align-items-center btn-lg font-weight-medium auth-form-btn" href="/" aria-label="Vissza a bejelentkezéshez">Beugrott mégis?<br>Ugorj vissza a belépéshez</a>
+					<a class="btn btn-block d-flex btn-success justify-content-center align-items-center btn-lg font-weight-medium auth-form-btn" href="/wp-admin/index.php" aria-label="Vissza a bejelentkezéshez">Beugrott mégis?<br>Ugorj vissza a belépéshez</a>
                   </div>
                 </form>
 				<?php

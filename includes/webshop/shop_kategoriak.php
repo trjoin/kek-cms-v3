@@ -291,6 +291,28 @@ function shop_kategoria_szerkesz_form($db_data = false){ ?>
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="csoportid">Csoport</label>
+                    <select name="csoportid" id="csoportid" class="form-control">
+                        <?php
+                        
+                        $out = "";
+                        
+                        foreach($csoportok as $csoport){
+                            $out .= '<option value="' . $csoport["csopid"] . '"';
+                            
+                            if((isset($_SESSION["edit_product_category"]["csoportid"]) && $_SESSION["edit_product_category"]["csoportid"] == $csoport["csopid"])
+                                || (isset($res[0]["csoportid"]) && $res[0]["csoportid"] == $csoport["csopid"]))
+                                $out .= " selected";
+                                
+                            $out .= '>' . $csoport["csoportnev"] . '</option>';
+                        }
+                        
+                        echo $out;
+                        
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="fthumbnail">Kategória kép</label>
                     <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" value="" />
                 </div>
