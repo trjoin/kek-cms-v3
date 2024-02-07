@@ -16,6 +16,7 @@ if(!isset($_POST["muvelet"]) || empty($_POST["muvelet"])){
     return false;
 }
 
+//routing
 $muvelet = filter_input(INPUT_POST, "muvelet", FILTER_UNSAFE_RAW);
 
 if($muvelet == "fokategoria_torles"){
