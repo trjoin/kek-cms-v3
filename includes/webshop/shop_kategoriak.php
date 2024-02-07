@@ -56,7 +56,7 @@ function webshop_kategoria_index() {
                     $out .= '<div class="col-lg-3">' . (!empty($row["csoportnev"]) ? $row["csoportnev"] : "-") . '</div>';
                     $out .= '<div class="col-lg-3">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=kategoriak&opt=szerkesztes&id=' . $row["fkatid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["fkatid"] . '">Törlés</button>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_kategoria_torles" data-id="' . $row["fkatid"] . '">Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -430,6 +430,7 @@ function shop_kategoria_szerkeszt_mentes(){
         shop_kategoria_szerkesz_form();
     }   
 }
+
 
 //
 ////kategória törlése
