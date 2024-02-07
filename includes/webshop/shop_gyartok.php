@@ -52,7 +52,7 @@ function webshop_gyarto_index() {
                 $out = "";
                 foreach($res as $row){ 
                     $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-4">a</div>';
+                    $out .= '<div class="col-lg-4"><img src="/uploads/' . $row["gyartologo"] . '" class="img-fluid col-lg-6" /></div>';
                     $out .= '<div class="col-lg-4">' . $row["gyartonev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=gyartok&opt=szerkesztes&id=' . $row["gyartoid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';

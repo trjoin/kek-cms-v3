@@ -51,7 +51,7 @@ function webshop_kategoria_index() {
                 $out = "";
                 foreach($res as $row){ 
                     $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-3">a</div>';
+                    $out .= '<div class="col-lg-3"><img src="/uploads/' . $row["fthumbnail"] . '" class="img-fluid col-lg-6" /></div>';
                     $out .= '<div class="col-lg-3">' . $row["fkatnev"] . '</div>';
                     $out .= '<div class="col-lg-3">' . (!empty($row["csoportnev"]) ? $row["csoportnev"] : "-") . '</div>';
                     $out .= '<div class="col-lg-3">';
