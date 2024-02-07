@@ -29,11 +29,11 @@ function shop_kategoria_torles(e){
     .then(json => {
         if (json.status == "success") {
             //sor törlése
-            let row = element.closest("");
-            row.classList.add("fadeout");
-            setTimeout(function () {
-                row.classList.add("d-none")
-            }, 1000);
+//            let row = element.closest("");
+//            row.classList.add("fadeout");
+//            setTimeout(function () {
+//                row.classList.add("d-none")
+//            }, 1000);
         }
 
         show_notification(json.status, json.msg, 5500);
