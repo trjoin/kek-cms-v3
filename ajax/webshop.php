@@ -1,7 +1,7 @@
 <?php
 
 include '../config.inc.php';
-include '../function.php';
+include '../functions.php';
 include '../connect.php';
 
 session_start();
@@ -19,12 +19,13 @@ if(!isset($_POST["muvelet"]) || empty($_POST["muvelet"])){
 //routing
 $muvelet = filter_input(INPUT_POST, "muvelet", FILTER_UNSAFE_RAW);
 
-if($muvelet == "fokategoria_torles"){
+if($muvelet == "fokategoria_torles")
     shop_fokategoria_torles();
-}
-else{
+elseif($muvelet == "csoport_torles")
+    shop_csoport_torles();
+else
     echo json_encode(array("status" => "error", "msg" => "Nem található feladat azonosító!"));
-}
+
     
 
 
@@ -79,6 +80,53 @@ function shop_fokategoria_torles(){
         $DB = NULL;
         echo json_encode(array("status" => "error", "msg" => "Hiba történt! " . $e->getMessage()));
     }
-    
-    
+}
+
+
+
+function shop_csoport_torles(){
+    $DB = NULL;
+    try{
+        if(!isset($_POST["id"]) || empty($_POST["id"]))
+            throw new Exception("Hiányzó csoport azonosító!");
+        
+        //azonosító ellenőrzése
+        $id = (int)$_POST["id"];
+        
+        if(!preg_match("/^[0-9]+$/", $id))
+            throw new Exception("Nem megfelelő csoport azonosító!");
+        
+        
+        $DB = connect(true);
+        
+        //hozzárendelt termékek ellenőrzése
+        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_fokategoria_hun WHERE csoportid = :id");
+        $sth->bindValue(":id", $id);
+        $sth->execute();
+        $termekek_count = $sth->fetch(PDO::FETCH_ASSOC);
+        
+        if($termekek_count["count(*)"] > 0)
+            throw new Exception("A csoport nem törölhető, mert vannak még hozzárendelt főkategóriák (összsen: " . $termekek_count["count(*)"] . ")!");
+        
+        
+        //főkategória adainak lekérdezése
+        $sth = $DB->prepare("SELECT * FROM trs_shop_csoport_hun WHERE csopid = :csopid LIMIT 1");
+        $sth->bindValue(":csopid", $id);
+        $sth->execute();
+        $db_data = $sth->fetch(PDO::FETCH_ASSOC);
+        
+        if(empty($db_data))
+            throw new Exception("Nem található a törölni kívánt csoport!");
+        
+        //adatbázis törlése
+        $DB->query("DELETE FROM trs_shop_csoport_hun WHERE csopid=" . $id . " LIMIT 1");
+        
+        $DB = NULL;
+        
+        echo json_encode(array("status" => "success", "msg" => "A csoport sikeresen törölve"));
+    }
+    catch (Exception $e) {
+        $DB = NULL;
+        echo json_encode(array("status" => "error", "msg" => "Hiba történt! " . $e->getMessage()));
+    }
 }

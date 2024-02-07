@@ -54,7 +54,7 @@ function webshop_csoport_index() {
                     $out .= '<div class="col-lg-4">' . $row["csoportnev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=csoportok&opt=szerkesztes&id=' . $row["csopid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["csopid"] . '">Törlés</button>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_csoport_torles" data-id="' . $row["csopid"] . '">Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
