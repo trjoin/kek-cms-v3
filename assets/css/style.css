@@ -12478,7 +12478,7 @@ code {
 
 /* Buttons */
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel, .wizard > .actions a {
-  font-size: 12px;
+  /*font-size: 12px; MEGSZÜNTETVE, MERT ALIG LÁTHATÓ VOLT*/
   line-height: 1;
   font-family: "nunito-bold", sans-serif;
   font-weight: 600;
