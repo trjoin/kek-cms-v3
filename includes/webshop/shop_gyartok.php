@@ -33,7 +33,7 @@ function webshop_gyarto_index() {
     <div class="card">
         <div class="card-body">
             <h2>Termék gyártók listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=gyartok&opt=ujgyarto" class="btn btn-primary">+ Új gyártó</a>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=gyartok&opt=ujgyarto" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
                 <h2>Jelenlegi gyártók</h2>
@@ -55,8 +55,8 @@ function webshop_gyarto_index() {
                     $out .= '<div class="col-lg-4"><img src="/uploads/' . $row["gyartologo"] . '" class="img-fluid col-lg-6" /></div>';
                     $out .= '<div class="col-lg-4">' . $row["gyartonev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=gyartok&opt=szerkesztes&id=' . $row["gyartoid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["gyartoid"] . '">Törlés</button>';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=gyartok&opt=szerkesztes&id=' . $row["gyartoid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["gyartoid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -94,8 +94,8 @@ function shop_uj_gyarto_nezet() {
                     <input type="file" name="gyartologo" id="gyartologo" class="form-control" accept=".jpg, .jpeg, .png" required />
                 </div>
                 <div>
-                    
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=gyartok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
@@ -235,7 +235,8 @@ function shop_gyarto_szerkesz_form($db_data = false){ ?>
                 <div class="mt-2">
                     <input type="hidden" name="current_image" value="/<?php echo (isset($_SESSION["edit_product_producer"]["current_image"]) ? $_SESSION["edit_product_producer"]["current_image"] : $db_data["gyartologo"]); ?>" />
                     <input type="hidden" name="gyartoid" value="<?php echo (isset($_SESSION["edit_product_producer"]["gyartoid"]) ? $_SESSION["edit_product_producer"]["gyartoid"] : $db_data["gyartoid"]); ?>" />
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=gyartok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>

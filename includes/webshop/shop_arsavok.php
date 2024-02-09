@@ -55,8 +55,8 @@ function webshop_arsav_index() {
                     $out .= '<div class="col-lg-3">' . $row["arsavnev"] . '</div>';
                     $out .= '<div class="col-lg-3">' . ($row["arsavaktiv"] == "1" ? "Aktív" : "Inaktív") . '</div>';
                     $out .= '<div class="col-lg-3">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=arsavok&opt=szerkesztes&id=' . $row["arsavid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_arsav_torles" data-id="' . $row["arsavid"] . '">Törlés</button>';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=arsavok&opt=szerkesztes&id=' . $row["arsavid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_arsav_torles" data-id="' . $row["arsavid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -93,7 +93,8 @@ function shop_uj_arsav_nezet() {
                     </select>
                 </div>
                 <div>
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=arsavok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
@@ -213,7 +214,8 @@ function shop_arsav_szerkesz_form($res = false){ ?>
                 </div>
                 <div>
                     <input type="hidden" name="arsavid" value="<?php echo (isset($_SESSION["edit_webshop_arsav"]["arsavid"]) ? $_SESSION["edit_webshop_arsav"]["arsavid"] : $res["arsavid"]); ?>" />
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=arsavok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>

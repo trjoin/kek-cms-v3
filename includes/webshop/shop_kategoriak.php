@@ -31,7 +31,7 @@ function webshop_kategoria_index() {
     <div class="card">
         <div class="card-body">
             <h2>Termék kategóriák listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új kategória</a>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
                 <h2>Jelenlegi főkategóriák</h2>
@@ -55,8 +55,8 @@ function webshop_kategoria_index() {
                     $out .= '<div class="col-lg-3">' . $row["fkatnev"] . '</div>';
                     $out .= '<div class="col-lg-3">' . (!empty($row["csoportnev"]) ? $row["csoportnev"] : "-") . '</div>';
                     $out .= '<div class="col-lg-3">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=kategoriak&opt=szerkesztes&id=' . $row["fkatid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_kategoria_torles" data-id="' . $row["fkatid"] . '">Törlés</button>';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=kategoriak&opt=szerkesztes&id=' . $row["fkatid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_kategoria_torles" data-id="' . $row["fkatid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -128,8 +128,8 @@ function shop_uj_kategoria_nezet() {
                     <input type="file" name="fthumbnail" id="fthumbnail" class="form-control" accept=".jpg, .jpeg, .png" required />
                 </div>
                 <div>
-                    
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=kategoriak"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
@@ -313,7 +313,8 @@ function shop_kategoria_szerkesz_form($db_data = false){ ?>
                 <div class="mt-2">
                     <input type="hidden" name="current_image" value="/<?php echo (isset($_SESSION["edit_product_category"]["current_image"]) ? $_SESSION["edit_product_category"]["current_image"] : $db_data["fthumbnail"]); ?>" />
                     <input type="hidden" name="fkatid" value="<?php echo (isset($_SESSION["edit_product_category"]["fkatid"]) ? $_SESSION["edit_product_category"]["fkatid"] : $db_data["fkatid"]); ?>" />
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=kategoriak"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>

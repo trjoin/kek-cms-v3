@@ -30,7 +30,7 @@ function webshop_csoport_index() {
     <div class="card">
         <div class="card-body">
             <h2>Termék csoportok listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=csoportok&opt=ujcsoport" class="btn btn-primary">+ Új termék csoport</a>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=csoportok&opt=ujcsoport" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
                 <h2>Jelenlegi termék csoportok</h2>
@@ -53,8 +53,8 @@ function webshop_csoport_index() {
                     $out .= '<div class="col-lg-4">' . $row["csopid"] . '</div>';
                     $out .= '<div class="col-lg-4">' . $row["csoportnev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=csoportok&opt=szerkesztes&id=' . $row["csopid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_csoport_torles" data-id="' . $row["csopid"] . '">Törlés</button>';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=csoportok&opt=szerkesztes&id=' . $row["csopid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_csoport_torles" data-id="' . $row["csopid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -83,7 +83,8 @@ function shop_uj_csoport_nezet() {
                     <textarea name="csoportleiras" id="csoportleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["new_webshop_group"]["csoportleiras"]) ? $_SESSION["new_webshop_group"]["csoportleiras"] : ""); ?></textarea>
                 </div>
                 <div>
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=csoportok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
@@ -201,7 +202,8 @@ function shop_csoport_szerkesz_form($res = false){ ?>
                 </div>
                 <div>
                     <input type="hidden" name="csopid" value="<?php echo (isset($_SESSION["edit_webshop_group"]["csopid"]) ? $_SESSION["edit_webshop_group"]["csopid"] : $res[0]["csopid"]); ?>" />
-                    <button class="btn btn-primary">Mentés</button>
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=csoportok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
