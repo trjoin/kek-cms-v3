@@ -188,10 +188,10 @@
 				?>
                 <form class="pt-3" method="POST" action="./index.php" autocomplete="off">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="loginUsername" name="username" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
+                    <input type="text" class="form-control form-control-lg loginput" id="loginUsername" name="username" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="loginPassword" name="password" placeholder="Jelszavad" aria-label="Belépési jelszó" autocomplete="off" required>
+                    <input type="password" class="form-control form-control-lg loginput" id="loginPassword" name="password" placeholder="Jelszavad" aria-label="Belépési jelszó" autocomplete="off" required>
                   </div>
                   <div class="mt-3">
                     <button class="btn btn-block d-flex w-100 justify-content-center align-items-center btn-secondary btn-lg font-weight-medium auth-form-btn" type="submit" aria-label="Belépés a rendszerbe">BELÉPÉS</button><br>
@@ -220,12 +220,12 @@
 					{
 				?>
 				<form class="pt-3" method="POST">
-					<input type="hidden" name="tokencheck" value="<?php echo $_REQUEST["lpwd"]; ?>">
+					<input type="hidden" name="tokencheck" class="loginput" value="<?php echo $_REQUEST["lpwd"]; ?>">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="newUsername" name="newusername" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
+                    <input type="text" class="form-control form-control-lg loginput" id="newUsername" name="newusername" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="newUserpassword" name="newuserpassword" placeholder="Új jelszó" aria-label="Új jelszó megadása" autocomplete="off" required>
+                    <input type="password" class="form-control form-control-lg loginput" id="newUserpassword" name="newuserpassword" placeholder="Új jelszó" aria-label="Új jelszó megadása" autocomplete="off" required>
                   </div>
                   <div class="mt-3">
                     <button class="btn btn-block d-flex w-100 justify-content-center align-items-center btn-secondary btn-lg font-weight-medium auth-form-btn" type="submit" aria-label="Elfelejtett jelszó pótlásának kérése">MENTÉS</button>
@@ -239,10 +239,10 @@
 				?>
                 <form class="pt-3" method="POST" action="./index.php?lost">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="lostUsername" name="lostusername" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
+                    <input type="text" class="form-control form-control-lg loginput" id="lostUsername" name="lostusername" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-lg" id="lostUseremail" name="lostuseremail" placeholder="Regisztrált email címed" aria-label="Regisztrált email cím" autocomplete="off" required>
+                    <input type="email" class="form-control form-control-lg loginput" id="lostUseremail" name="lostuseremail" placeholder="Regisztrált email címed" aria-label="Regisztrált email cím" autocomplete="off" required>
                   </div>
                   <div class="mt-3">
                     <button class="btn btn-block d-flex w-100 justify-content-center align-items-center btn-secondary btn-lg font-weight-medium auth-form-btn" type="submit" aria-label="Elfelejtett jelszó pótlásának kérése">KÉREM</button><br>
