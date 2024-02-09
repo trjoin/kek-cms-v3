@@ -16,17 +16,17 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='weboldal'){echo'show';} ?>" id="page-layouts">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=oldalak">Oldalak és tartalom</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=menukezelo">Menü kezelő</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=oldalsav">Oldalsáv elemek</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=kozossegimedia">Közösségi média</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=beallitasok">Alapbeállítások</a></li><!-- ide kerül majd karbantartás mód, debug mód, weboldal default settings, sitemap generator, gdpr, db backupper to ftp -->
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='oldalak'){echo'active';} ?>" href="./index.php?action=weboldal&thing=oldalak">Oldalak és tartalom</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='menukezelo'){echo'active';} ?>" href="./index.php?action=weboldal&thing=menukezelo">Menü kezelő</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='oldalsav'){echo'active';} ?>" href="./index.php?action=weboldal&thing=oldalsav">Oldalsáv elemek</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='kozossegimedia'){echo'active';} ?>" href="./index.php?action=weboldal&thing=kozossegimedia">Közösségi média</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='beallitasok'){echo'active';} ?>" href="./index.php?action=weboldal&thing=beallitasok">Alapbeállítások</a></li><!-- ide kerül majd karbantartás mód, debug mód, weboldal default settings, sitemap generator, gdpr, db backupper to ftp -->
 		  <?php
 			if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]=="3")
 			{
 		?>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=hibanaplo">Hiba napló</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=weboldal&thing=backupper">DB Biztonsági mentés</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='hibanaplo'){echo'active';} ?>" href="./index.php?action=weboldal&thing=hibanaplo">Hiba napló</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='backupper'){echo'active';} ?>" href="./index.php?action=weboldal&thing=backupper">DB Biztonsági mentés</a></li>
 		<?php
 			}
 		?>
@@ -42,9 +42,9 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='stat'){echo'show';} ?>" id="page-stats">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=stat&thing=latogatok">Látogatók</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=stat&thing=vasarlasok#">Vásárlások</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=stat&thing=marketing">Marketing</a></li><!-- pop-up, google analytics meg egyéb faszságok -->
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='latogatok'){echo'active';} ?>" href="./index.php?action=stat&thing=latogatok">Látogatók</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='vasarlasok'){echo'active';} ?>" href="./index.php?action=stat&thing=vasarlasok#">Vásárlások</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='marketing'){echo'active';} ?>" href="./index.php?action=stat&thing=marketing">Marketing</a></li><!-- pop-up, google analytics meg egyéb faszságok -->
 		</ul>
 	  </div>
 	</li>
@@ -58,9 +58,9 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='shopset'){echo'show';} ?>" id="parameters">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=shopset&thing=parameterek">Paraméterek</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=shopset&thing=szallmodok">Szállítási módok</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=shopset&thing=fizmodok">Fizetési módok</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='parameterek'){echo'active';} ?>" href="./index.php?action=shopset&thing=parameterek">Paraméterek</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='szallmodok'){echo'active';} ?>" href="./index.php?action=shopset&thing=szallmodok">Szállítási módok</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='fizmodok'){echo'active';} ?>" href="./index.php?action=shopset&thing=fizmodok">Fizetési módok</a></li>
 		</ul>
 	  </div>
 	</li>
@@ -72,14 +72,14 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='webshop'){echo'show';} ?>" id="boltom">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=csoportok">Csoportok</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=kategoriak">Kategóriák</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=gyartok">Gyártók</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=termekek">Termékek</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=termek_opciok">Termék opciók</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=akciok">Akció tervezés</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=arsavok">Ársávok</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=webshop&thing=letoltheto">Letölthető elemek</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='csoportok'){echo'active';} ?>" href="./index.php?action=webshop&thing=csoportok">Csoportok</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='kategoriak'){echo'active';} ?>" href="./index.php?action=webshop&thing=kategoriak">Kategóriák</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='gyartok'){echo'active';} ?>" href="./index.php?action=webshop&thing=gyartok">Gyártók</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='termekek'){echo'active';} ?>" href="./index.php?action=webshop&thing=termekek">Termékek</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='termek_opciok'){echo'active';} ?>" href="./index.php?action=webshop&thing=termek_opciok">Termék opciók</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='akciok'){echo'active';} ?>" href="./index.php?action=webshop&thing=akciok">Akció tervezés</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='arsavok'){echo'active';} ?>" href="./index.php?action=webshop&thing=arsavok">Ársávok</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='letoltheto'){echo'active';} ?>" href="./index.php?action=webshop&thing=letoltheto">Letölthető elemek</a></li>
 		</ul>
 	  </div>
 	</li>
@@ -105,7 +105,7 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='nyelvek'){echo'show';} ?>" id="modulok">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=nyelvek&op=ujnyelv">Új nyelv telepítése</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujnyelv'){echo'active';} ?>" href="./index.php?action=modulok&thing=nyelvek&op=ujnyelv">Új nyelv telepítése</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=nyelvek&op=listaz">Nyelvek megtekintése</a></li>
 		</ul>
 	  </div>
@@ -118,7 +118,7 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='kepvalto'){echo'show';} ?>" id="modulok1">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=kepvalto&op=ujkepvalto">Új hozzáadása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujkepvalto'){echo'active';} ?>" href="./index.php?action=modulok&thing=kepvalto&op=ujkepvalto">Új hozzáadása</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=kepvalto&op=listaz">Megtekintés</a></li>
 		</ul>
 	  </div>
@@ -131,8 +131,8 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='galeria'){echo'show';} ?>" id="modulok2">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=galeria&op=ujkepfeltoltes">Új kép hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=galeria&op=ujgaleria">Új galéria létrehozása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujkepfeltoltes'){echo'active';} ?>" href="./index.php?action=modulok&thing=galeria&op=ujkepfeltoltes">Új kép hozzáadása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujgaleria'){echo'active';} ?>" href="./index.php?action=modulok&thing=galeria&op=ujgaleria">Új galéria létrehozása</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=galeria&op=listaz">Megtekintés</a></li>
 		</ul>
 	  </div>
@@ -145,7 +145,7 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='videok'){echo'show';} ?>" id="modulok3">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=videok&op=ujvideo">Új hozzáadása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujvideo'){echo'active';} ?>" href="./index.php?action=modulok&thing=videok&op=ujvideo">Új hozzáadása</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=videok&op=listaz">Megtekintés</a></li>
 		</ul>
 	  </div>
@@ -158,7 +158,7 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='blog'){echo'show';} ?>" id="modulok4">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=blog&op=ujcikk">Új hozzáadása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujcikk'){echo'active';} ?>" href="./index.php?action=modulok&thing=blog&op=ujcikk">Új hozzáadása</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=blog&op=listaz">Megtekintés</a></li>
 		</ul>
 	  </div>
@@ -171,7 +171,7 @@
 	  </a>
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='letoltesek'){echo'show';} ?>" id="modulok5">
 		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=letoltesek&op=ujletoltes">Új hozzáadása</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujletoltes'){echo'active';} ?>" href="./index.php?action=modulok&thing=letoltesek&op=ujletoltes">Új hozzáadása</a></li>
 		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=letoltesek&op=listaz">Megtekintés</a></li>
 		</ul>
 	  </div>
