@@ -30,7 +30,7 @@ function webshop_arsav_index() {
     <div class="card">
         <div class="card-body">
             <h2>Termék ársávok listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=arsavok&opt=ujarsav" class="btn btn-primary">+ Új termék ársáv</a>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=arsavok&opt=ujarsav" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
                 <h2>Jelenlegi termék ársávok</h2>
@@ -43,7 +43,7 @@ function webshop_arsav_index() {
                 <div class="row mx-0 fw-bolder mb-2">
                     <div class="col-lg-3">Azonosító</div>
                     <div class="col-lg-3">Megnevezés</div>
-                    <div class="col-lg-3">Aktív</div>
+                    <div class="col-lg-3">Elérhetőség</div>
                     <div class="col-lg-3">Műveletek</div>
                 </div>
                 <?php 
@@ -53,7 +53,7 @@ function webshop_arsav_index() {
                     $out .= '<div class="row mx-0">';
                     $out .= '<div class="col-lg-3">' . $row["arsavid"] . '</div>';
                     $out .= '<div class="col-lg-3">' . $row["arsavnev"] . '</div>';
-                    $out .= '<div class="col-lg-3">' . $row["arsavaktiv"] . '</div>';
+                    $out .= '<div class="col-lg-3">' . ($row["arsavaktiv"] == "1" ? "Aktív" : "Inaktív") . '</div>';
                     $out .= '<div class="col-lg-3">';
                     $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=arsavok&opt=szerkesztes&id=' . $row["arsavid"] . '" class="btn btn-outline-primary px-2 py-1">Szerkesztés</a>';
                     $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2 shop_arsav_torles" data-id="' . $row["arsavid"] . '">Törlés</button>';
