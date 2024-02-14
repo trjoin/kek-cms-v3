@@ -3,7 +3,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 {
 	if(isset($_REQUEST["opt"]))
 	{
-		if ($_REQUEST["opt"] == "ujoldal")
+		if ($_REQUEST["opt"] == "ujmenupont")
 			menu_hozzaad();
 		elseif ($_REQUEST["opt"] == "ujmentes")
 			menu_uj_mentes();
@@ -398,21 +398,21 @@ else
 			?>
 			<div class="card">
 				<div class="card-body">
-					<h2>Oldalak és tartalmak listája</h2>
-					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=menukezelo&opt=ujoldal" class="btn btn-primary">+ Új hozzáadása</a>
+					<h2>Menüpontok listája</h2>
+					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=menukezelo&opt=ujmenupont" class="btn btn-primary">+ Új hozzáadása</a>
 
 					<div class="mt-3">
-						<h2>Jelenlegi oldalak</h2>
+						<h2>Jelenlegi menüpontok</h2>
 			<?php
 						if(empty($res))
 						{
-							echo '<p class="text-danger">Jelenleg nem található egyetlen létrehozott oldal sem!</p>';
+							echo '<p class="text-danger">Jelenleg nem található egyetlen létrehozott menüpont sem!</p>';
 						}
 						else
 						{
 			?>
 							<div class="row mx-0 fw-bolder mb-2">
-								<div class="col-lg-4">Oldal címe</div>
+								<div class="col-lg-4">Menüpont címe</div>
 								<div class="col-lg-4">Bekapcsolva?</div>
 								<div class="col-lg-4">Műveletek</div>
 							</div>
