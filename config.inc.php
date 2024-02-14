@@ -17,8 +17,14 @@ DEFINE("DB_NAME", 'rzvgdubh_trsadmin');
 global $prefix;
 $prefix="trs";
 
+global $lang;
+$lang="hun";
+
 global $domain;
-$domain="dev.adlepomed.hu";
+$domain="https://test.adlepomed.hu";
+
+global $adminurl;
+$adminurl=$domain."/wp-admin/";
 
 global $defaultmail;
 $defaultmail="noreply@adlepomed.hu";

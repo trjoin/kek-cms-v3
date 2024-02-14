@@ -66,7 +66,7 @@
 	</li>
 	<li class="nav-item <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='webshop'){echo'active';} ?>">
 	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#boltom" aria-expanded="false" aria-controls="boltom">
-		<span class="icon-bg"><i class="mdi mdi-store menu-icon"></i></span>
+		<span class="icon-bg"> <i class="mdi mdi-store menu-icon"></i> </span>
 		<span class="menu-title">Boltom</span>
 		<i class="menu-arrow"></i>
 	  </a>
