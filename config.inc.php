@@ -14,17 +14,10 @@ DEFINE("USER_NAME", 'rzvgdubh_trsadmin');
 DEFINE("PASSWD", 'koju;te89(z(');
 DEFINE("DB_NAME", 'rzvgdubh_trsadmin');
 
-global $prefix;
-$prefix="trs";
-
-global $lang;
-$lang="hun";
-
-global $domain;
-$domain="https://test.adlepomed.hu";
-
-global $adminurl;
-$adminurl=$domain."/wp-admin/";
+DEFINE("prefix", 'trs');
+DEFINE("lang", 'hun');
+DEFINE("url", 'https://test.adlepomed.hu');
+DEFINE("adminurl", url.'/wp-admin/');
 
 global $defaultmail;
 $defaultmail="noreply@adlepomed.hu";

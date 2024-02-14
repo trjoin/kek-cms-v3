@@ -3,7 +3,7 @@
 	if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=" ")
 	{
 		$pdo = connect();
-		$login=$pdo->prepare("select * from ".$prefix."_users_hun where usernev=? and userpwd=? ");
+		$login=$pdo->prepare("select * from ".prefix."_users_hun where usernev=? and userpwd=? ");
 		$login->execute(array($_POST["username"],hash('sha256', $_POST['password'])));
 		if($login->rowCount()>0)
 		{
@@ -29,7 +29,7 @@
 		}
 		else
 		{
-			$pdo->query("update ".$prefix."_users_hun set login_fails=login_fails+1 where usernev='".$_POST["username"]."'");
+			$pdo->query("update ".prefix."_users_hun set login_fails=login_fails+1 where usernev='".$_POST["username"]."'");
 			$error="<span style='color:#f00;'>Hibás felhasználónév vagy jelszó!</span><br>";
 		}
 	}
@@ -39,13 +39,13 @@
 		$pdo = connect();
 		if($_POST["lostusername"]!="" AND $_POST["lostuseremail"]!="")
 		{
-			$losted=$pdo->prepare("select * from ".$prefix."_users_hun where usernev=? and useremail=? ");
+			$losted=$pdo->prepare("select * from ".prefix."_users_hun where usernev=? and useremail=? ");
 			$losted->execute(array($_POST["lostusername"],$_POST["lostuseremail"]));
 			if($losted->rowCount()>0)
 			{
 				//token készités és bejegyzés
 				$l=$losted->fetch();
-				$tokensave=$pdo->query("update ".$prefix."_users_hun set token='".md5($_POST["lostusername"])."' where usernev='".$_POST["lostusername"]."' and useremail='".$_POST["lostuseremail"]."'");
+				$tokensave=$pdo->query("update ".prefix."_users_hun set token='".md5($_POST["lostusername"])."' where usernev='".$_POST["lostusername"]."' and useremail='".$_POST["lostuseremail"]."'");
 				
 				$targy="Új jelszó kérése a ".$absp." weboldal adminisztrációs felületéhez";
 				$mailcim  = $_POST["lostuseremail"];
@@ -80,7 +80,7 @@
 	elseif(isset($_REQUEST["lpwd"]) AND $_REQUEST["lpwd"]!="" AND $_REQUEST["lpwd"]!=" " AND !isset($_POST["tokencheck"]))
 	{
 		$pdo = connect();
-		$beload=$pdo->query("select * from ".$prefix."_users_hun where token='".$_REQUEST["lpwd"]."'");
+		$beload=$pdo->query("select * from ".prefix."_users_hun where token='".$_REQUEST["lpwd"]."'");
 		if($beload->rowCount()>0)
 		{
 			$error="<span style='color:#090;'>Sikeresen megkaptuk új jelszó készítési kérelmed!</span>";
@@ -97,10 +97,10 @@
 		$pdo = connect();
 		if($_POST["newusername"]!="" AND $_POST["newuserpassword"]!="" AND $_POST["tokencheck"]!="")
 		{
-			$beload=$pdo->query("select * from ".$prefix."_users_hun where usernev='".$_POST["newusername"]."' AND token='".$_POST["tokencheck"]."'");
+			$beload=$pdo->query("select * from ".prefix."_users_hun where usernev='".$_POST["newusername"]."' AND token='".$_POST["tokencheck"]."'");
 			if($beload->rowCount()>0)
 			{
-				$tokensave=$pdo->query("update ".$prefix."_users_hun set token='',userpwd='".hash('sha256', $_POST['newuserpassword'])."' where usernev='".$_POST["newusername"]."' and token='".$_POST["tokencheck"]."'");
+				$tokensave=$pdo->query("update ".prefix."_users_hun set token='',userpwd='".hash('sha256', $_POST['newuserpassword'])."' where usernev='".$_POST["newusername"]."' and token='".$_POST["tokencheck"]."'");
 				if($tokensave)
 				{
 					$error="<span style='color:#090;'>Sikeresen megváltoztattad a jelszavad, mostmár bejelentkezhetsz <a href='/'>ide kattintva</a>!</span>";
