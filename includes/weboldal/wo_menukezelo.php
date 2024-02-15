@@ -101,36 +101,19 @@ else
 				throw new Exception("A meta title kitöltése kötelező!");
 			if (!isset($form_data["pozicio"]) || empty($form_data["pozicio"]))
 				throw new Exception("A meta leirás kitöltése kötelező!");
-
-			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
-			$oldalfurl = to_linknew($oldalfurl);
-			
-			//kép feltöltése, ha sikeresek voltak az ellenőrzések
-			$file_ext = substr($_FILES["ogimage"]['name'], strripos($_FILES["ogimage"]['name'], '.'));
-			$ogimage =  $oldalfurl . uniqid("-") . $file_ext;
-			
-			if(!move_uploaded_file($_FILES["ogimage"]['tmp_name'], "../uploads/" . $ogimage))
-				throw new Exception("Hiba történt a képfeltöltés során!");
-			
-			include("includes/SimpleImage.php");
-			list($width, $height) = getimagesize("../uploads/" . $ogimage);
-			if($width>="1920")
-			{
-				$uks=$oldalfurl . uniqid("-") . "_" . $file_ext;
-				//Képméretező FÁNKSÖN
-				$image = new SimpleImage();
-				$image->load("../uploads/" . $ogimage);
-				$image->resizeToWidth(1920);
-				$image->save("../uploads/".$uks);
-				//régi nagy kép törlése
-				unlink("../uploads/" . $ogimage);
-				$ogimage=$uks;
-			}
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (oldalcim,oldalcont,furl,tomodul,metatitle,metadesc,ogimage,oldalaktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["oldalaktiv"]."')");
+			
+			$almenupontok="";
+			foreach($form_data["tartalomid"] as $k => $v)
+			{
+				if($v!="")
+				{
+					$almenupontok.=$v.",";
+				}
+			}
+			
+			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (tartalomid,menupontcim,pozicio,almenupontok,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$almenupontok."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_err_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -140,6 +123,7 @@ else
 		{
 			$DB = NULL;
 			$_SESSION["php_err_notification"] = $e->getMessage();
+			menu_lista();
 		}
 	}
 	function menu_szerkeszt_mentes()
@@ -150,75 +134,32 @@ else
 			//adatok tisztítása és ellenőrzése
 			$form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
 
-			if (!isset($form_data["oldalcim"]) || empty($form_data["oldalcim"]))
+			if (!isset($form_data["tartalomid"]) || empty($form_data["tartalomid"]))
 				throw new Exception("A megnevezés kitöltése kötelező!");
-			if (!isset($form_data["metatitle"]) || empty($form_data["metatitle"]))
+			if (!isset($form_data["menupontcim"]) || empty($form_data["menupontcim"]))
 				throw new Exception("A meta title kitöltése kötelező!");
-			if (!isset($form_data["metadesc"]) || empty($form_data["metadesc"]))
+			if (!isset($form_data["pozicio"]) || empty($form_data["pozicio"]))
 				throw new Exception("A meta leirás kitöltése kötelező!");
 			
 			$DB = connect(true);
 			
-			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
-			$oldalfurl = to_linknew($oldalfurl);
-			
-			//kép adatok ellenőrzése, ha feltölt ujat
-			if(isset($_FILES["ogimage"]) AND $_FILES["ogimage"]["size"] != 0)
+			$almenupontok="";
+			foreach($form_data["tartalomid"] as $k => $v)
 			{
-				if($_FILES["ogimage"]["size"] == 0)
-					throw new Exception("Hiányzó kiemelt kép, vagy ez a fájl nem is kép!");
-				
-				if($_FILES["ogimage"]["type"] != "image/jpeg" && $_FILES["ogimage"]["type"] != "image/png")
-					throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
-				
-				//kép feltöltése, ha sikeresek voltak az ellenőrzések
-				$file_ext = substr($_FILES["ogimage"]['name'], strripos($_FILES["ogimage"]['name'], '.'));
-				$ogimage =  $oldalfurl . uniqid("-") . $file_ext;
-				
-				if(!move_uploaded_file($_FILES["ogimage"]['tmp_name'], "../uploads/" . $ogimage))
-					throw new Exception("Hiba történt a képfeltöltés során!");
-				
-				include("includes/SimpleImage.php");
-				list($width, $height) = getimagesize("../uploads/" . $ogimage);
-				if($width>="1920")
+				if($v!="")
 				{
-					$uks=$oldalfurl . uniqid("-") . "_" . $file_ext;
-					//Képméretező FÁNKSÖN
-					$image = new SimpleImage();
-					$image->load("../uploads/" . $ogimage);
-					$image->resizeToWidth(1920);
-					$image->save("../uploads/".$uks);
-					//régi nagy kép törlése
-					unlink("../uploads/" . $ogimage);
-					$ogimage=$uks;
+					$almenupontok.=$v.",";
 				}
-				
-				//régi kép törlése
-				$beload=$DB->query("select ogimage from ".prefix."_menupontok_".lang." where menuid='".$form_data["menuid"]."'");
-				if($beload->rowCount()>0)
-				{
-					$b=$beload->fetch();
-					unlink("../uploads/".$b["ogimage"]);
-				}
-				$ogimagechange="ogimage='".$ogimage."',";
-			}
-			else
-			{
-				$ogimagechange="";
 			}
 
 			$elment=$DB->query("update ".prefix."_menupontok_".lang." set 
-				oldalcim='".$form_data["oldalcim"]."',
-				oldalcont='".$form_data["oldalcont"]."',
-				furl='".$oldalfurl."',
-				tomodul='".$form_data["tomodul"]."',
-				metatitle='".$form_data["metatitle"]."',
-				metadesc='".$form_data["metadesc"]."',
-				".$ogimagechange."
-				oldalaktiv='".$form_data["oldalaktiv"]."' 
-			where menuid='".$form_data["menuid"]."'");
+				tartalomid='".$form_data["tartalomid"]."',
+				menupontcim='".$form_data["menupontcim"]."',
+				pozicio='".$form_data["pozicio"]."',
+				almenupontok='".$almenupontok."',
+				megnyitas='".$form_data["metadesc"]."',
+				menuaktiv='".$form_data["oldalaktiv"]."' 
+			where menuid='".$form_data["modid"]."'");
 				
 			$DB = NULL;
 			$_SESSION["php_err_notification"]="Sikeres művelet";
@@ -312,6 +253,7 @@ else
 						<div class="card">
 							<div class="card-body">
 								<form action="'.adminurl.'index.php?action=weboldal&thing=menukezelo&opt=szerkesztmentes" method="POST">
+									<input type="hidden" name="modid" value="'.$_REQUEST["id"].'">
 									<div class="form-group">
 										<label for="menupontcim">Menüpont címe, neve</label>
 										<input type="text" name="menupontcim" id="menupontcim" value="'.$m["menupontcim"].'" class="form-control" required />
