@@ -214,8 +214,10 @@ else
 				throw new Exception("A meta leirás kitöltése kötelező!");
 			
 			$DB = connect(true);
-			$fomenusave=$DB->query("update ".prefix."_menupontok_".lang." set almenupontok=CONCAT(almenupontok,',".$form_data["pozicio"]."') where menuid='".$form_data["szulo"]."'");
 			$elment=$DB->query("insert into ".prefix."_almenupontok_".lang." (tartalomid,menupontcim,pozicio,szulo,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["szulo"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
+			$stmt = $DB->query("SELECT LAST_INSERT_ID()");
+			$lastId = $stmt->fetchColumn();
+			$fomenusave=$DB->query("update ".prefix."_menupontok_".lang." set almenupontok=CONCAT(almenupontok,',".$lastId."') where menuid='".$form_data["szulo"]."'");
 			$DB = NULL;
 			$_SESSION["php_err_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -573,7 +575,7 @@ else
 								<div class="col-lg-4">Műveletek</div>
 							</div>
 			<?php
-							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang."");
+							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." order by pozicio asc");
 							if($stha->rowCount()>0)
 							{
 								while($row=$stha->fetch())
@@ -591,6 +593,7 @@ else
 									if($row["almenupontok"]!="")
 									{
 										$amp=explode(",",$row["almenupontok"]);
+										sort($amp);
 										foreach($amp as $k => $v)
 										{
 											if($v!="" AND $v!=0)
