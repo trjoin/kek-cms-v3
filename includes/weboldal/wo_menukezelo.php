@@ -104,16 +104,7 @@ else
 			
 			$DB = connect(true);
 			
-			$almenupontok="";
-			foreach($form_data["tartalomid"] as $k => $v)
-			{
-				if($v!="")
-				{
-					$almenupontok.=$v.",";
-				}
-			}
-			
-			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (tartalomid,menupontcim,pozicio,almenupontok,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$almenupontok."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (tartalomid,menupontcim,pozicio,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_err_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -144,7 +135,7 @@ else
 			$DB = connect(true);
 			
 			$almenupontok="";
-			foreach($form_data["tartalomid"] as $k => $v)
+			foreach($form_data["almenupontok"] as $k => $v)
 			{
 				if($v!="")
 				{
@@ -176,19 +167,6 @@ else
 	{
 		$DB = NULL;
 		$DB = connect(true);
-		$oldalak="";
-		$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
-		if($beload->rowCount()>0)
-		{
-			while($b=$beload->fetch())
-			{
-				$oldalak.='<option value="'.$b["oldalid"].'">'.$b["oldalcim"].'</option>';
-			}
-		}
-		else
-		{
-			$oldalak='<option value="" selected disabled>NINCS LÉTREHOZVA EGYETLEN OLDAL SEM</option>';
-		}
 		echo '<h2 class="text-muted font-weight-bold mb-2"> Új menüpont hozzáadása </h2>
 				<div class="card">
 					<div class="card-body">
@@ -204,9 +182,20 @@ else
 							<div class="form-group">
 								<label for="tartalomid">Tartalom hozzárendelése</label>
 								<select name="tartalomid" id="tartalomid" class="form-control" required>
-									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>
-									'.$oldalak.'
-								</select>
+									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>';
+									$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+									if($beload->rowCount()>0)
+									{
+										while($b=$beload->fetch())
+										{
+											 echo '<option value="'.$b["oldalid"].'">'.$b["oldalcim"].'</option>';
+										}
+									}
+									else
+									{
+										echo '<option value="" selected disabled>NINCS LÉTREHOZVA EGYETLEN OLDAL SEM</option>';
+									}
+					echo '		</select>
 							</div>
 							<div class="form-group">
 								<label for="menuaktiv">Menüpont be van kapcsolva?</label>
@@ -220,13 +209,6 @@ else
 								<select name="megnyitas" id="megnyitas" class="form-control">
 									<option value="1">IGEN</option>
 									<option value="0" selected>NEM</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="almenupontok">Almenüpont hozzárendelése</label>
-								<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>
-									<option value="" selected>Válassz akár több almenüpontot is, vagy hagyd igy, ha nem kell!</option>
-									'.$oldalak.'
 								</select>
 							</div>
 							<div>
@@ -247,7 +229,6 @@ else
 			$menup=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
 			if($menup->rowCount()>0)
 			{
-				$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
 				$m=$menup->fetch();
 				echo '<h2 class="text-muted font-weight-bold mb-2"> Menüpont szerkesztése </h2>
 						<div class="card">
@@ -265,41 +246,44 @@ else
 									<div class="form-group">
 										<label for="tartalomid">Tartalom hozzárendelése</label>
 										<select name="tartalomid" id="tartalomid" class="form-control" required>';
+											$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
 											while($b=$beload->fetch())
 											{
-												$oldalak.='<option value="'.$b["oldalid"].'" '.($m["tartalomid"]==$b["oldalid"] ? 'selected' : '').'>'.$b["oldalcim"].'</option>';
+												echo '<option value="'.$b["oldalid"].'" '.($m["tartalomid"]==$b["oldalid"] ? 'selected' : '').'>'.$b["oldalcim"].'</option>';
 											}
 								echo '	</select>
 									</div>
 									<div class="form-group">
 										<label for="menuaktiv">Menüpont be van kapcsolva?</label>
 										<select name="menuaktiv" id="menuaktiv" class="form-control">
-											<option value="1" selected>IGEN</option>
-											<option value="0">NEM</option>
+											<option value="1" '.($m["menuaktiv"]=='1' ? 'selected' : '').'>IGEN</option>
+											<option value="0" '.($m["menuaktiv"]=='0' ? 'selected' : '').'>NEM</option>
 										</select>
 									</div>
 									<div class="form-group">
 										<label for="megnyitas">Menüpont külön ablakban nyiljon meg?</label>
 										<select name="megnyitas" id="megnyitas" class="form-control">
-											<option value="1">IGEN</option>
-											<option value="0" selected>NEM</option>
+											<option value="1" '.($m["megnyitas"]=='1' ? 'selected' : '').'>IGEN</option>
+											<option value="0" '.($m["megnyitas"]=='1' ? 'selected' : '').'>NEM</option>
 										</select>
 									</div>
 									<div class="form-group">
 										<label for="almenupontok">Almenüpont(ok) hozzárendelése</label>
-										<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>';
+										<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>
+											<option value="">Válassz akár több almenüpontot is, vagy kattints ide, ha nem kell almenüpont!</option>';
 											if($m["almenupontok"]!="")
 											{
 												$amp=explode(",",$m["almenupontok"]);
-												$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang."");
-												while($a=$almenu->fetch())
-												{
-													$oldalak.='<option value="'.$a["oldalid"].'" '.(in_array($a["oldalid"], $amp) ? 'selected' : '').'>'.$a["oldalcim"].'</option>';
-												}
 											}
 											else
 											{
-												echo '<option value="" selected disabled>Válassz akár több almenüpontot is, vagy hagyd igy, ha nem kell!</option>';
+												$amp=array();
+											}
+											
+											$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid!='".$_REQUEST["id"]."'");
+											while($a=$almenu->fetch())
+											{
+												 echo '<option value="'.$a["menuid"].'" '.(in_array($a["menuid"], $amp) ? 'selected' : '').'>'.$a["menupontcim"].'</option>';
 											}
 								echo '	</select>
 									</div>
@@ -339,14 +323,6 @@ else
 
 					<div class="mt-3">
 						<h2>Jelenlegi menüpontok</h2>
-			<?php
-						if(empty($res))
-						{
-							echo '<p class="text-danger">Jelenleg nem található egyetlen létrehozott menüpont sem!</p>';
-						}
-						else
-						{
-			?>
 							<div class="row mx-0 fw-bolder mb-2">
 								<div class="col-lg-4">Menüpont címe</div>
 								<div class="col-lg-4">Bekapcsolva?</div>
@@ -354,40 +330,47 @@ else
 							</div>
 			<?php
 							$sth = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang."");
-							while($row=$sth->fetch())
+							if($sth->rowCount()>0)
 							{
-								//főmenüpont listázása
-								echo '<div class="row mx-0">';
-									echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
-									echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-									echo '<div class="col-lg-4">';
-										echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-										echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-									echo '</div>';
-								echo '</div>';
-								//ha van almenüpontja akkor azt listázzuk alatta
-								if($row["almenupontok"]!="")
+								while($row=$sth->fetch())
 								{
-									$amp=explode(",",$row["almenupontok"]);
-									foreach($amp as $k => $v)
+									//főmenüpont listázása
+									echo '<div class="row mx-0">';
+										echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
+										echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
+										echo '<div class="col-lg-4">';
+											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+										echo '</div>';
+									echo '</div>';
+									//ha van almenüpontja akkor azt listázzuk alatta
+									if($row["almenupontok"]!="")
 									{
-										if($v!="")
+										$amp=explode(",",$row["almenupontok"]);
+										foreach($amp as $k => $v)
 										{
-											$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$v."'");
-											echo '<div class="row mx-0">';
-												echo '<div class="col-lg-4"><span class="mdi mdi-arrow-right-bottom"></span> ' . $row["menupontcim"] . '</div>';
-												echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-												echo '<div class="col-lg-4">';
-													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+											if($v!="" AND $v!=0)
+											{
+												$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$v."'");
+												$al=$almenu->fetch();
+												echo '<div class="row mx-0">';
+													echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> ' . $al["menupontcim"] . '</div>';
+													echo '<div class="col-lg-4">' . ($al["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
+													echo '<div class="col-lg-4">';
+														echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $al["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+														echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $al["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+													echo '</div>';
 												echo '</div>';
-											echo '</div>';
+											}
 										}
 									}
+									//majd haladunk tovább a következő főmenüponttal...
 								}
-								//majd haladunk tovább a következő főmenüponttal...
 							}
-						}
+							else
+							{
+								echo '<p class="text-danger">Jelenleg nem található egyetlen létrehozott menüpont sem!</p>';
+							}
 			?>
 					</div>
 				</div>
