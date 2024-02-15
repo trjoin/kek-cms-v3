@@ -147,7 +147,7 @@ else
 			}
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_oldalak_".lang." (oldalcim,oldalcont,furl,tomodul,metatitle,metadesc,ogimage,oldalaktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["oldalaktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_oldalak_".lang." (oldalcim,oldalcont,furl,tomodul,tolink,metatitle,metadesc,ogimage,oldalaktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["tolink"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["oldalaktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_err_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalak");</script>';
@@ -232,6 +232,7 @@ else
 				oldalcont='".$form_data["oldalcont"]."',
 				furl='".$oldalfurl."',
 				tomodul='".$form_data["tomodul"]."',
+				tolink='".$form_data["tolink"]."',
 				metatitle='".$form_data["metatitle"]."',
 				metadesc='".$form_data["metadesc"]."',
 				".$ogimagechange."
@@ -297,6 +298,10 @@ else
 									<option value="1" selected>IGEN</option>
 									<option value="0">NEM</option>
 								</select>
+							</div>
+							<div class="form-group">
+								<label for="tolink">Itt megadhatsz külső linket a tartalom készités helyett</label>
+								<input type="text" name="tolink" id="tolink" class="form-control" placeholder="Adja meg a linket ahova ez az oldal mutasson, vagy alább ird meg a tartalmat te" />
 							</div>
 							<div class="form-group">
 								<label for="oldalcont">Oldal tartalma</label>
@@ -391,6 +396,10 @@ else
 											<option value="1" '.($res["oldalaktiv"]=='1' ? 'selected' : '').'>IGEN</option>
 											<option value="0" '.($res["oldalaktiv"]=='0' ? 'selected' : '').'>NEM</option>
 										</select>
+									</div>
+									<div class="form-group">
+										<label for="tolink">Itt megadhatsz külső linket a tartalom készités helyett</label>
+										<input type="text" name="tolink" id="tolink" class="form-control" value="'.$res["tolink"].'" placeholder="Adja meg a linket ahova ez az oldal mutasson, vagy alább ird meg a tartalmat te" />
 									</div>
 									<div class="form-group">
 										<label for="oldalcont">Oldal tartalma</label>
