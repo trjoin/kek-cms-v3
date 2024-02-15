@@ -580,7 +580,7 @@ else
 							{
 								while($row=$stha->fetch())
 								{
-									echo '<div class="row mx-0">';
+									echo '<div class="row mx-0 py-1">';
 										echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
 										echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
 										echo '<div class="col-lg-4 col-xxl-3 d-flex justify-content-between">';
