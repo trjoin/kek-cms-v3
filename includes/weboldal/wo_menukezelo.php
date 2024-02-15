@@ -95,22 +95,13 @@ else
 			//adatok tisztítása és ellenőrzése
 			$form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
 
-			if (!isset($form_data["oldalcim"]) || empty($form_data["oldalcim"]))
+			if (!isset($form_data["tartalomid"]) || empty($form_data["tartalomid"]))
 				throw new Exception("A megnevezés kitöltése kötelező!");
-			if (!isset($form_data["metatitle"]) || empty($form_data["metatitle"]))
+			if (!isset($form_data["menupontcim"]) || empty($form_data["menupontcim"]))
 				throw new Exception("A meta title kitöltése kötelező!");
-			if (!isset($form_data["metadesc"]) || empty($form_data["metadesc"]))
+			if (!isset($form_data["pozicio"]) || empty($form_data["pozicio"]))
 				throw new Exception("A meta leirás kitöltése kötelező!");
-			if (!isset($form_data["oldalaktiv"]) || empty($form_data["oldalaktiv"]))
-				throw new Exception("A bekapcsolás jelző kitöltése kötelező!");
-			
-			//kép adatok ellenőrzése
-			if(!isset($_FILES["ogimage"]) || $_FILES["ogimage"]["size"] == 0)
-				throw new Exception("Hiányzó kiemelt kép, vagy ez a fájl nem is kép!");
-			
-			if($_FILES["ogimage"]["type"] != "image/jpeg" && $_FILES["ogimage"]["type"] != "image/png")
-				throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
-			
+
 			//adatok előkészítése
 			global $mirol, $mire;
 			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
@@ -243,13 +234,27 @@ else
 	function menu_hozzaad()
 	{
 		$DB = NULL;
+		$DB = connect(true);
+		$oldalak="";
+		$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+		if($beload->rowCount()>0)
+		{
+			while($b=$beload->fetch())
+			{
+				$oldalak.='<option value="'.$b["oldalid"].'">'.$b["oldalcim"].'</option>';
+			}
+		}
+		else
+		{
+			$oldalak='<option value="" selected disabled>NINCS LÉTREHOZVA EGYETLEN OLDAL SEM</option>';
+		}
 		echo '<h2 class="text-muted font-weight-bold mb-2"> Új menüpont hozzáadása </h2>
 				<div class="card">
 					<div class="card-body">
-						<form action="'.adminurl.'index.php?action=weboldal&thing=menukezelo&opt=ujmentes" method="POST" enctype="multipart/form-data">
+						<form action="'.adminurl.'index.php?action=weboldal&thing=menukezelo&opt=ujmentes" method="POST">
 							<div class="form-group">
 								<label for="menupontcim">Menüpont címe, neve</label>
-								<input type="number" name="menupontcim" id="menupontcim" class="form-control" required />
+								<input type="text" name="menupontcim" id="menupontcim" class="form-control" required />
 							</div>
 							<div class="form-group">
 								<label for="pozicio">Pozíció sorszám</label>
@@ -258,14 +263,9 @@ else
 							<div class="form-group">
 								<label for="tartalomid">Tartalom hozzárendelése</label>
 								<select name="tartalomid" id="tartalomid" class="form-control" required>
-									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>';
-								$DB = connect(true);
-								$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
-								while($b=$beload->fetch())
-								{
-									echo '<option value="'.$b["oldalid"].'">'.$b["oldalcim"].'</option>';
-								}
-			echo '				</select>
+									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>
+									'.$oldalak.'
+								</select>
 							</div>
 							<div class="form-group">
 								<label for="menuaktiv">Menüpont be van kapcsolva?</label>
@@ -283,14 +283,10 @@ else
 							</div>
 							<div class="form-group">
 								<label for="almenupontok">Almenüpont hozzárendelése</label>
-								<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>';
-								$DB = connect(true);
-								$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
-								while($b=$beload->fetch())
-								{
-									echo '<option value="'.$b["oldalid"].'">'.$b["oldalcim"].'</option>';
-								}
-			echo '				</select>
+								<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>
+									<option value="" selected>Válassz akár több almenüpontot is, vagy hagyd igy, ha nem kell!</option>
+									'.$oldalak.'
+								</select>
 							</div>
 							<div>
 								<button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
@@ -305,68 +301,65 @@ else
 		$DB = NULL;
 		try
 		{
-			echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
-					<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
-					<script>
-						CKEDITOR.env.isCompatible = true;
-					</script>';
-
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
-			$res = $sth->fetch();
-			if(empty($res))
+			
+			$menup=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
+			if($menup->rowCount()>0)
 			{
-				throw new Exception("Nem található adatok a megadott oldal és tartalom az azonosító alapján!");
-				$DB = NULL;
-			}
-			else
-			{
-				echo '<h2 class="text-muted font-weight-bold mb-2"> Új oldal hozzáadása </h2>
+				$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+				$m=$menup->fetch();
+				echo '<h2 class="text-muted font-weight-bold mb-2"> Menüpont szerkesztése </h2>
 						<div class="card">
 							<div class="card-body">
-								<form action="'.adminurl.'index.php?action=weboldal&thing=menukezelo&opt=szerkesztmentes" method="POST" enctype="multipart/form-data">
-									<input type="hidden" name="menuid" value="'.$_REQUEST["id"].'">
+								<form action="'.adminurl.'index.php?action=weboldal&thing=menukezelo&opt=szerkesztmentes" method="POST">
 									<div class="form-group">
-										<label for="oldalcim">Új oldal címe</label>
-										<input type="text" name="oldalcim" id="oldalcim" value="'.$res["oldalcim"].'" class="form-control" placeholder="Adja meg az új oldal nevét, címét" maxlength="250" required />
+										<label for="menupontcim">Menüpont címe, neve</label>
+										<input type="text" name="menupontcim" id="menupontcim" value="'.$m["menupontcim"].'" class="form-control" required />
 									</div>
 									<div class="form-group">
-										<label for="metatitle">Meta címsor (title)</label>
-										<input type="text" name="metatitle" id="metatitle" value="'.$res["metatitle"].'" class="form-control" placeholder="Adja meg az új oldal lapfül címét" maxlength="250" required />
+										<label for="pozicio">Pozíció sorszám</label>
+										<input type="number" name="pozicio" id="pozicio" class="form-control" value="'.$m["pozicio"].'" required />
 									</div>
 									<div class="form-group">
-										<label for="metadesc">Meta leírás (description)</label>
-										<textarea name="metadesc" id="metadesc" class="form-control" rows="5" placeholder="Pár sorban irja le mit fog tartalmazni az új oldal, mint egy összefoglalószerűen." required>'.$res["metadesc"].'</textarea>
-									</div>
-									<div class="form-group">
-										<label for="ogimage">Kiemelt kép</label>
-										<input type="file" name="ogimage" id="ogimage" class="form-control" accept=".jpg, .jpeg, .png, .webp" />
-										'.($res["ogimage"]!='' ? '<br><img src="/uploads/'.$res["ogimage"].'" style="max-width:350px;">' : '').'
-									</div>
-									<div class="form-group">
-										<label for="tomodul">Rendelsz hozzá modult?</label>
-										<select name="tomodul" id="tomodul" class="form-control">
-											<option value="">Kérlek válassz, ha igen</option>';
-											$DB = connect(true);
-											$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1'");
-											while($m=$modulok->fetch())
+										<label for="tartalomid">Tartalom hozzárendelése</label>
+										<select name="tartalomid" id="tartalomid" class="form-control" required>';
+											while($b=$beload->fetch())
 											{
-												echo '<option value="'.$m["modulid"].'" '.($res["tomodul"]==$m["modulid"] ? 'selected' : '').'>'.$m["modulnev"].'</option>';
+												$oldalak.='<option value="'.$b["oldalid"].'" '.($m["tartalomid"]==$b["oldalid"] ? 'selected' : '').'>'.$b["oldalcim"].'</option>';
 											}
-											$DB = NULL;
-						echo '			</select>
+								echo '	</select>
 									</div>
-									
 									<div class="form-group">
-										<label for="oldalaktiv">Oldal be van kapcsolva?</label>
-										<select name="oldalaktiv" id="oldalaktiv" class="form-control">
-											<option value="1" '.($res["oldalaktiv"]=='1' ? 'selected' : '').'>IGEN</option>
-											<option value="0" '.($res["oldalaktiv"]=='0' ? 'selected' : '').'>NEM</option>
+										<label for="menuaktiv">Menüpont be van kapcsolva?</label>
+										<select name="menuaktiv" id="menuaktiv" class="form-control">
+											<option value="1" selected>IGEN</option>
+											<option value="0">NEM</option>
 										</select>
 									</div>
 									<div class="form-group">
-										<label for="oldalcont">Oldal tartalma</label>
-										<textarea name="oldalcont" id="oldalcont" class="form-control" rows="15" placeholder="Szerkeszd meg a taratlmad, amit csak szeretnél..." required>'.$res["oldalcont"].'</textarea>
+										<label for="megnyitas">Menüpont külön ablakban nyiljon meg?</label>
+										<select name="megnyitas" id="megnyitas" class="form-control">
+											<option value="1">IGEN</option>
+											<option value="0" selected>NEM</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="almenupontok">Almenüpont(ok) hozzárendelése</label>
+										<select name="almenupontok[]" id="almenupontok" class="form-control" multiple>';
+											if($m["almenupontok"]!="")
+											{
+												$amp=explode(",",$m["almenupontok"]);
+												$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang."");
+												while($a=$almenu->fetch())
+												{
+													$oldalak.='<option value="'.$a["oldalid"].'" '.(in_array($a["oldalid"], $amp) ? 'selected' : '').'>'.$a["oldalcim"].'</option>';
+												}
+											}
+											else
+											{
+												echo '<option value="" selected disabled>Válassz akár több almenüpontot is, vagy hagyd igy, ha nem kell!</option>';
+											}
+								echo '	</select>
 									</div>
 									<div>
 										<button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
@@ -375,6 +368,12 @@ else
 								</form>
 							</div>
 						</div>';
+			}
+			else
+			{
+				$DB = NULL;
+				$_SESSION["php_err_notification"] = "NIncs ilyen azonositoval menüpont";
+				menu_lista();
 			}
 		}
 		catch(Exception $e)
