@@ -135,6 +135,7 @@ else
 			$DB = connect(true);
 			
 			$almenupontok="";
+			unset($almenupontok);
 			foreach($form_data["almenupontok"] as $k => $v)
 			{
 				if($v!="")
@@ -149,7 +150,7 @@ else
 				pozicio='".$form_data["pozicio"]."',
 				almenupontok='".$almenupontok."',
 				megnyitas='".$form_data["metadesc"]."',
-				menuaktiv='".$form_data["oldalaktiv"]."' 
+				menuaktiv='".$form_data["menuaktiv"]."' 
 			where menuid='".$form_data["modid"]."'");
 				
 			$DB = NULL;
@@ -329,12 +330,13 @@ else
 								<div class="col-lg-4">Műveletek</div>
 							</div>
 			<?php
-							$sth = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang."");
-							if($sth->rowCount()>0)
+							//almenüponttal rendelkező főmenüpontok
+							$almenutomb=array();
+							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where almenupontok!=''");
+							if($stha->rowCount()>0)
 							{
-								while($row=$sth->fetch())
+								while($row=$stha->fetch())
 								{
-									//főmenüpont listázása
 									echo '<div class="row mx-0">';
 										echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
 										echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
@@ -343,33 +345,44 @@ else
 											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
 										echo '</div>';
 									echo '</div>';
-									//ha van almenüpontja akkor azt listázzuk alatta
-									if($row["almenupontok"]!="")
+									$amp=explode(",",$row["almenupontok"]);
+									foreach($amp as $k => $v)
 									{
-										$amp=explode(",",$row["almenupontok"]);
-										foreach($amp as $k => $v)
+										if($v!="" AND $v!=0)
 										{
-											if($v!="" AND $v!=0)
-											{
-												$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$v."'");
-												$al=$almenu->fetch();
-												echo '<div class="row mx-0">';
-													echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> ' . $al["menupontcim"] . '</div>';
-													echo '<div class="col-lg-4">' . ($al["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-													echo '<div class="col-lg-4">';
-														echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $al["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-														echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $al["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-													echo '</div>';
+											$almenu=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$v."'");
+											$al=$almenu->fetch();
+											array_push($almenutomb, $al["menuid"]);
+											echo '<div class="row mx-0">';
+												echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> ' . $al["menupontcim"] . '</div>';
+												echo '<div class="col-lg-4">' . ($al["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $al["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
+												echo '<div class="col-lg-4">';
+													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $al["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $al["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
 												echo '</div>';
-											}
+											echo '</div>';
 										}
 									}
-									//majd haladunk tovább a következő főmenüponttal...
 								}
 							}
-							else
+							//főmenüpontok, almenü nélkül
+							$sth = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where almenupontok=''");
+							if($sth->rowCount()>0)
 							{
-								echo '<p class="text-danger">Jelenleg nem található egyetlen létrehozott menüpont sem!</p>';
+								while($row=$sth->fetch())
+								{
+									if(!in_array($row["menuid"],$almenutomb))
+									{
+										echo '<div class="row mx-0">';
+											echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
+											echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
+											echo '<div class="col-lg-4">';
+												echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+												echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+											echo '</div>';
+										echo '</div>';
+									}
+								}
 							}
 			?>
 					</div>
