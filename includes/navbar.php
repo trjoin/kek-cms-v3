@@ -159,7 +159,8 @@
 	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='blog'){echo'show';} ?>" id="modulok4">
 		<ul class="nav flex-column sub-menu">
 		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujcikk'){echo'active';} ?>" href="./index.php?action=modulok&thing=blog&op=ujcikk">Új hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=blog&op=listaz">Megtekintés</a></li>
+		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=blog&thing=blog&op=listaz">Megtekintés</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='kategoriak'){echo'active';} ?>" href="./index.php?action=blog&thing=kateroriak">Kategóriák</a></li>
 		</ul>
 	  </div>
 	</li>
