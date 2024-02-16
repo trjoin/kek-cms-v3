@@ -253,6 +253,8 @@ else
 	}
 	function oldalak_hozzaad()
 	{
+		$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","§","\"","_","+",":","%",",","?","=","*","(",")","<",">","[","]","{","}","&","#","@","<",">","$","'","!","/",";"," ");
+		$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
 		echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
 				<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
 				<script>
@@ -282,12 +284,24 @@ else
 							<div class="form-group">
 								<label for="tomodul">Rendelsz hozzá modult?</label>
 								<select name="tomodul" id="tomodul" class="form-control">
-									<option value="" selected disabled>Kérlek válassz, ha igen</option>';
+									<option value="">Kérlek válassz, ha igen</option>';
 									$DB = connect(true);
-									$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1'");
+									$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1' and integ='1'");
 									while($m=$modulok->fetch())
 									{
-										echo '<option value="'.$m["modulid"].'">'.$m["modulnev"].'</option>';
+										echo '<optgroup label="'.$m["modulnev"].'">';
+										$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".lang." ");
+										if($modulbe->rowCount()>0)
+										{
+											while($modul=$modulbe->fetch())
+											{
+												echo '<option value="'.$m["modulid"].'|'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"].'">'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."nev"].'</option>';
+											}
+										}
+										else
+										{
+											echo '<option value="" disabled>Nincs rendelkezésre álló adat ennél a modulnál.</option>';
+										}
 									}
 									$DB = NULL;
 				echo '			</select>
@@ -336,6 +350,8 @@ else
 	}
 	function oldalak_szerkeszt()
 	{
+		$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","§","\"","_","+",":","%",",","?","=","*","(",")","<",">","[","]","{","}","&","#","@","<",">","$","'","!","/",";"," ");
+		$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
 		$DB = NULL;
 		try
 		{
@@ -355,7 +371,7 @@ else
 			}
 			else
 			{
-				echo '<h2 class="text-muted font-weight-bold mb-2"> Új oldal hozzáadása </h2>
+				echo '<h2 class="text-muted font-weight-bold mb-2"> Oldal szerkesztése </h2>
 						<div class="card">
 							<div class="card-body">
 								<form action="'.adminurl.'index.php?action=weboldal&thing=oldalak&opt=szerkesztmentes" method="POST" enctype="multipart/form-data">
@@ -382,10 +398,23 @@ else
 										<select name="tomodul" id="tomodul" class="form-control">
 											<option value="">Kérlek válassz, ha igen</option>';
 											$DB = connect(true);
-											$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1'");
+											$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1' and integ='1'");
 											while($m=$modulok->fetch())
 											{
-												echo '<option value="'.$m["modulid"].'" '.($res["tomodul"]==$m["modulid"] ? 'selected' : '').'>'.$m["modulnev"].'</option>';
+												$meglevo=explode("|",$res["tomodul"]);
+												echo '<optgroup label="'.$m["modulnev"].'">';
+												$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".lang." ");
+												if($modulbe->rowCount()>0)
+												{
+													while($modul=$modulbe->fetch())
+													{
+														echo '<option value="'.$m["modulid"].'|'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"].'" '.($meglevo[1]==$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"] ? 'selected' : '').'>'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."nev"].'</option>';
+													}
+												}
+												else
+												{
+													echo '<option value="" disabled>Nincs rendelkezésre álló adat ennél a modulnál.</option>';
+												}
 											}
 											$DB = NULL;
 						echo '			</select>

@@ -575,13 +575,14 @@ else
 								<div class="col-lg-4">Műveletek</div>
 							</div>
 			<?php
+							$sorszam=1;
 							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." order by pozicio asc");
 							if($stha->rowCount()>0)
 							{
 								while($row=$stha->fetch())
 								{
 									echo '<div class="row mx-0 py-1">';
-										echo '<div class="col-lg-4">' . $row["menupontcim"] . '</div>';
+										echo '<div class="col-lg-4">' . $row["pozicio"] . '. ' . $row["menupontcim"] . '</div>';
 										echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
 										echo '<div class="col-lg-4 col-xxl-3 d-flex justify-content-between">';
 											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
@@ -598,7 +599,7 @@ else
 										foreach($almenuk as $almenu)
 										{
 											echo '<div class="row mx-0">';
-											echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> ' . $almenu["menupontcim"] . '</div>';
+											echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> '.$sorszam.'.' . $almenu["pozicio"] . ' ' . $almenu["menupontcim"] . '</div>';
 											echo '<div class="col-lg-4">' . ($almenu["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=alkikapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=albekapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
 											echo '<div class="col-lg-4 col-xxl-3 d-flex justify-content-between">';
 													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=alszerkesztes&id=' . $almenu["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
@@ -607,6 +608,7 @@ else
 											echo '</div>';
 										}
 									}
+									$sorszam++;
 								}
 							}
 							else
