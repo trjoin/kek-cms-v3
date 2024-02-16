@@ -1,20 +1,20 @@
 <?php
 
 
-if (isset($_REQUEST["opt"])) {
+if (isset($_REQUEST["op"])) {
 
     //új blog
     //blog lista
     //blog szerkesztés
     //blog törlése
     
-    if ($_REQUEST["opt"] == "uj")
+    if ($_REQUEST["op"] == "ujcikk")
         shop_uj_blog_nezet();
-    elseif ($_REQUEST["opt"] == "ujmentes")
+    elseif ($_REQUEST["op"] == "ujmentes")
         shop_uj_blog_mentes();
-    elseif ($_REQUEST["opt"] == "szerkesztes")
+    elseif ($_REQUEST["op"] == "szerkesztes")
         shop_blog_szerkeszt_nezet();
-    elseif ($_REQUEST["opt"] == "szerkesztesmentes")
+    elseif ($_REQUEST["op"] == "szerkesztesmentes")
         shop_blog_szerkeszt_mentes();
     else
         webshop_blog_index();
@@ -29,7 +29,7 @@ function webshop_blog_index() {
     try{
     //adatok lekérdezése
     $DB = connect(true);
-    $sth = $DB->query("SELECT * FROM " . prefix."_blogcat_".lang);
+    $sth = $DB->query("SELECT * FROM " . prefix."_blog_".lang);
     $res = $sth->fetchAll();
     $DB = NULL;
     
@@ -83,7 +83,7 @@ function shop_uj_blog_nezet() {
     <div class="card">
         <div class="card-body">
 
-            <form action="/wp-admin/index.php?action=blog&thing=kategoriak&opt=ujkategoriamentes" method="post">
+            <form action="/wp-admin/index.php?action=modulok&thing=blog&opt=ujcikkmentes" method="post">
                 <div class="form-group">
                     <label for="blogkatnev">Új blog kategória</label>
                     <input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog"]["blogkatnev"]) ? $_SESSION["new_blog"]["blogkatnev"] : ""); ?>" maxlength="200" required />
