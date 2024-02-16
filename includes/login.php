@@ -186,7 +186,7 @@
 							</script>';
 					}
 				?>
-                <form class="pt-3" method="POST" action="./index.php" autocomplete="off">
+                <form class="pt-3" method="POST" autocomplete="off">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg loginput" id="loginUsername" name="username" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>
