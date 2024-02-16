@@ -96,51 +96,11 @@ else
 			//adatok tisztítása és ellenőrzése
 			$form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
 
-			if (!isset($form_data["oldalcim"]) || empty($form_data["oldalcim"]))
+			if (!isset($form_data["elemnev"]) || empty($form_data["elemnev"]))
 				throw new Exception("A megnevezés kitöltése kötelező!");
-			if (!isset($form_data["metatitle"]) || empty($form_data["metatitle"]))
-				throw new Exception("A meta title kitöltése kötelező!");
-			if (!isset($form_data["metadesc"]) || empty($form_data["metadesc"]))
-				throw new Exception("A meta leirás kitöltése kötelező!");
-			if (!isset($form_data["aktiv"]) || empty($form_data["aktiv"]))
-				throw new Exception("A bekapcsolás jelző kitöltése kötelező!");
-			
-			//kép adatok ellenőrzése
-			if(!isset($_FILES["ogimage"]) || $_FILES["ogimage"]["size"] == 0)
-				throw new Exception("Hiányzó kiemelt kép, vagy ez a fájl nem is kép!");
-			
-			if($_FILES["ogimage"]["type"] != "image/jpeg" && $_FILES["ogimage"]["type"] != "image/png")
-				throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
-			
-			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
-			$oldalfurl = to_linknew($oldalfurl);
-			
-			//kép feltöltése, ha sikeresek voltak az ellenőrzések
-			$file_ext = substr($_FILES["ogimage"]['name'], strripos($_FILES["ogimage"]['name'], '.'));
-			$ogimage =  $oldalfurl . uniqid("-") . $file_ext;
-			
-			if(!move_uploaded_file($_FILES["ogimage"]['tmp_name'], "../uploads/" . $ogimage))
-				throw new Exception("Hiba történt a képfeltöltés során!");
-			
-			include("includes/SimpleImage.php");
-			list($width, $height) = getimagesize("../uploads/" . $ogimage);
-			if($width>="1920")
-			{
-				$uks=$oldalfurl . uniqid("-") . "_" . $file_ext;
-				//Képméretező FÁNKSÖN
-				$image = new SimpleImage();
-				$image->load("../uploads/" . $ogimage);
-				$image->resizeToWidth(1920);
-				$image->save("../uploads/".$uks);
-				//régi nagy kép törlése
-				unlink("../uploads/" . $ogimage);
-				$ogimage=$uks;
-			}
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_oldalsav_".lang." (oldalcim,oldalcont,furl,tomodul,tolink,metatitle,metadesc,ogimage,aktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["tolink"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["aktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_oldalsav_".lang." (elemnev,elemcont,pozicio,aktiv) values ('".$form_data["elemnev"]."','".$form_data["elemcont"]."','".$form_data["pozicio"]."','".$form_data["aktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalsav");</script>';
@@ -161,74 +121,14 @@ else
 			//adatok tisztítása és ellenőrzése
 			$form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
 
-			if (!isset($form_data["oldalcim"]) || empty($form_data["oldalcim"]))
+			if (!isset($form_data["elemnev"]) || empty($form_data["elemnev"]))
 				throw new Exception("A megnevezés kitöltése kötelező!");
-			if (!isset($form_data["metatitle"]) || empty($form_data["metatitle"]))
-				throw new Exception("A meta title kitöltése kötelező!");
-			if (!isset($form_data["metadesc"]) || empty($form_data["metadesc"]))
-				throw new Exception("A meta leirás kitöltése kötelező!");
-			
 			$DB = connect(true);
-			
-			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
-			$oldalfurl = to_linknew($oldalfurl);
-			
-			//kép adatok ellenőrzése, ha feltölt ujat
-			if(isset($_FILES["ogimage"]) AND $_FILES["ogimage"]["size"] != 0)
-			{
-				if($_FILES["ogimage"]["size"] == 0)
-					throw new Exception("Hiányzó kiemelt kép, vagy ez a fájl nem is kép!");
-				
-				if($_FILES["ogimage"]["type"] != "image/jpeg" && $_FILES["ogimage"]["type"] != "image/png")
-					throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
-				
-				//kép feltöltése, ha sikeresek voltak az ellenőrzések
-				$file_ext = substr($_FILES["ogimage"]['name'], strripos($_FILES["ogimage"]['name'], '.'));
-				$ogimage =  $oldalfurl . uniqid("-") . $file_ext;
-				
-				if(!move_uploaded_file($_FILES["ogimage"]['tmp_name'], "../uploads/" . $ogimage))
-					throw new Exception("Hiba történt a képfeltöltés során!");
-				
-				include("includes/SimpleImage.php");
-				list($width, $height) = getimagesize("../uploads/" . $ogimage);
-				if($width>="1920")
-				{
-					$uks=$oldalfurl . uniqid("-") . "_" . $file_ext;
-					//Képméretező FÁNKSÖN
-					$image = new SimpleImage();
-					$image->load("../uploads/" . $ogimage);
-					$image->resizeToWidth(1920);
-					$image->save("../uploads/".$uks);
-					//régi nagy kép törlése
-					unlink("../uploads/" . $ogimage);
-					$ogimage=$uks;
-				}
-				
-				//régi kép törlése
-				$beload=$DB->query("select ogimage from ".prefix."_oldalsav_".lang." where elemid='".$form_data["elemid"]."'");
-				if($beload->rowCount()>0)
-				{
-					$b=$beload->fetch();
-					unlink("../uploads/".$b["ogimage"]);
-				}
-				$ogimagechange="ogimage='".$ogimage."',";
-			}
-			else
-			{
-				$ogimagechange="";
-			}
 
 			$elment=$DB->query("update ".prefix."_oldalsav_".lang." set 
-				oldalcim='".$form_data["oldalcim"]."',
-				oldalcont='".$form_data["oldalcont"]."',
-				furl='".$oldalfurl."',
-				tomodul='".$form_data["tomodul"]."',
-				tolink='".$form_data["tolink"]."',
-				metatitle='".$form_data["metatitle"]."',
-				metadesc='".$form_data["metadesc"]."',
-				".$ogimagechange."
+				elemnev='".$form_data["elemnev"]."',
+				elemcont='".$form_data["elemcont"]."',
+				pozicio='".$form_data["pozicio"]."',
 				aktiv='".$form_data["aktiv"]."' 
 			where elemid='".$form_data["elemid"]."'");
 				
@@ -338,8 +238,8 @@ else
 									<div class="form-group">
 										<label for="aktiv">Oldalsáv elem be van kapcsolva?</label>
 										<select name="aktiv" id="aktiv" class="form-control">
-											<option value="1" '.($res["pozicio"]=='1' ? 'selected' : '').'>IGEN</option>
-											<option value="0" '.($res["pozicio"]=='0' ? 'selected' : '').'>NEM</option>
+											<option value="1" '.($res["aktiv"]=='1' ? 'selected' : '').'>IGEN</option>
+											<option value="0" '.($res["aktiv"]=='0' ? 'selected' : '').'>NEM</option>
 										</select>
 									</div>
 									<div class="form-group">
