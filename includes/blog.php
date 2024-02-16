@@ -13,7 +13,7 @@ if (isset($_REQUEST["opt"])) {
     //blog kategória szerkesztése
     //blog kategória törlése
     
-    if ($_REQUEST["opt"] == "ujblogkategoria")
+    if ($_REQUEST["opt"] == "ujkategoria")
         shop_uj_blog_kategoria_nezet();
     elseif ($_REQUEST["opt"] == "ujgyartomentes")
         shop_uj_gyarto_mentes();
@@ -42,19 +42,18 @@ function webshop_blog_kategoria_index() {
     ?>
     <div class="card">
         <div class="card-body">
-            <h2>Termék gyártók listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=webshop&thing=gyartok&opt=ujgyarto" class="btn btn-primary">+ Új hozzáadása</a>
+            <h2>Blog kategóriák listája</h2>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=blog&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
-                <h2>Jelenlegi gyártók</h2>
+                <h2>Jelenlegi kategóriák</h2>
                 <?php
                 if(empty($res)){
-                    echo '<p class="text-danger">Jelenleg nem található egyetlen gyártó sem!</p>';
+                    echo '<p class="text-danger">Jelenleg nem található egyetlen kategória sem!</p>';
                 }
                 else{ 
                 ?>
                 <div class="row mx-0 fw-bolder mb-2">
-                    <div class="col-lg-4">Logó</div>
                     <div class="col-lg-4">Megnevezés</div>
                     <div class="col-lg-4">Műveletek</div>
                 </div>
@@ -62,11 +61,10 @@ function webshop_blog_kategoria_index() {
                 $out = "";
                 foreach($res as $row){ 
                     $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-4"><img src="/uploads/' . $row["gyartologo"] . '" class="img-fluid col-lg-6" /></div>';
-                    $out .= '<div class="col-lg-4">' . $row["gyartonev"] . '</div>';
+                    $out .= '<div class="col-lg-4">' . $row["blogkatnev"] . '</div>';
                     $out .= '<div class="col-lg-4">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=webshop&thing=gyartok&opt=szerkesztes&id=' . $row["gyartoid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["gyartoid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
+                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=blog&thing=kategoriak&opt=kategoriaszerkesztes&id=' . $row["blogkatid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["blogkatid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
                     $out .= '</div>';
                     $out .= '</div>';
                 }
@@ -84,28 +82,21 @@ function webshop_blog_kategoria_index() {
     }
 }
 
-function shop_uj_gyarto_nezet() {
+function shop_uj_blog_kategoria_nezet() {
     ?>
-    <h2 class="text-muted font-weight-bold mb-2"> Új gyártó hozzáadása </h2>
+    <h2 class="text-muted font-weight-bold mb-2"> Új kategória hozzáadása </h2>
     <div class="card">
         <div class="card-body">
 
-            <form action="/wp-admin/index.php?action=webshop&thing=gyartok&opt=ujgyartomentes" method="post" enctype="multipart/form-data">
+            <form action="/wp-admin/index.php?action=blog&thing=kategoriak&opt=ujkategoriamentes" method="post">
                 <div class="form-group">
-                    <label for="gyartonev">Megnevezés</label>
-                    <input type="text" name="gyartonev" id="gyartonev" class="form-control" value="<?php echo (isset($_SESSION["new_product_producer"]["gyartonev"]) ? $_SESSION["new_product_producer"]["gyartonev"] : ""); ?>" maxlength="200" required />
+                    <label for="blogkatnev">Új blog kategória</label>
+                    <input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog_category"]["blogkatnev"]) ? $_SESSION["new_blog_category"]["gyartonblogkatnevev"] : ""); ?>" maxlength="200" required />
                 </div>
-                <div class="form-group">
-                    <label for="gyartoleiras">Leírás</label>
-                    <textarea name="gyartoleiras" id="gyartoleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["new_product_producer"]["gyartoleiras"]) ? $_SESSION["new_product_producer"]["gyartoleiras"] : ""); ?></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="gyartologo">Gyártó kép</label>
-                    <input type="file" name="gyartologo" id="gyartologo" class="form-control" accept=".jpg, .jpeg, .png" required />
-                </div>
+                
                 <div>
                     <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
-                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=gyartok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=blog&thing=kategoriak"><span class="mdi mdi-arrow-left"></span> Vissza</a>
                 </div>
             </form>
         </div>
