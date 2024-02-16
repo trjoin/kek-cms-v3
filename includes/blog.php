@@ -8,28 +8,23 @@ if (isset($_REQUEST["opt"])) {
     //blog szerkesztés
     //blog törlése
     
-    //blog kategóriák
-    //új blog kategória
-    //blog kategória szerkesztése
-    //blog kategória törlése
-    
-    if ($_REQUEST["opt"] == "ujkategoria")
-        shop_uj_blog_kategoria_nezet();
-    elseif ($_REQUEST["opt"] == "ujgyartomentes")
-        shop_uj_gyarto_mentes();
+    if ($_REQUEST["opt"] == "uj")
+        shop_uj_blog_nezet();
+    elseif ($_REQUEST["opt"] == "ujmentes")
+        shop_uj_blog_mentes();
     elseif ($_REQUEST["opt"] == "szerkesztes")
-        shop_gyarto_szerkeszt_nezet();
+        shop_blog_szerkeszt_nezet();
     elseif ($_REQUEST["opt"] == "szerkesztesmentes")
-        shop_gyarto_szerkeszt_mentes();
+        shop_blog_szerkeszt_mentes();
     else
-        webshop_blog_kategoria_index();
+        webshop_blog_index();
 }
 else {
     //default működés hívása
-    webshop_blog_kategoria_index();
+    webshop_blog_index();
 }
 
-function webshop_blog_kategoria_index() {
+function webshop_blog_index() {
     $DB = NULL;
     try{
     //adatok lekérdezése
@@ -42,14 +37,14 @@ function webshop_blog_kategoria_index() {
     ?>
     <div class="card">
         <div class="card-body">
-            <h2>Blog kategóriák listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=blog&thing=kategoriak&opt=ujkategoria" class="btn btn-primary">+ Új hozzáadása</a>
+            <h2>Blog bejegyzések listája</h2>
+            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=modul&thing=blog&opt=uj" class="btn btn-primary">+ Új hozzáadása</a>
 
             <div class="mt-3">
-                <h2>Jelenlegi kategóriák</h2>
+                <h2>Jelenlegi blogok</h2>
                 <?php
                 if(empty($res)){
-                    echo '<p class="text-danger">Jelenleg nem található egyetlen kategória sem!</p>';
+                    echo '<p class="text-danger">Jelenleg nem található egyetlen blog bejegyzés sem!</p>';
                 }
                 else{ 
                 ?>
@@ -82,16 +77,16 @@ function webshop_blog_kategoria_index() {
     }
 }
 
-function shop_uj_blog_kategoria_nezet() {
+function shop_uj_blog_nezet() {
     ?>
-    <h2 class="text-muted font-weight-bold mb-2"> Új kategória hozzáadása </h2>
+    <h2 class="text-muted font-weight-bold mb-2"> Új blog bejegyzés </h2>
     <div class="card">
         <div class="card-body">
 
             <form action="/wp-admin/index.php?action=blog&thing=kategoriak&opt=ujkategoriamentes" method="post">
                 <div class="form-group">
                     <label for="blogkatnev">Új blog kategória</label>
-                    <input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog_category"]["blogkatnev"]) ? $_SESSION["new_blog_category"]["gyartonblogkatnevev"] : ""); ?>" maxlength="200" required />
+                    <input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog"]["blogkatnev"]) ? $_SESSION["new_blog"]["blogkatnev"] : ""); ?>" maxlength="200" required />
                 </div>
                 
                 <div>
@@ -104,75 +99,52 @@ function shop_uj_blog_kategoria_nezet() {
     <?php
 }
 
-function shop_uj_gyarto_mentes() {
+function shop_uj_blog_mentes() {
     $DB = NULL;
     try {
         //adatok tisztítása és ellenőrzése
         $form_data = filter_var_array($_POST, FILTER_UNSAFE_RAW);
-        $_SESSION["new_product_producer"] = $form_data;
+        $_SESSION["new_blog"] = $form_data;
 
-        if (!isset($form_data["gyartonev"]) || empty($form_data["gyartonev"]))
+        if (!isset($form_data["blogkatnev"]) || empty($form_data["blogkatnev"]))
             throw new Exception("A megnevezés kitöltése kötelező!");
-        if (!isset($form_data["gyartoleiras"]) || empty($form_data["gyartoleiras"]))
-            throw new Exception("A leírás kitöltése kötelező!");
-        
-        //kép adatok ellenőrzése
-        if(!isset($_FILES["gyartologo"]) || $_FILES["gyartologo"]["size"] == 0)
-            throw new Exception("Hiányzó gyártó logó kép!");
-        
-        if($_FILES["gyartologo"]["type"] != "image/jpeg" && $_FILES["gyartologo"]["type"] != "image/png")
-            throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
-        
-        //adatok előkészítése
-        global $mirol, $mire;
-        $gyartofurl = str_replace($mirol, $mire, $form_data["gyartonev"]);
-        $gyartofurl = to_linknew($gyartofurl);
         
         
         //adatok bejegyzése
         $DB = connect(true);
         
         //megnevezés egyediségének ellenőrzése
-        $sth = $DB->prepare("SELECT count(*) FROM trs_shop_gyarto_hun WHERE gyartonev = :gyartonev");
-        $sth->bindValue(":gyartonev", $form_data["gyartonev"]);
+        $sth = $DB->prepare("SELECT count(*) FROM " . prefix ."_blogcat_" . lang . " WHERE blogkatnev = :blogkatnev");
+        $sth->bindValue(":blogkatnev", $form_data["blogkatnev"]);
         $sth->execute();
         
-        $megnevezes_count = $sth->fetchAll();
+        $megnevezes_count = $sth->fetch();
         
-        if($megnevezes_count[0]["count(*)"] > 0){
-            throw new Exception("Már létezik ilyen nevű gyártó, kérem válasszon másikat!");
+        if($megnevezes_count["count(*)"] > 0){
+            throw new Exception("Már létezik ilyen nevű blog kategória, kérem válasszon másik megnevezést!");
         }
         
-        //kép feltöltése, ha sikeresek voltak az ellenőrzések
-        $file_ext = substr($_FILES["gyartologo"]['name'], strripos($_FILES["gyartologo"]['name'], '.'));
-        $gyartologo =  $gyartofurl . uniqid("-") . $file_ext;
         
-        if(!move_uploaded_file($_FILES["gyartologo"]['tmp_name'], "../uploads/" . $gyartologo))
-            throw new Exception("Hiba történt a képfeltöltés során!");
 
-        $sql = "INSERT INTO trs_shop_gyarto_hun (gyartonev, gyartoleiras, gyartofurl, gyartologo) VALUES (:gyartonev, :gyartoleiras, :gyartofurl, :gyartologo)";
+        $sql = "INSERT INTO " . prefix ."_blogcat_" . lang . " (blogkatnev) VALUES (:blogkatnev)";
         $sth = $DB->prepare($sql);
 
-        $sth->bindValue(":gyartonev", $form_data["gyartonev"]);
-        $sth->bindValue(":gyartoleiras", $form_data["gyartoleiras"]);
-        $sth->bindValue(":gyartofurl", $gyartofurl);
-        $sth->bindValue(":gyartologo", $gyartologo);
-
+        $sth->bindValue(":blogkatnev", $form_data["blogkatnev"]);
         $res = $sth->execute();
 
         $DB = NULL;
 
         //átirányítás
-        unset($_SESSION["new_product_producer"]);
-        $_SESSION["php_notification"] = 'Termék gyártó sikeresen hozzáadva!';
+        unset($_SESSION["new_blog"]);
+        $_SESSION["php_notification"] = 'A blog kategória sikeresen hozzáadva!';
 
-        echo '<script>window.location.replace("/wp-admin/index.php?action=webshop&thing=gyartok");</script>';
-        die(); //lefutott a program további része, ami gondot okozott
+        echo '<script>window.location.replace("/wp-admin/index.php?action=modul&thing=blog");</script>';
+        die();
     }
     catch (Exception $e) {
         $DB = NULL;
         $_SESSION["php_err_notification"] = $e->getMessage();
-        shop_uj_gyarto_nezet();
+        shop_uj_blog_kategoria_nezet();
     }
 }
 
