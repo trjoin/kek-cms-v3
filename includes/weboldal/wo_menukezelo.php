@@ -52,7 +52,7 @@ else
 			$DB = connect(true);
 			$bekapcsol=$DB->query("update ".prefix."_menupontok_".lang." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -71,7 +71,7 @@ else
 			$DB = connect(true);
 			$bekapcsol=$DB->query("update ".prefix."_almenupontok_".lang." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -90,7 +90,7 @@ else
 			$DB = connect(true);
 			$kikapcsol=$DB->query("update ".prefix."_menupontok_".lang." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -109,7 +109,7 @@ else
 			$DB = connect(true);
 			$kikapcsol=$DB->query("update ".prefix."_almenupontok_".lang." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -128,7 +128,7 @@ else
 			$DB = connect(true);
 			$torles=$DB->query("delete from ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -157,7 +157,7 @@ else
 
 			$torles=$DB->query("delete from ".prefix."_almenupontok_".lang." where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -187,7 +187,7 @@ else
 			
 			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (tartalomid,menupontcim,pozicio,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -219,7 +219,7 @@ else
 			$lastId = $stmt->fetchColumn();
 			$fomenusave=$DB->query("update ".prefix."_menupontok_".lang." set almenupontok=CONCAT(almenupontok,',".$lastId."') where menuid='".$form_data["szulo"]."'");
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -256,7 +256,7 @@ else
 			where menuid='".$form_data["modid"]."'");
 				
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
@@ -292,7 +292,7 @@ else
 			where menuid='".$form_data["modid"]."'");
 				
 			$DB = NULL;
-			$_SESSION["php_err_notification"]="Sikeres művelet";
+			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
 			die();
 		}
