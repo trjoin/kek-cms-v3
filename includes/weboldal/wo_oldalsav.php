@@ -36,7 +36,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$bekapcsol=$DB->query("update ".prefix."_oldalsav_".lang." set aktiv='1' where elemid='".$_REQUEST["id"]."'");
+			$bekapcsol=$DB->query("update ".prefix."_oldalsav_".$_SESSION["lang"]." set aktiv='1' where elemid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalsav");</script>';
@@ -55,7 +55,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$kikapcsol=$DB->query("update ".prefix."_oldalsav_".lang." set aktiv='0' where elemid='".$_REQUEST["id"]."'");
+			$kikapcsol=$DB->query("update ".prefix."_oldalsav_".$_SESSION["lang"]." set aktiv='0' where elemid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalsav");</script>';
@@ -75,7 +75,7 @@ else
 		{
 			$DB = connect(true);
 			//adatbázis bejegyzés törlése
-			$torles=$DB->query("delete from ".prefix."_oldalsav_".lang." where elemid='".$_REQUEST["id"]."'");
+			$torles=$DB->query("delete from ".prefix."_oldalsav_".$_SESSION["lang"]." where elemid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalsav");</script>';
@@ -100,7 +100,7 @@ else
 				throw new Exception("A megnevezés kitöltése kötelező!");
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_oldalsav_".lang." (elemnev,elemcont,pozicio,aktiv) values ('".$form_data["elemnev"]."','".$form_data["elemcont"]."','".$form_data["pozicio"]."','".$form_data["aktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_oldalsav_".$_SESSION["lang"]." (elemnev,elemcont,pozicio,aktiv) values ('".$form_data["elemnev"]."','".$form_data["elemcont"]."','".$form_data["pozicio"]."','".$form_data["aktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalsav");</script>';
@@ -125,7 +125,7 @@ else
 				throw new Exception("A megnevezés kitöltése kötelező!");
 			$DB = connect(true);
 
-			$elment=$DB->query("update ".prefix."_oldalsav_".lang." set 
+			$elment=$DB->query("update ".prefix."_oldalsav_".$_SESSION["lang"]." set 
 				elemnev='".$form_data["elemnev"]."',
 				elemcont='".$form_data["elemcont"]."',
 				pozicio='".$form_data["pozicio"]."',
@@ -184,7 +184,7 @@ else
 		?>
 			<script>
 				CKEDITOR.replace( 'elemcont', {
-				language: 'hu',
+				$_SESSION["lang"]uage: 'hu',
 				height: 800,
 			<?php
 				$useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -213,7 +213,7 @@ else
 					</script>';
 
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_oldalsav_".lang." where elemid='".$_REQUEST["id"]."'");
+			$sth = $DB->query("SELECT * FROM ".prefix."_oldalsav_".$_SESSION["lang"]." where elemid='".$_REQUEST["id"]."'");
 			$res = $sth->fetch();
 			if(empty($res))
 			{
@@ -256,7 +256,7 @@ else
 				?>
 					<script>
 						CKEDITOR.replace( 'elemcont', {
-						language: 'hu',
+						$_SESSION["lang"]uage: 'hu',
 						height: 800,
 					<?php
 						$useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -287,7 +287,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_oldalsav_".lang."");
+			$sth = $DB->query("SELECT * FROM ".prefix."_oldalsav_".$_SESSION["lang"]."");
 			$res = $sth->fetchAll();
 			$DB = NULL;
 
@@ -307,23 +307,28 @@ else
 						else
 						{
 			?>
-							<div class="row mx-0 fw-bolder mb-2">
-								<div class="col-lg-4">Elem címe</div>
-								<div class="col-lg-4">Bekapcsolva?</div>
-								<div class="col-lg-4">Műveletek</div>
-							</div>
+							<table class="table">
+							  <thead>
+								<tr style="border-bottom: 2px solid #4aa3c5;">
+								  <th scope="col"><strong><big>Elem címe</big></strong></th>
+								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
+								  <th scope="col"><strong><big>Műveletek</big></strong></th>
+								</tr>
+							  </thead>
+							  <tbody>
 			<?php 
 							$out = "";
 							foreach($res as $row){ 
-								$out .= '<div class="row mx-0">';
-									$out .= '<div class="col-lg-4">' . $row["pozicio"] . '. ' . $row["elemnev"] . '</div>';
-									$out .= '<div class="col-lg-4">' . ($row["aktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=kikapcsol&id=' . $row["elemid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=bekapcsol&id=' . $row["elemid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-									$out .= '<div class="col-lg-4">';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=szerkesztes&id=' . $row["elemid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=torles&id=' . $row["elemid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-									$out .= '</div>';
-								$out .= '</div>';
+								$out .= '<tr>';
+									$out .= '<td>' . $row["pozicio"] . '. ' . $row["elemnev"] . '</td>';
+									$out .= '<td>' . ($row["aktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=kikapcsol&id=' . $row["elemid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=bekapcsol&id=' . $row["elemid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</td>';
+									$out .= '<td>';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=szerkesztes&id=' . $row["elemid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalsav&opt=torles&id=' . $row["elemid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+									$out .= '</td>';
+								$out .= '</tr>';
 							}
+							$out .= '</tbody></table>';
 							echo $out;
 						}
 			?>

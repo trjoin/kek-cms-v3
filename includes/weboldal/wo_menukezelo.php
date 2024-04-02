@@ -50,7 +50,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$bekapcsol=$DB->query("update ".prefix."_menupontok_".lang." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
+			$bekapcsol=$DB->query("update ".prefix."_menupontok_".$_SESSION["lang"]." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -69,7 +69,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$bekapcsol=$DB->query("update ".prefix."_almenupontok_".lang." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
+			$bekapcsol=$DB->query("update ".prefix."_almenupontok_".$_SESSION["lang"]." set menuaktiv='1' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -88,7 +88,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$kikapcsol=$DB->query("update ".prefix."_menupontok_".lang." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
+			$kikapcsol=$DB->query("update ".prefix."_menupontok_".$_SESSION["lang"]." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -107,7 +107,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$kikapcsol=$DB->query("update ".prefix."_almenupontok_".lang." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
+			$kikapcsol=$DB->query("update ".prefix."_almenupontok_".$_SESSION["lang"]." set menuaktiv='0' where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -126,7 +126,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$torles=$DB->query("delete from ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
+			$torles=$DB->query("delete from ".prefix."_menupontok_".$_SESSION["lang"]." where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -146,16 +146,16 @@ else
 		{
 			$DB = connect(true);
 			
-				$fobe=$DB->query("select * from ".prefix."_menupontok_".lang." where almenupontok like '%".$_REQUEST["id"].",%'");
+				$fobe=$DB->query("select * from ".prefix."_menupontok_".$_SESSION["lang"]." where almenupontok like '%".$_REQUEST["id"].",%'");
 				$f=$fobe->fetch();
 				$alok=explode(",",$f["almenupontok"]);
 				if (($key = array_search($_REQUEST["id"], $alok)) !== false) {
 					unset($alok[$key]);
 				}
 				$alok=implode(",",$alok);
-				$fotorol=$DB->query("update ".prefix."_menupontok_".lang." set almenupontok='".$alok."' where menuid='".$f["menuid"]."'");
+				$fotorol=$DB->query("update ".prefix."_menupontok_".$_SESSION["lang"]." set almenupontok='".$alok."' where menuid='".$f["menuid"]."'");
 
-			$torles=$DB->query("delete from ".prefix."_almenupontok_".lang." where menuid='".$_REQUEST["id"]."'");
+			$torles=$DB->query("delete from ".prefix."_almenupontok_".$_SESSION["lang"]." where menuid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -185,7 +185,7 @@ else
 			
 			$DB = connect(true);
 			
-			$elment=$DB->query("insert into ".prefix."_menupontok_".lang." (tartalomid,menupontcim,pozicio,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_menupontok_".$_SESSION["lang"]." (tartalomid,menupontcim,pozicio,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -214,10 +214,10 @@ else
 				throw new Exception("A meta leirás kitöltése kötelező!");
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_almenupontok_".lang." (tartalomid,menupontcim,pozicio,szulo,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["szulo"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_almenupontok_".$_SESSION["lang"]." (tartalomid,menupontcim,pozicio,szulo,megnyitas,menuaktiv) values ('".$form_data["tartalomid"]."','".$form_data["menupontcim"]."','".$form_data["pozicio"]."','".$form_data["szulo"]."','".$form_data["megnyitas"]."','".$form_data["menuaktiv"]."')");
 			$stmt = $DB->query("SELECT LAST_INSERT_ID()");
 			$lastId = $stmt->fetchColumn();
-			$fomenusave=$DB->query("update ".prefix."_menupontok_".lang." set almenupontok=CONCAT(almenupontok,',".$lastId."') where menuid='".$form_data["szulo"]."'");
+			$fomenusave=$DB->query("update ".prefix."_menupontok_".$_SESSION["lang"]." set almenupontok=CONCAT(almenupontok,',".$lastId."') where menuid='".$form_data["szulo"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=menukezelo");</script>';
@@ -247,7 +247,7 @@ else
 			
 			$DB = connect(true);
 
-			$elment=$DB->query("update ".prefix."_menupontok_".lang." set 
+			$elment=$DB->query("update ".prefix."_menupontok_".$_SESSION["lang"]." set 
 				tartalomid='".$form_data["tartalomid"]."',
 				menupontcim='".$form_data["menupontcim"]."',
 				pozicio='".$form_data["pozicio"]."',
@@ -283,7 +283,7 @@ else
 			
 			$DB = connect(true);
 
-			$elment=$DB->query("update ".prefix."_almenupontok_".lang." set 
+			$elment=$DB->query("update ".prefix."_almenupontok_".$_SESSION["lang"]." set 
 				tartalomid='".$form_data["tartalomid"]."',
 				menupontcim='".$form_data["menupontcim"]."',
 				pozicio='".$form_data["pozicio"]."',
@@ -322,7 +322,7 @@ else
 								<label for="tartalomid">Tartalom hozzárendelése</label>
 								<select name="tartalomid" id="tartalomid" class="form-control" required>
 									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>';
-									$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+									$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]." where oldalaktiv='1'");
 									if($beload->rowCount()>0)
 									{
 										while($b=$beload->fetch())
@@ -379,7 +379,7 @@ else
 								<label for="tartalomid">Tartalom hozzárendelése</label>
 								<select name="tartalomid" id="tartalomid" class="form-control" required>
 									<option value="">Kérlek válassz, vagy adj meg egyedi hivatkozást!</option>';
-									$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+									$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]." where oldalaktiv='1'");
 									if($beload->rowCount()>0)
 									{
 										while($b=$beload->fetch())
@@ -422,7 +422,7 @@ else
 		{
 			$DB = connect(true);
 			
-			$menup=$DB->query("SELECT * FROM ".prefix."_menupontok_".lang." where menuid='".$_REQUEST["id"]."'");
+			$menup=$DB->query("SELECT * FROM ".prefix."_menupontok_".$_SESSION["lang"]." where menuid='".$_REQUEST["id"]."'");
 			if($menup->rowCount()>0)
 			{
 				$m=$menup->fetch();
@@ -442,7 +442,7 @@ else
 									<div class="form-group">
 										<label for="tartalomid">Tartalom hozzárendelése</label>
 										<select name="tartalomid" id="tartalomid" class="form-control" required>';
-											$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+											$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]." where oldalaktiv='1'");
 											while($b=$beload->fetch())
 											{
 												echo '<option value="'.$b["oldalid"].'" '.($m["tartalomid"]==$b["oldalid"] ? 'selected' : '').'>'.$b["oldalcim"].'</option>';
@@ -492,7 +492,7 @@ else
 		{
 			$DB = connect(true);
 			
-			$menup=$DB->query("SELECT * FROM ".prefix."_almenupontok_".lang." where menuid='".$_REQUEST["id"]."'");
+			$menup=$DB->query("SELECT * FROM ".prefix."_almenupontok_".$_SESSION["lang"]." where menuid='".$_REQUEST["id"]."'");
 			if($menup->rowCount()>0)
 			{
 				$m=$menup->fetch();
@@ -512,7 +512,7 @@ else
 									<div class="form-group">
 										<label for="tartalomid">Tartalom hozzárendelése</label>
 										<select name="tartalomid" id="tartalomid" class="form-control" required>';
-											$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalaktiv='1'");
+											$beload=$DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]." where oldalaktiv='1'");
 											while($b=$beload->fetch())
 											{
 												echo '<option value="'.$b["oldalid"].'" '.($m["tartalomid"]==$b["oldalid"] ? 'selected' : '').'>'.$b["oldalcim"].'</option>';
@@ -569,47 +569,52 @@ else
 
 					<div class="mt-3">
 						<h2>Jelenlegi menüpontok</h2>
-							<div class="row mx-0 fw-bolder mb-2">
-								<div class="col-lg-4">Menüpont címe</div>
-								<div class="col-lg-4">Bekapcsolva?</div>
-								<div class="col-lg-4">Műveletek</div>
-							</div>
+							<table class="table">
+							  <thead>
+								<tr style="border-bottom: 2px solid #4aa3c5;">
+								  <th scope="col"><strong><big>Menüpont címe</big></strong></th>
+								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
+								  <th scope="col"><strong><big>Műveletek</big></strong></th>
+								</tr>
+							  </thead>
+							  <tbody>
 			<?php
 							$sorszam=1;
-							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".lang." order by pozicio asc");
+							$stha = $DB->query("SELECT * FROM ".prefix."_menupontok_".$_SESSION["lang"]." order by pozicio asc");
 							if($stha->rowCount()>0)
 							{
 								while($row=$stha->fetch())
 								{
-									echo '<div class="row mx-0 py-1">';
-										echo '<div class="col-lg-4">' . $row["pozicio"] . '. ' . $row["menupontcim"] . '</div>';
-										echo '<div class="col-lg-4">' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-										echo '<div class="col-lg-4 col-xxl-3 d-flex justify-content-between">';
+									echo '<tr>';
+										echo '<td>' . $row["pozicio"] . '. ' . $row["menupontcim"] . '</td>';
+										echo '<td>' . ($row["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=kikapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=bekapcsol&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</td>';
+										echo '<td>';
 											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=szerkesztes&id=' . $row["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=ujalmenupont&id=' . $row["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-plus"></span> Új almenüpont</a> ';
+											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=ujalmenupont&id=' . $row["menuid"] . '" class="btn btn-outline-light px-2 py-1"><span class="mdi mdi-plus"></span> Új almenüpont</a> ';
 											echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=torles&id=' . $row["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-										echo '</div>';
-									echo '</div>';
+										echo '</td>';
+									echo '</tr>';
 									
 									if($row["almenupontok"]!="")
 									{
-										$res = $DB->query("SELECT * FROM ".prefix."_almenupontok_".lang." WHERE menuid IN (".ltrim($row["almenupontok"], ",").") ORDER BY pozicio");
+										$res = $DB->query("SELECT * FROM ".prefix."_almenupontok_".$_SESSION["lang"]." WHERE menuid IN (".ltrim($row["almenupontok"], ",").") ORDER BY pozicio");
 										$almenuk = $res->fetchAll();
 										
 										foreach($almenuk as $almenu)
 										{
-											echo '<div class="row mx-0">';
-											echo '<div class="col-lg-4"><span class="mdi mdi-arrow-bottom-right"></span> '.$sorszam.'.' . $almenu["pozicio"] . ' ' . $almenu["menupontcim"] . '</div>';
-											echo '<div class="col-lg-4">' . ($almenu["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=alkikapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=albekapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-											echo '<div class="col-lg-4 col-xxl-3 d-flex justify-content-between">';
+											echo '<tr>';
+											echo '<td><span class="mdi mdi-arrow-bottom-right"></span> '.$sorszam.'.' . $almenu["pozicio"] . ' ' . $almenu["menupontcim"] . '</td>';
+											echo '<td>' . ($almenu["menuaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=alkikapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=albekapcsol&id=' . $almenu["menuid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</td>';
+											echo '<td>';
 													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=alszerkesztes&id=' . $almenu["menuid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
 													echo '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=menukezelo&opt=altorles&id=' . $almenu["menuid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-											echo '</div>';
-											echo '</div>';
+											echo '</td>';
+											echo '</tr>';
 										}
 									}
 									$sorszam++;
 								}
+								echo '</tbody></table>';
 							}
 							else
 							{
