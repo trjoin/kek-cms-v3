@@ -33,7 +33,7 @@ else
 		{
 			$DB = connect(true);
 			//adatbázis bejegyzés törlése
-			$torles=$DB->query("delete from ".prefix."_socialmedia_".lang." where socialid='".$_REQUEST["id"]."'");
+			$torles=$DB->query("delete from ".prefix."_socialmedia_".$_SESSION["lang"]." where socialid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=kozossegimedia");</script>';
@@ -60,7 +60,7 @@ else
 				throw new Exception("A megnevezés kitöltése kötelező!");
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_socialmedia_".lang." (socialnev,sociallink) values ('".$form_data["socialnev"]."','".$form_data["sociallink"]."')");
+			$elment=$DB->query("insert into ".prefix."_socialmedia_".$_SESSION["lang"]." (socialnev,sociallink) values ('".$form_data["socialnev"]."','".$form_data["sociallink"]."')");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=kozossegimedia");</script>';
@@ -88,7 +88,7 @@ else
 			
 			$DB = connect(true);
 
-			$elment=$DB->query("update ".prefix."_socialmedia_".lang." set 
+			$elment=$DB->query("update ".prefix."_socialmedia_".$_SESSION["lang"]." set 
 				socialnev='".$form_data["socialnev"]."',
 				sociallink='".$form_data["sociallink"]."'
 			where socialid='".$form_data["socialid"]."'");
@@ -133,7 +133,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_socialmedia_".lang." where socialid='".$_REQUEST["id"]."'");
+			$sth = $DB->query("SELECT * FROM ".prefix."_socialmedia_".$_SESSION["lang"]." where socialid='".$_REQUEST["id"]."'");
 			$res = $sth->fetch();
 			if(empty($res))
 			{
@@ -177,7 +177,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_socialmedia_".lang."");
+			$sth = $DB->query("SELECT * FROM ".prefix."_socialmedia_".$_SESSION["lang"]."");
 			$res = $sth->fetchAll();
 			$DB = NULL;
 
@@ -185,7 +185,7 @@ else
 			<div class="card">
 				<div class="card-body">
 					<h2>Közösségi médiaelemek listája</h2>
-					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=kozossegimedia&opt=ujelem" class="btn btn-primary">+ Új hozzáadása</a>
+					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=kozossegimedia&opt=ujelem" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
 						<h2>Jelenlegi linkek</h2>
@@ -197,23 +197,28 @@ else
 						else
 						{
 			?>
-							<div class="row mx-0 fw-bolder mb-2">
-								<div class="col-lg-4">Elem neve</div>
-								<div class="col-lg-4">Link</div>
-								<div class="col-lg-4">Műveletek</div>
-							</div>
+							<table class="table">
+							  <thead>
+								<tr style="border-bottom: 2px solid #4aa3c5;">
+								  <th scope="col"><strong><big>Elem neve</big></strong></th>
+								  <th scope="col"><strong><big>Link</big></strong></th>
+								  <th scope="col"><strong><big>Műveletek</big></strong></th>
+								</tr>
+							  </thead>
+							  <tbody>
 			<?php 
 							$out = "";
 							foreach($res as $row){ 
-								$out .= '<div class="row mx-0">';
-									$out .= '<div class="col-lg-4">' . $row["socialnev"] . '</div>';
-									$out .= '<div class="col-lg-4">' . $row["sociallink"] . '</div>';
-									$out .= '<div class="col-lg-4">';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=kozossegimedia&opt=szerkesztes&id=' . $row["socialid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=kozossegimedia&opt=torles&id=' . $row["socialid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-									$out .= '</div>';
-								$out .= '</div>';
+								$out .= '<tr>';
+									$out .= '<td>' . $row["socialnev"] . '</td>';
+									$out .= '<td><a href="'.$row["sociallink"].'" target="_blank" class="btn btn-default btn-sm px-1 py-0">' . $row["sociallink"] . ' &raquo;</a></td>';
+									$out .= '<td>';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=kozossegimedia&opt=szerkesztes&id=' . $row["socialid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=kozossegimedia&opt=torles&id=' . $row["socialid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+									$out .= '</td>';
+								$out .= '</tr>';
 							}
+							$out .= '</tbody></table>';
 							echo $out;
 						}
 			?>

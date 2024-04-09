@@ -13236,7 +13236,7 @@ code {
   .card .card-title {
     color: #fff;
     margin-bottom: 1.625rem;
-    text-transform: capitalize;
+    
     font-family: "nunito-regular", sans-serif;
     font-size: 1.125rem;
     font-weight: 600; }
@@ -16353,7 +16353,7 @@ body.avgrund-active {
   font-family: "nunito-regular", sans-serif;
   background-color: #ffffff;
   border-color: rgba(58, 58, 67, 0.36);
-  text-transform: capitalize;
+  
   color: #a8b2b9; }
   .fc button .fc-icon-right-single-arrow:after,
   .fc button .fc-icon-left-single-arrow:after {

@@ -30,7 +30,7 @@
           </button>
 		  <div class="search-field d-none d-xl-block">
             <form class="d-flex align-items-center h-100" action="index.html#">
-              Box of shits and useless tools
+              Box of shits and useless tools <sup>&reg;</sup> | <img src="https://flagsapi.com/<?php echo $_SESSION["lang_code"]; ?>/flat/32.png">
             </form>
           </div>
           <ul class="navbar-nav navbar-nav-right">
@@ -67,6 +67,28 @@
                     <i class="mdi mdi-logout ms-1"></i>
                   </a>
                 </div>
+              </div>
+            </li>
+			<li class="nav-item dropdown">
+              <a class="nav-link count-indicator dropdown-toggle" id="langDropdown" href="./index.php#" data-bs-toggle="dropdown">
+                <i class="mdi mdi-flag"></i>
+              </a>
+              <div class="dropdown-menu navbar-dropdown dropdown-menu-end p-0 border-0 font-size-sm" aria-labelledby="langDropdown">
+				<?php
+					$nyelvek=$defaultwebdata["nyelvek"];
+					$nyelv=explode(",",$nyelvek);
+					foreach($nyelv as $k=>$v)
+					{
+						if($v!="")
+						{
+							echo '<a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?lang='.$v.'">
+									<span>'.($v==$_SESSION["lang"] ? '<u>'.$osszesnyelv[$v].'</u>' : $osszesnyelv[$v] ).' &raquo;</span>
+									<img src="https://flagsapi.com/'.$osszesnyelvkod[$v].'/flat/16.png">
+								  </a>';
+							echo '<div role="separator" class="dropdown-divider"></div>';
+						}
+					}
+				?>
               </div>
             </li>
             <li class="nav-item dropdown">

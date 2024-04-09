@@ -36,7 +36,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$bekapcsol=$DB->query("update ".prefix."_oldalak_".lang." set oldalaktiv='1' where oldalid='".$_REQUEST["id"]."'");
+			$bekapcsol=$DB->query("update ".prefix."_oldalak_".$_SESSION["lang"]." set oldalaktiv='1' where oldalid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalak");</script>';
@@ -55,7 +55,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$kikapcsol=$DB->query("update ".prefix."_oldalak_".lang." set oldalaktiv='0' where oldalid='".$_REQUEST["id"]."'");
+			$kikapcsol=$DB->query("update ".prefix."_oldalak_".$_SESSION["lang"]." set oldalaktiv='0' where oldalid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalak");</script>';
@@ -75,14 +75,14 @@ else
 		{
 			$DB = connect(true);
 			//kép törlése
-			$beload=$DB->query("select ogimage from ".prefix."_oldalak_".lang." where oldalid='".$_REQUEST["id"]."'");
+			$beload=$DB->query("select ogimage from ".prefix."_oldalak_".$_SESSION["lang"]." where oldalid='".$_REQUEST["id"]."'");
 			if($beload->rowCount()>0)
 			{
 				$b=$beload->fetch();
 				unlink("../uploads/".$b["ogimage"]);
 			}
 			//adatbázis bejegyzés törlése
-			$torles=$DB->query("delete from ".prefix."_oldalak_".lang." where oldalid='".$_REQUEST["id"]."'");
+			$torles=$DB->query("delete from ".prefix."_oldalak_".$_SESSION["lang"]." where oldalid='".$_REQUEST["id"]."'");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalak");</script>';
@@ -147,7 +147,7 @@ else
 			}
 			
 			$DB = connect(true);
-			$elment=$DB->query("insert into ".prefix."_oldalak_".lang." (oldalcim,oldalcont,furl,tomodul,tolink,metatitle,metadesc,ogimage,oldalaktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["tolink"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["oldalaktiv"]."')");
+			$elment=$DB->query("insert into ".prefix."_oldalak_".$_SESSION["lang"]." (oldalcim,oldalcont,furl,tomodul,tolink,metatitle,metadesc,ogimage,oldalaktiv) values ('".$form_data["oldalcim"]."','".$form_data["oldalcont"]."','".$oldalfurl."','".$form_data["tomodul"]."','".$form_data["tolink"]."','".$form_data["metatitle"]."','".$form_data["metadesc"]."','".$ogimage."','".$form_data["oldalaktiv"]."')");
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";
 			echo '<script>window.location.replace("'.adminurl.'index.php?action=weboldal&thing=oldalak");</script>';
@@ -214,7 +214,7 @@ else
 				}
 				
 				//régi kép törlése
-				$beload=$DB->query("select ogimage from ".prefix."_oldalak_".lang." where oldalid='".$form_data["oldalid"]."'");
+				$beload=$DB->query("select ogimage from ".prefix."_oldalak_".$_SESSION["lang"]." where oldalid='".$form_data["oldalid"]."'");
 				if($beload->rowCount()>0)
 				{
 					$b=$beload->fetch();
@@ -227,7 +227,7 @@ else
 				$ogimagechange="";
 			}
 
-			$elment=$DB->query("update ".prefix."_oldalak_".lang." set 
+			$elment=$DB->query("update ".prefix."_oldalak_".$_SESSION["lang"]." set 
 				oldalcim='".$form_data["oldalcim"]."',
 				oldalcont='".$form_data["oldalcont"]."',
 				furl='".$oldalfurl."',
@@ -286,11 +286,11 @@ else
 								<select name="tomodul" id="tomodul" class="form-control">
 									<option value="">Kérlek válassz, ha igen</option>';
 									$DB = connect(true);
-									$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1' and integ='1'");
+									$modulok=$DB->query("select * from ".prefix."_modul_".$_SESSION["lang"]." where aktiv='1' and integ='1'");
 									while($m=$modulok->fetch())
 									{
 										echo '<optgroup label="'.$m["modulnev"].'">';
-										$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".lang." ");
+										$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".$_SESSION["lang"]." ");
 										if($modulbe->rowCount()>0)
 										{
 											while($modul=$modulbe->fetch())
@@ -355,14 +355,14 @@ else
 		$DB = NULL;
 		try
 		{
-			echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
-					<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
+			echo '<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
+					<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
 					<script>
 						CKEDITOR.env.isCompatible = true;
 					</script>';
 
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_oldalak_".lang." where oldalid='".$_REQUEST["id"]."'");
+			$sth = $DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]." where oldalid='".$_REQUEST["id"]."'");
 			$res = $sth->fetch();
 			if(empty($res))
 			{
@@ -398,12 +398,12 @@ else
 										<select name="tomodul" id="tomodul" class="form-control">
 											<option value="">Kérlek válassz, ha igen</option>';
 											$DB = connect(true);
-											$modulok=$DB->query("select * from ".prefix."_modul_".lang." where aktiv='1' and integ='1'");
+											$modulok=$DB->query("select * from ".prefix."_modul_".$_SESSION["lang"]." where aktiv='1' and integ='1'");
 											while($m=$modulok->fetch())
 											{
 												$meglevo=explode("|",$res["tomodul"]);
 												echo '<optgroup label="'.$m["modulnev"].'">';
-												$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".lang." ");
+												$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".$_SESSION["lang"]." ");
 												if($modulbe->rowCount()>0)
 												{
 													while($modul=$modulbe->fetch())
@@ -475,7 +475,7 @@ else
 		try
 		{
 			$DB = connect(true);
-			$sth = $DB->query("SELECT * FROM ".prefix."_oldalak_".lang."");
+			$sth = $DB->query("SELECT * FROM ".prefix."_oldalak_".$_SESSION["lang"]."");
 			$res = $sth->fetchAll();
 			$DB = NULL;
 
@@ -483,7 +483,7 @@ else
 			<div class="card">
 				<div class="card-body">
 					<h2>Oldalak és tartalmak listája</h2>
-					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalak&opt=ujoldal" class="btn btn-primary">+ Új hozzáadása</a>
+					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalak&opt=ujoldal" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
 						<h2>Jelenlegi oldalak</h2>
@@ -495,23 +495,28 @@ else
 						else
 						{
 			?>
-							<div class="row mx-0 fw-bolder mb-2">
-								<div class="col-lg-4">Oldal címe</div>
-								<div class="col-lg-4">Bekapcsolva?</div>
-								<div class="col-lg-4">Műveletek</div>
-							</div>
+							<table class="table">
+							  <thead>
+								<tr style="border-bottom: 2px solid #4aa3c5;">
+								  <th scope="col"><strong><big>Oldal címe</big></strong></th>
+								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
+								  <th scope="col"><strong><big>Műveletek</big></strong></th>
+								</tr>
+							  </thead>
+							  <tbody>
 			<?php 
 							$out = "";
 							foreach($res as $row){ 
-								$out .= '<div class="row mx-0">';
-									$out .= '<div class="col-lg-4">' . $row["oldalcim"] . '</div>';
-									$out .= '<div class="col-lg-4">' . ($row["oldalaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=kikapcsol&id=' . $row["oldalid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=bekapcsol&id=' . $row["oldalid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</div>';
-									$out .= '<div class="col-lg-4">';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=szerkesztes&id=' . $row["oldalid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
-									$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=torles&id=' . $row["oldalid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
-									$out .= '</div>';
-								$out .= '</div>';
+								$out .= '<tr>';
+									$out .= '<td>' . $row["oldalcim"] . '</td>';
+									$out .= '<td>' . ($row["oldalaktiv"]=='1' ? 'IGEN <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=kikapcsol&id=' . $row["oldalid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> kikapcsol</a>' : 'NEM <a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=bekapcsol&id=' . $row["oldalid"] . '" class="btn btn-outline-warning px-1 py-0"><span class="mdi mdi-power-cycle"></span> bekapcsol</a>') . '</td>';
+									$out .= '<td>';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=szerkesztes&id=' . $row["oldalid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a> ';
+										$out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=weboldal&thing=oldalak&opt=torles&id=' . $row["oldalid"] . '" class="btn btn-outline-danger px-2 py-1" onClick="return confirm(\'Biztosan törlöd?\')"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+									$out .= '</td>';
+								$out .= '</tr>';
 							}
+							$out .= '</tbody></table>';
 							echo $out;
 						}
 			?>
