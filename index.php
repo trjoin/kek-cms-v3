@@ -8,23 +8,28 @@
 	if(!isset($_REQUEST["lang"]) AND !isset($_SESSION["lang"]))
 	{
 		$_SESSION["lang"] = lang;
+		$_SESSION["lang_code"] = langcode;
 	}
 	else
 	{
 		if(!isset($_REQUEST["lang"]))
 		{
 			$_SESSION["lang"] = $_SESSION["lang"];
+			$_SESSION["lang_code"] = $_SESSION["lang_code"];
 		}
 		else
 		{
 			$_SESSION["lang"] = $_REQUEST["lang"];
+			if($_REQUEST["lang"]=="hun"){ $_SESSION["lang_code"] = "HU"; }
+			if($_REQUEST["lang"]=="ger"){ $_SESSION["lang_code"] = "DE"; }
+			if($_REQUEST["lang"]=="eng"){ $_SESSION["lang_code"] = "GB"; }
 		}
 	}
 	//első kapcsolat DB-hez
-	$pdo = connect(true);
+	$DB = connect(true);
 	/*** ALAPADATOK BETÖLTÉSE ***/
 	$defaultwebdata=array();
-	$webosszetevok=$pdo->query("select * from ".prefix."_parameters_hun");
+	$webosszetevok=$DB->query("select * from ".prefix."_parameters_hun");
 	while($webadatok=$webosszetevok->fetch())
 	{
 		$defaultwebdata[$webadatok["webparamname"]] = $webadatok["webparamcont"];
@@ -35,14 +40,19 @@
 		ini_set("display_startup_errors", 1);
 		ini_set("display_errors", 1);
 		error_reporting(-1);
+		$_SESSION["debugmode"] = "<span style='color:#900;background:#fff;padding: 5px 10px;'><strong>WARNING!</strong> DEBUG MODE IS ON!</span>";
 	}
-	
+	else
+	{
+		$_SESSION["debugmode"]="";
+	}
+	/*** KIJELENTKEZÉS LEKEZELÉSE ***/
 	if(isset($_REQUEST["out"]))
 	{
 		session_unset();
 		header("Location: /wp-admin/index.php");
 	}
-	
+	//munkamenet ellenőrzés és aktuális akció szerinti modul betöltés
     if(isset($_SESSION["munkamenet"]) AND $_SESSION["munkamenet"]!="")
 	{
         if(isset($_REQUEST["action"]))

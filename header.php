@@ -30,7 +30,7 @@
           </button>
 		  <div class="search-field d-none d-xl-block">
             <form class="d-flex align-items-center h-100" action="index.html#">
-              Box of shits and useless tools <sup>&reg;</sup> | <?php echo $_SESSION["lang"]; ?>
+              Box of shits and useless tools <sup>&reg;</sup> | <img src="https://flagsapi.com/<?php echo $_SESSION["lang_code"]; ?>/flat/32.png">
             </form>
           </div>
           <ul class="navbar-nav navbar-nav-right">
@@ -83,7 +83,7 @@
 						{
 							echo '<a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?lang='.$v.'">
 									<span>'.($v==$_SESSION["lang"] ? '<u>'.$osszesnyelv[$v].'</u>' : $osszesnyelv[$v] ).' &raquo;</span>
-									<i class="mdi mdi-flag ms-1"></i>
+									<img src="https://flagsapi.com/'.$osszesnyelvkod[$v].'/flat/16.png">
 								  </a>';
 							echo '<div role="separator" class="dropdown-divider"></div>';
 						}

@@ -172,6 +172,7 @@
                 <h3 class="text-dark">Hello! Készen állsz?</h3>
                 <h4 class="font-weight-light text-dark">Jelentkezz be a munka megkezdéséhez.</h4>
 				<?php
+					if(isset($_SESSION["debugmode"])){ echo $_SESSION["debugmode"].'<br>'; }
 					echo $error;
 					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]!="")
 					{
@@ -272,7 +273,7 @@
 								$("#newsbox").html('<h5 class="text-dark">' + $newsTitle + '</h5><div id="content"><p class="text-dark">' + $newsContent + '</p></div>');
 							}
 						});
-					})
+					});
 				</script>
                 <h3 class="text-dark">Újdonságok, érdekességek...</h3><br><br>
 				<div class="p5" id="newsbox"> </div>

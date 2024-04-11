@@ -14,6 +14,7 @@ DEFINE("DB_NAME", "rzvgdubh_trsadmin");
 
 DEFINE("prefix", "trs");
 DEFINE("lang", "hun");
+DEFINE("langcode", "HU");
 DEFINE("url", "https://test.adlepomed.hu");
 DEFINE("adminurl", url."/wp-admin/");
 DEFINE("defaultmail", "noreply@adlepomed.hu");
@@ -23,6 +24,7 @@ $absp=(isset($_SERVER["HTTPS"]) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"
 $fullurl=$absp.$_SERVER["REQUEST_URI"];
 
 $osszesnyelv=array("hun"=>"Magyar","eng"=>"Angol","ger"=>"Német");
+$osszesnyelvkod=array("hun"=>"HU","eng"=>"GB","ger"=>"DE");
 
 DEFINE("SESSION_NAME", "trsdash");
 

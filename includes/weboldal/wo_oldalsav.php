@@ -146,8 +146,8 @@ else
 	}
 	function oldalsav_hozzaad()
 	{
-		echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
-				<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
+		echo '<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
+				<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
 				<script>
 					CKEDITOR.env.isCompatible = true;
 				</script>';
@@ -184,7 +184,7 @@ else
 		?>
 			<script>
 				CKEDITOR.replace( 'elemcont', {
-				$_SESSION["lang"]uage: 'hu',
+				language: 'hu',
 				height: 800,
 			<?php
 				$useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -256,7 +256,7 @@ else
 				?>
 					<script>
 						CKEDITOR.replace( 'elemcont', {
-						$_SESSION["lang"]uage: 'hu',
+						language: 'hu',
 						height: 800,
 					<?php
 						$useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -295,7 +295,7 @@ else
 			<div class="card">
 				<div class="card-body">
 					<h2>Oldalsáv (widget) elemek listája</h2>
-					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalsav&opt=ujelem" class="btn btn-primary">+ Új hozzáadása</a>
+					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalsav&opt=ujelem" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
 						<h2>Jelenlegi elemek</h2>

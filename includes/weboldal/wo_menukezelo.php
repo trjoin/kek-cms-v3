@@ -544,7 +544,7 @@ else
 			else
 			{
 				$DB = NULL;
-				$_SESSION["php_err_notification"] = "NIncs ilyen azonositoval menüpont";
+				$_SESSION["php_err_notification"] = "Nincs ilyen azonositóval menüpont!";
 				menu_lista();
 			}
 		}
@@ -565,7 +565,7 @@ else
 			<div class="card">
 				<div class="card-body">
 					<h2>Menüpontok listája</h2>
-					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=menukezelo&opt=ujmenupont" class="btn btn-primary">+ Új hozzáadása</a>
+					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=menukezelo&opt=ujmenupont" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
 						<h2>Jelenlegi menüpontok</h2>

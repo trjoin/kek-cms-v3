@@ -4,6 +4,7 @@
 ?>
 <div class="d-xl-flex justify-content-between align-items-start">
   <h2 class="text-muted font-weight-bold mb-2"> MŰSZERFAL </h2>
+  <?php echo $_SESSION["debugmode"]; ?>
   <div class="d-sm-flex justify-content-xl-between align-items-center mb-2">
 	<div class="dropdown ms-0 ml-md-4 mt-2 mt-lg-0">
 	  <i class="mdi mdi-calendar me-1"></i><?php echo date("Y.m.d.").", ".$napok[date("N")]; ?>
@@ -19,56 +20,55 @@
 				<div class="row">
 				  <div class="col-sm-12">
 					<div class="d-flex justify-content-between align-items-center mb-4">
-					  <h4 class="card-title mb-0">Aktuális</h4>
-					  <div class="dropdown dropdown-arrow-none">
-						<button class="btn p-0 text-muted dropdown-toggle" type="button" id="dropdownMenuIconButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						  <i class="mdi mdi-dots-vertical"></i>
-						</button>
-						<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuIconButton1">
-						  <h6 class="dropdown-header">Settings</h6>
-						  <a class="dropdown-item" href="index.php#">Action</a>
-						  <a class="dropdown-item" href="index.php#">Another action</a>
-						  <a class="dropdown-item" href="index.php#">Something else here</a>
-						  <div class="dropdown-divider"></div>
-						  <a class="dropdown-item" href="index.php#">Separated link</a>
+					  <h2 class="card-title mb-0">Szép napot és jó munkát a K.E.K. CMS rendszerébe.</h2>
+					</div>
+				  </div>
+
+				  <div class="col-lg-7 grid-margin grid-margin-lg-0">
+					<div class="ps-0 pl-lg-4">
+					  <div class="d-xl-block mb-2">
+						<div class="d-lg-block mb-lg-2 mb-xl-0">
+						  <h4 class="font-weight-bold mb-0">FONTOS!</h4>
+						  <p class="mb-0">Többnyelvű oldal esetében a menüpontok és tartalmaik az MODULOK főmenüben található NYELVEK választó segítségével módosíthatóak, az alábbi módon:<br>
+							- válassza ki a kívánt nyelvet a MODULOK főmenüből,<br>
+							- kattintson a hozzá tartozó linkre - azaz a nyelv nevére,<br>
+							- a főmenüben máris a választott idegen nyelvi tartalmak jelennek meg,<br>
+							- ezekre kattintva már szerkeszteni is fogja tudni.
+						  </p>
+						  <br>
+						  <h4 class="font-weight-bold mb-0">FIGYELEM!</h4>
+						  <p class="mb-0">Új menüpont létrehozásánál, CSAK az aktuális - oldal által használt és beállított - nyelven jön létre a tartalom! A többi nyelven a tartalmakat egyénileg létre kell hozni!
+						  </p>
 						</div>
 					  </div>
 					</div>
 				  </div>
-				  <div class="col-lg-3 col-sm-4 grid-margin  grid-margin-lg-0">
-					<div class="wrapper pb-5 border-bottom">
-					  <div class="text-wrapper d-flex align-items-center justify-content-between mb-2">
-						<p class="mb-0">Total Profit</p>
-						<span class="text-success">+ 2.95%</span>
+				  
+				  <div class="col-lg-5 grid-margin grid-margin-lg-0">
+					  <div class="ps-0 pl-lg-4">
+					    <div class="d-xl-block mb-2">
+						<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+						<script>
+							$(function(){
+								$.ajax({
+									type: "GET",
+									url: "https://trswebdesign.hu/hirekxml.php",
+									dataType: "xml",
+									success: function(xml) {
+										var $newsData = $(xml).find('news:eq(0)');
+										var $newsTitle = $($newsData).find('title:eq(0)').text();
+										var $newsContent = $($newsData).find('content:eq(0)').text();
+										$("#newsbox").html('<h5 class="text-white">' + $newsTitle + '</h5><p class="text-white">' + $newsContent + '</p>');
+									}
+								});
+							})
+						</script>
+						<h3 class="text-white">Újdonságok, érdekességek:</h3><br>
+						<div id="newsbox"> </div>
+					    </div>
 					  </div>
-					  <h3 class="mb-0 font-weight-bold">$ 92556</h3>
-					  <canvas id="total-profit-dark"></canvas>
 					</div>
-					<div class="wrapper pt-5">
-					  <div class="text-wrapper d-flex align-items-center justify-content-between mb-2">
-						<p class="mb-0">Expenses</p>
-						<span class="text-muted">+ 52.95%</span>
-					  </div>
-					  <h3 class="mb-4 font-weight-bold">$ 59565</h3>
-					  <canvas id="total-expences-dark"></canvas>
-					</div>
-				  </div>
-				  <div class="col-lg-9 col-sm-8 grid-margin  grid-margin-lg-0">
-					<div class="ps-0 pl-lg-4 ">
-					  <div class="d-xl-flex justify-content-between align-items-center mb-2">
-						<div class="d-lg-flex align-items-center mb-lg-2 mb-xl-0">
-						  <h3 class="font-weight-bold me-2 mb-0">Devices sales</h3>
-						  <h5 class="mb-0 text-muted">( growth 62% )</h5>
-						</div>
-						<div class="d-lg-flex">
-						  <p class="me-2 mb-0 text-muted">Timezone:</p>
-						  <p class="font-weight-bold mb-0">GMT-0400 Eastern Delight Time</p>
-						</div>
-					  </div>
-					  <div class="graph-custom-legend clearfix" id="device-sales-legend"></div>
-					  <canvas id="device-sales-dark"></canvas>
-					</div>
-				  </div>
+				  
 				</div>
 			  </div>
 			</div>
