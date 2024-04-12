@@ -331,7 +331,7 @@ else
 		?>
 			<script>
 				CKEDITOR.replace( 'oldalcont', {
-				$_SESSION["lang"]uage: 'hu',
+				language: 'hu',
 				height: 800,
 			<?php
 				$useragent=$_SERVER['HTTP_USER_AGENT'];
@@ -444,7 +444,7 @@ else
 				?>
 					<script>
 						CKEDITOR.replace( 'oldalcont', {
-						$_SESSION["lang"]uage: 'hu',
+						language: 'hu',
 						height: 800,
 					<?php
 						$useragent=$_SERVER['HTTP_USER_AGENT'];
