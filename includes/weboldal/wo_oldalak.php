@@ -120,8 +120,7 @@ else
 				throw new Exception("Nem megengedett képformátum, kérem válasszon jpg vagy png képet!");
 			
 			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
+			$oldalfurl = cserekari($form_data["oldalcim"]);
 			$oldalfurl = to_linknew($oldalfurl);
 			
 			//kép feltöltése, ha sikeresek voltak az ellenőrzések
@@ -178,8 +177,7 @@ else
 			$DB = connect(true);
 			
 			//adatok előkészítése
-			global $mirol, $mire;
-			$oldalfurl = str_replace($mirol, $mire, $form_data["oldalcim"]);
+			$oldalfurl = cserekari($form_data["oldalcim"]);
 			$oldalfurl = to_linknew($oldalfurl);
 			
 			//kép adatok ellenőrzése, ha feltölt ujat
@@ -253,10 +251,7 @@ else
 	}
 	function oldalak_hozzaad()
 	{
-		$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","§","\"","_","+",":","%",",","?","=","*","(",")","<",">","[","]","{","}","&","#","@","<",">","$","'","!","/",";"," ");
-		$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
 		echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
-				<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
 				<script>
 					CKEDITOR.env.isCompatible = true;
 				</script>';
@@ -290,12 +285,12 @@ else
 									while($m=$modulok->fetch())
 									{
 										echo '<optgroup label="'.$m["modulnev"].'">';
-										$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".$_SESSION["lang"]." ");
+										$modulbe=$DB->query("select * from ".prefix."_".cserekari($m["modulnev"])."_".$_SESSION["lang"]." ");
 										if($modulbe->rowCount()>0)
 										{
 											while($modul=$modulbe->fetch())
 											{
-												echo '<option value="'.$m["modulid"].'|'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"].'">'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."nev"].'</option>';
+												echo '<option value="'.$m["modulid"].'|'.$modul[cserekari($m["modulnev"])."id"].'">'.$modul[cserekari($m["modulnev"])."nev"].'</option>';
 											}
 										}
 										else
@@ -350,13 +345,10 @@ else
 	}
 	function oldalak_szerkeszt()
 	{
-		$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","§","\"","_","+",":","%",",","?","=","*","(",")","<",">","[","]","{","}","&","#","@","<",">","$","'","!","/",";"," ");
-		$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
 		$DB = NULL;
 		try
 		{
-			echo '<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
-					<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
+			echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
 					<script>
 						CKEDITOR.env.isCompatible = true;
 					</script>';
@@ -403,12 +395,12 @@ else
 											{
 												$meglevo=explode("|",$res["tomodul"]);
 												echo '<optgroup label="'.$m["modulnev"].'">';
-												$modulbe=$DB->query("select * from ".prefix."_".str_replace($mirol,$mire,strtolower($m["modulnev"]))."_".$_SESSION["lang"]." ");
+												$modulbe=$DB->query("select * from ".prefix."_".cserekari($m["modulnev"])."_".$_SESSION["lang"]." ");
 												if($modulbe->rowCount()>0)
 												{
 													while($modul=$modulbe->fetch())
 													{
-														echo '<option value="'.$m["modulid"].'|'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"].'" '.($meglevo[1]==$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."id"] ? 'selected' : '').'>'.$modul[str_replace($mirol,$mire,strtolower($m["modulnev"]))."nev"].'</option>';
+														echo '<option value="'.$m["modulid"].'|'.$modul[cserekari($m["modulnev"])."id"].'" '.($meglevo[1]==$modul[cserekari($m["modulnev"])."id"] ? 'selected' : '').'>'.$modul[cserekari($m["modulnev"])."nev"].'</option>';
 													}
 												}
 												else
@@ -482,11 +474,10 @@ else
 			?>
 			<div class="card">
 				<div class="card-body">
-					<h2>Oldalak és tartalmak listája</h2>
+					<h2>Oldalak és tartalom</h2>
 					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalak&opt=ujoldal" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
-						<h2>Jelenlegi oldalak</h2>
 			<?php
 						if(empty($res))
 						{
@@ -498,7 +489,7 @@ else
 							<table class="table">
 							  <thead>
 								<tr style="border-bottom: 2px solid #4aa3c5;">
-								  <th scope="col"><strong><big>Oldal címe</big></strong></th>
+								  <th scope="col"><strong><big>Oldal neve</big></strong><i class="fa fa-question-circle" title="Az a név, ami alapján a menükezelőben felismerhető a számodra"></i></th>
 								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
 								  <th scope="col"><strong><big>Műveletek</big></strong></th>
 								</tr>

@@ -1,7 +1,7 @@
 <?php
-
+$DB = connect(true);
 if (isset($_GET["termektorol"])) {
-    $torles = $pdo->query("delete from " . $elotag . "_shop_termek where t_id=" . $_GET["termektorol"]);
+    $torles = $DB->query("delete from " . $elotag . "_shop_termek where t_id=" . $_GET["termektorol"]);
     if ($torles) {
         echo "<h3 style='color:#00FF00;'>Sikeres terméktörlés!</h3>";
         echo "<script>
@@ -52,7 +52,7 @@ elseif (isset($_POST["ujtermek"])) {
         $pdfdok = $dazo . "_" . $SafePDF;
 
         if (move_uploaded_file($_FILES["t_fkep"]["tmp_name"], $fajlnev) AND move_uploaded_file($_FILES["t_pdf"]["tmp_name"], $pdfnev)) {
-            $termekment = $pdo->query("insert into " . $elotag . "_shop_termek (t_gyarto,t_nev,t_ar,t_kategoria,t_fkep,t_kleiras,t_nleiras,t_datum,t_pdf) values('" . $_POST["t_gyarto"] . "','" . $_POST["t_nev"] . "','" . $_POST["t_ar"] . "','" . $_POST["t_kategoria"] . "','" . $fokep . "','" . $_POST["t_kleiras"] . "','" . $_POST["t_nleiras"] . "',now(),'" . $pdfdok . "')");
+            $termekment = $DB->query("insert into " . $elotag . "_shop_termek (t_gyarto,t_nev,t_ar,t_kategoria,t_fkep,t_kleiras,t_nleiras,t_datum,t_pdf) values('" . $_POST["t_gyarto"] . "','" . $_POST["t_nev"] . "','" . $_POST["t_ar"] . "','" . $_POST["t_kategoria"] . "','" . $fokep . "','" . $_POST["t_kleiras"] . "','" . $_POST["t_nleiras"] . "',now(),'" . $pdfdok . "')");
             if ($termekment) {
                 echo "<h3 style='color:#00FF00;'>Sikeres termékfelvétel!</h3>";
             }
@@ -68,7 +68,7 @@ elseif (isset($_POST["ujtermek"])) {
     }
     else {
         if (move_uploaded_file($_FILES["t_fkep"]["tmp_name"], $fajlnev)) {
-            $termekment = $pdo->query("insert into " . $elotag . "_shop_termek (t_gyarto,t_nev,t_ar,t_kategoria,t_fkep,t_kleiras,t_nleiras,t_datum) values('" . $_POST["t_gyarto"] . "','" . $_POST["t_nev"] . "','" . $_POST["t_ar"] . "','" . $_POST["t_kategoria"] . "','" . $fokep . "','" . $_POST["t_kleiras"] . "','" . $_POST["t_nleiras"] . "',now())");
+            $termekment = $DB->query("insert into " . $elotag . "_shop_termek (t_gyarto,t_nev,t_ar,t_kategoria,t_fkep,t_kleiras,t_nleiras,t_datum) values('" . $_POST["t_gyarto"] . "','" . $_POST["t_nev"] . "','" . $_POST["t_ar"] . "','" . $_POST["t_kategoria"] . "','" . $fokep . "','" . $_POST["t_kleiras"] . "','" . $_POST["t_nleiras"] . "',now())");
             if ($termekment) {
                 echo "<h3 style='color:#00FF00;'>Sikeres termékfelvétel!</h3><a href='index.php?lng=hun&page=shop&ujtermek=y'><b>ISMÉT ÚJ TERMÉK FELVÉTELE &raquo;</b></a>";
             }
@@ -132,7 +132,7 @@ elseif (isset($_POST["termekmod"])) {
         $pdfdok = $dazo . "_" . $SafePDF;
 
         if (move_uploaded_file($_FILES["t_pdf"]["tmp_name"], $pdfnev)) {
-            $termekfrissitpdf = $pdo->query("update " . $elotag . "_shop_termek set t_pdf='" . $pdfdok . "' where t_id='" . $_POST["termekmod"] . "'");
+            $termekfrissitpdf = $DB->query("update " . $elotag . "_shop_termek set t_pdf='" . $pdfdok . "' where t_id='" . $_POST["termekmod"] . "'");
             if ($termekfrissitpdf) {
                 echo "<h3 style='color:#00FF00;'>Sikeres PDF feltöltés!</h3>";
             }
@@ -270,7 +270,7 @@ elseif (isset($_POST["termekmod"])) {
             }
         }
         if ($sikeres >= 1 AND $vanfokep == "van") {
-            $termekfrissit = $pdo->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_fkep='" . $fokep . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
+            $termekfrissit = $DB->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_fkep='" . $fokep . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
 
             if ($termekfrissit) {
                 echo "<h3 style='color:#00FF00;'>Sikeres termék frissítés!</h3>";
@@ -295,7 +295,7 @@ elseif (isset($_POST["termekmod"])) {
             }
         }
         elseif ($sikeres >= 1 AND $vanfokep == "nincs") {
-            $termekfrissit = $pdo->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
+            $termekfrissit = $DB->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
 
             if ($termekfrissit) {
                 echo "<h3 style='color:#00FF00;'>Sikeres termék frissítés!</h3>";
@@ -399,7 +399,7 @@ elseif (isset($_POST["termekmod"])) {
             }
         }
         if ($sikeres >= 1 AND $vanfokep == "nincs") {
-            $termekfrissit = $pdo->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
+            $termekfrissit = $DB->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_kepek='" . $osszesfajl . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
 
             if ($termekfrissit) {
                 echo "<h3 style='color:#00FF00;'>Sikeres termék frissítés!</h3>";
@@ -484,7 +484,7 @@ elseif (isset($_POST["termekmod"])) {
             $fokep = $dazo . "_" . $SafeFile;
 
             if (move_uploaded_file($_FILES["t_fkep"]["tmp_name"], $fajlnev)) {
-                $termekfrissit = $pdo->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_fkep='" . $fokep . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
+                $termekfrissit = $DB->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_fkep='" . $fokep . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
                 if ($termekfrissit) {
                     echo "<h3 style='color:#00FF00;'>Sikeres termék frissítés!</h3>";
                     echo "<script>
@@ -529,7 +529,7 @@ elseif (isset($_POST["termekmod"])) {
         }
     }
     else { //képcsere és feltöltés nélküli frissítés
-        $termekfrissit = $pdo->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
+        $termekfrissit = $DB->query("update " . $elotag . "_shop_termek set t_gyarto='" . $_POST["t_gyarto"] . "',t_nev='" . $_POST["t_nev"] . "',t_kategoria='" . $_POST["t_kategoria"] . "',t_ar='" . $_POST["t_ar"] . "',t_kleiras='" . $_POST["t_kleiras"] . "',t_nleiras='" . $_POST["t_nleiras"] . "' where t_id='" . $_POST["termekmod"] . "'");
         if ($termekfrissit) {
             echo "<h3 style='color:#00FF00;'>Sikeres termék frissítés!</h3>";
             echo "<script>
@@ -559,7 +559,7 @@ elseif (isset($_GET["ujtermek"])) {
 					<b>Termék Gyártó:</b><br />
 						<select name='t_gyarto' id='t_gyarto' style='width:200px;' required>
 							<option value=''>Válasszon gyártót!</option>";
-    $gyartok = $pdo->query("select * from " . $elotag . "_shop_gyartok");
+    $gyartok = $DB->query("select * from " . $elotag . "_shop_gyartok");
     while ($eg = $gyartok->fetch()) {
         echo "<option value='" . $eg["shop_gyartonev"] . "'>" . $eg["shop_gyartonev"] . "</option>";
     }
@@ -567,7 +567,7 @@ elseif (isset($_GET["ujtermek"])) {
 					<b>Termék Kategória:</b><br />
 						<select name='t_kategoria' id='t_kategoria' style='width:200px;'>
 							<option value=''>Válasszon kategóriát!</option>";
-    $kategoria1 = $pdo->query("select * from " . $elotag . "_shop_kategoriak");
+    $kategoria1 = $DB->query("select * from " . $elotag . "_shop_kategoriak");
     while ($ek1 = $kategoria1->fetch()) {
         echo "<option value='" . $ek1["shop_kategorianev"] . "'>" . $ek1["shop_kategorianev"] . "</option>";
     }
@@ -583,14 +583,14 @@ elseif (isset($_GET["ujtermek"])) {
 			   </form>";
 }
 elseif (isset($_GET["termekmod"])) {
-    $ter_bet = $pdo->query("select * from " . $elotag . "_shop_termek where t_id='" . $_GET["termekmod"] . "'");
+    $ter_bet = $DB->query("select * from " . $elotag . "_shop_termek where t_id='" . $_GET["termekmod"] . "'");
     $adatok = $ter_bet->fetch();
     echo "<h2>TERMÉK MÓDOSÍTÁSA</h2>";
     echo "<form name='termekmodform' id='termekmodform' method='POST' action='index.php?lng=" . $webaktlang . "&page=shop' enctype='multipart/form-data'>
 					<input type='hidden' name='termekmod' id='termekmod' value='" . $_GET["termekmod"] . "'>
 					<b>Termék Gyártó:</b><br /><select name='t_gyarto' id='t_gyarto' style='width:200px;' required>
 											<option value='" . $adatok["t_gyarto"] . "'>" . $adatok["t_gyarto"] . "</option>";
-    $gyartok = $pdo->query("select * from " . $elotag . "_shop_gyartok");
+    $gyartok = $DB->query("select * from " . $elotag . "_shop_gyartok");
     while ($eg = $gyartok->fetch()) {
         echo "<option value='" . $eg["shop_gyartonev"] . "'>" . $eg["shop_gyartonev"] . "</option>";
     }
@@ -602,7 +602,7 @@ elseif (isset($_GET["termekmod"])) {
     else {
         echo "<option value=''>Válasszon kategóriát!</option>";
     }
-    $kategoria1 = $pdo->query("select * from " . $elotag . "_shop_kategoriak");
+    $kategoria1 = $DB->query("select * from " . $elotag . "_shop_kategoriak");
     while ($ek1 = $kategoria1->fetch()) {
         echo "<option value='" . $ek1["shop_kategorianev"] . "'>" . $ek1["shop_kategorianev"] . "</option>";
     }
@@ -647,7 +647,7 @@ elseif (isset($_GET["termekmod"])) {
 }
 
 //default
-$osszes=$pdo->query("select * from ".$elotag."_shop_termek");
+$osszes=$DB->query("select * from ".$elotag."_shop_termek");
 			echo "<h3>TERMÉK LISTA</h3>
 					<a href='index.php?lng=".$webaktlang."&page=shop&ujtermek=y' class='btn'>+ új termék felvétele &raquo;</a><br>
 					<br />

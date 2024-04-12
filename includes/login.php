@@ -10,8 +10,12 @@
 			$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
 			$_SESSION["userlogged"]=$egy_sor["teljesnev"];
 			$_SESSION["useremail"]=$egy_sor["useremail"];
+			$_SESSION["userkod"]=$egy_sor["uid"];
 			$_SESSION["jogkor"]=$egy_sor["jogkor"];
 			$_SESSION["munkamenet"]=date("Ymdhis");
+			
+			//naplózás bejegyzése
+			$pdo->query("insert into ".prefix."_userlog_hun (userid,tevekenyseg,logdatum) values('".$egy_sor["uid"]."','Bejelentkezett.',now())");
 			
 			//$support = telepitési idő az adatbázisból, ha lesz
 			$support="2024-02-01";

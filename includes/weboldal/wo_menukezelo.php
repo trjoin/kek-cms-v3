@@ -564,15 +564,14 @@ else
 			?>
 			<div class="card">
 				<div class="card-body">
-					<h2>Menüpontok listája</h2>
+					<h2>Menüpontok</h2>
 					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=menukezelo&opt=ujmenupont" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
-						<h2>Jelenlegi menüpontok</h2>
 							<table class="table">
 							  <thead>
 								<tr style="border-bottom: 2px solid #4aa3c5;">
-								  <th scope="col"><strong><big>Menüpont címe</big></strong></th>
+								  <th scope="col"><strong><big>Menüpont címe</big></strong><i class="fa fa-question-circle" title="Fő és almenüpontok, szerkezeti struktúra"></i></th>
 								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
 								  <th scope="col"><strong><big>Műveletek</big></strong></th>
 								</tr>

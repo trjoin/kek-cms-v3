@@ -184,11 +184,10 @@ else
 			?>
 			<div class="card">
 				<div class="card-body">
-					<h2>Közösségi médiaelemek listája</h2>
+					<h2>Közösségi média hivatkozások</h2>
 					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=kozossegimedia&opt=ujelem" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
-						<h2>Jelenlegi linkek</h2>
 			<?php
 						if(empty($res))
 						{
@@ -200,7 +199,7 @@ else
 							<table class="table">
 							  <thead>
 								<tr style="border-bottom: 2px solid #4aa3c5;">
-								  <th scope="col"><strong><big>Elem neve</big></strong></th>
+								  <th scope="col"><strong><big>Elem neve</big></strong><i class="fa fa-question-circle" title="Ésszerű azt megadni egybe írva amelyik portálhoz tartozik, hogy ikon is kerülhessen automatikusan hozzá"></i></th>
 								  <th scope="col"><strong><big>Link</big></strong></th>
 								  <th scope="col"><strong><big>Műveletek</big></strong></th>
 								</tr>

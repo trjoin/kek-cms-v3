@@ -137,8 +137,9 @@ else
 								"gdpr"=>"GDPR kód|text",
 								"breakoff"=>"Karbantartás mód|checkbox",
 								"debugmod"=>"Hibafigyelő mód|checkbox",
-								"gmapskey"=>"Google térkép címke, kód|text",
-								"nyelvek"=>"Telepített nyelvek|nulla");
+								"gmapskey"=>"Google térképhez cím|text",
+								"nyelvek"=>"Telepített nyelvek|nulla",
+								"bkpdate"=>"Utolsó adatbázis biztonsági mentés|nulla");
 		
 		echo '<div class="card">
 				<div class="card-body">

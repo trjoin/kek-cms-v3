@@ -43,7 +43,7 @@
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='stat'){echo'show';} ?>" id="page-stats">
 		<ul class="nav flex-column sub-menu">
 		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='latogatok'){echo'active';} ?>" href="./index.php?action=stat&thing=latogatok">Látogatók</a></li>
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='vasarlasok'){echo'active';} ?>" href="./index.php?action=stat&thing=vasarlasok#">Vásárlások</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='vasarlasok'){echo'active';} ?>" href="./index.php?action=stat&thing=vasarlasok">Vásárlások</a></li>
 		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='marketing'){echo'active';} ?>" href="./index.php?action=stat&thing=marketing">Marketing</a></li><!-- pop-up, google analytics meg egyéb faszságok -->
 		</ul>
 	  </div>

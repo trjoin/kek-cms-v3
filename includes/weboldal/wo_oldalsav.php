@@ -146,8 +146,7 @@ else
 	}
 	function oldalsav_hozzaad()
 	{
-		echo '<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
-				<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
+		echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
 				<script>
 					CKEDITOR.env.isCompatible = true;
 				</script>';
@@ -207,7 +206,6 @@ else
 		try
 		{
 			echo '<script type="text/javascript" src="'.adminurl.'assets/kekcms/ckeditor/ckeditor.js"></script>
-					<script src="'.adminurl.'assets/kekcms/ckeditor/adapters/jquery.js"></script>
 					<script>
 						CKEDITOR.env.isCompatible = true;
 					</script>';
@@ -294,11 +292,10 @@ else
 			?>
 			<div class="card">
 				<div class="card-body">
-					<h2>Oldalsáv (widget) elemek listája</h2>
+					<h2>Oldalsáv elemek</h2>
 					<a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=weboldal&thing=oldalsav&opt=ujelem" class="btn btn-primary btn-sm">+ Új hozzáadása</a>
 
 					<div class="mt-3">
-						<h2>Jelenlegi elemek</h2>
 			<?php
 						if(empty($res))
 						{
@@ -310,7 +307,7 @@ else
 							<table class="table">
 							  <thead>
 								<tr style="border-bottom: 2px solid #4aa3c5;">
-								  <th scope="col"><strong><big>Elem címe</big></strong></th>
+								  <th scope="col"><strong><big>Elem címe</big></strong><i class="fa fa-question-circle" title="Ez fog megjelenni az oldalsáv elem címeként a weblapon"></i></th>
 								  <th scope="col"><strong><big>Bekapcsolva?</big></strong></th>
 								  <th scope="col"><strong><big>Műveletek</big></strong></th>
 								</tr>
