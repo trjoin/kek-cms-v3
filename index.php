@@ -40,7 +40,7 @@
 		ini_set("display_startup_errors", 1);
 		ini_set("display_errors", 1);
 		error_reporting(-1);
-		$_SESSION["debugmode"] = "<span style='color:#900;background:#fff;padding: 5px 10px;'><strong>WARNING!</strong> DEBUG MODE IS ON!</span>";
+		$_SESSION["debugmode"] = "<span style='color:#900;background:#fff;padding: 5px 10px;'><strong>FIGYELEM!</strong> A HIBAKERESŐ MÓD AKTÍV!</span>";
 	}
 	else
 	{
