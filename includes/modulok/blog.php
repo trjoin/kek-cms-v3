@@ -1,75 +1,86 @@
 <?php
-
-
-if (isset($_REQUEST["op"])) {
-
-    //új blog
-    //blog lista
-    //blog szerkesztés
-    //blog törlése
-    
-    if ($_REQUEST["op"] == "ujcikk")
-        shop_uj_blog_nezet();
-    elseif ($_REQUEST["op"] == "ujmentes")
-        shop_uj_blog_mentes();
-    elseif ($_REQUEST["op"] == "szerkesztes")
-        shop_blog_szerkeszt_nezet();
-    elseif ($_REQUEST["op"] == "szerkesztesmentes")
-        shop_blog_szerkeszt_mentes();
-    else
-        webshop_blog_index();
+if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
+{
+	if(isset($_REQUEST["opt"]))
+	{
+		if ($_REQUEST["opt"] == "ujblog")
+			blog_hozzaad();
+		elseif ($_REQUEST["opt"] == "ujblogmentes")
+			blog_uj_mentes();
+		elseif ($_REQUEST["opt"] == "szerkesztes")
+			blog_szerkeszt();
+		elseif ($_REQUEST["opt"] == "szerkesztmentes")
+			blog_szerkeszt_mentes();
+		elseif ($_REQUEST["opt"] == "torles")
+			blog_torles();
+		elseif ($_REQUEST["opt"] == "kikapcsol")
+			blog_kikapcsol();
+		elseif ($_REQUEST["opt"] == "bekapcsol")
+			blog_bekapcsol();
+		else
+			blog_lista();
+	}
+	else
+	{
+		blog_lista();
+	}
 }
-else {
-    //default működés hívása
-    webshop_blog_index();
+else
+{
+    return false;
 }
 
-function webshop_blog_index() {
+function blog_lista() 
+{
     $DB = NULL;
     try{
-    //adatok lekérdezése
-    $DB = connect(true);
-    $sth = $DB->query("SELECT * FROM " . prefix."_blog_".lang);
-    $res = $sth->fetchAll();
-    $DB = NULL;
-    
-    //nézet megjelenítése
-    ?>
-    <div class="card">
-        <div class="card-body">
-            <h2>Blog bejegyzések listája</h2>
-            <a href="<?php echo $_SERVER["PHP_SELF"]; ?>?action=modul&thing=blog&opt=uj" class="btn btn-primary">+ Új hozzáadása</a>
+		//adatok lekérdezése
+		$DB = connect(true);
+		$sth = $DB->query("SELECT * FROM " . prefix."_blog_".lang);
+		$res = $sth->fetchAll();
+		$DB = NULL;
 
-            <div class="mt-3">
-                <h2>Jelenlegi blogok</h2>
-                <?php
-                if(empty($res)){
-                    echo '<p class="text-danger">Jelenleg nem található egyetlen blog bejegyzés sem!</p>';
-                }
-                else{ 
-                ?>
-                <div class="row mx-0 fw-bolder mb-2">
-                    <div class="col-lg-4">Megnevezés</div>
-                    <div class="col-lg-4">Műveletek</div>
-                </div>
-                <?php 
-                $out = "";
-                foreach($res as $row){ 
-                    $out .= '<div class="row mx-0">';
-                    $out .= '<div class="col-lg-4">' . $row["blogkatnev"] . '</div>';
-                    $out .= '<div class="col-lg-4">';
-                    $out .= '<a href="' . $_SERVER["PHP_SELF"] . '?action=blog&thing=kategoriak&opt=kategoriaszerkesztes&id=' . $row["blogkatid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
-                    $out .= '<button type="button" class="btn btn-outline-danger px-2 py-1 ms-2" data-id="' . $row["blogkatid"] . '"><span class="mdi mdi-trash-can"></span> Törlés</button>';
-                    $out .= '</div>';
-                    $out .= '</div>';
-                }
-                echo $out;
-                ?>
-            </div>
-        </div>
-    </div>
-    <?php 
-       }
+		echo '<div class="card">
+			   <div class="card-body">
+				<h2>Blog bejegyzések listája</h2>
+				<a href="'.adminurl.'index.php?action=modules&thing=blog&opt=ujblog" class="btn btn-primary">+ Új hozzáadása</a>
+				<div class="mt-3">';
+					if(empty($res))
+					{
+						echo '<p class="text-danger">Jelenleg nem található egyetlen blog bejegyzés sem!</p>';
+					}
+					else
+					{
+						echo '<div class="row mx-0 fw-bolder mb-2">
+								<div class="col-lg-4">Cikk címe</div>
+								<div class="col-lg-4">Aktív?</div>
+								<div class="col-lg-4">Műveletek</div>
+							  </div>';
+						$out = "";
+						foreach($res as $row)
+						{ 
+							$out .= '<div class="row mx-0">';
+								$out .= '<div class="col-lg-4">' . $row["blogcim"] . '</div>';
+								$out .= '<div class="col-lg-4">' . ($row["cikkaktiv"]=='1' ? 'IGEN' : 'NEM') . '</div>';
+								$out .= '<div class="col-lg-4">';
+									$out .= '<a href="'.adminurl.'index.php?action=modules&thing=blog&opt=szerkesztes&blogid=' . $row["blogid"] . '" class="btn btn-outline-primary px-2 py-1"><span class="mdi mdi-wrench"></span> Szerkesztés</a>';
+									if($row["cikkaktiv"]=='1')
+									{
+										$out .= '<a href="'.adminurl.'index.php?action=modules&thing=blog&opt=kikapcsol&blogid=' . $row["blogid"] . '" class="btn btn-outline-warning px-2 py-1"><span class="mdi mdi-power-cycle"></span> Kikapcsol</a>';
+									}
+									else
+									{
+										$out .= '<a href="'.adminurl.'index.php?action=modules&thing=blog&opt=bekapcsol&blogid=' . $row["blogid"] . '" class="btn btn-outline-success px-2 py-1"><span class="mdi mdi-power-cycle"></span> Aktivál</a>';
+									}
+									$out .= '<a href="'.adminurl.'index.php?action=modules&thing=blog&opt=torles&blogid=' . $row["blogid"] . '" class="btn btn-outline-danger px-2 py-1"><span class="mdi mdi-trash-can"></span> Törlés</a>';
+								$out .= '</div>';
+							$out .= '</div>';
+						}
+						echo $out;
+					}
+			echo '</div>
+				 </div>
+				</div>';
     }
     catch(Exception $e){
         $DB = NULL;
@@ -77,29 +88,29 @@ function webshop_blog_index() {
     }
 }
 
-function shop_uj_blog_nezet() {
-    ?>
-    <h2 class="text-muted font-weight-bold mb-2"> Új blog bejegyzés </h2>
-    <div class="card">
-        <div class="card-body">
+function shop_uj_blog_nezet() 
+{
+    echo '<h2 class="text-muted font-weight-bold mb-2"> Új blog bejegyzés </h2>
+			<div class="card">
+				<div class="card-body">
 
-            <form action="/wp-admin/index.php?action=modulok&thing=blog&opt=ujcikkmentes" method="post">
-                <div class="form-group">
-                    <label for="blogkatnev">Új blog kategória</label>
-                    <input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog"]["blogkatnev"]) ? $_SESSION["new_blog"]["blogkatnev"] : ""); ?>" maxlength="200" required />
-                </div>
-                
-                <div>
-                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
-                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=blog&thing=kategoriak"><span class="mdi mdi-arrow-left"></span> Vissza</a>
-                </div>
-            </form>
-        </div>
-    </div>
-    <?php
+					<form action="/wp-admin/index.php?action=modulok&thing=blog&opt=ujcikkmentes" method="post">
+						<div class="form-group">
+							<label for="blogkatnev">Új blog kategória</label>
+							<input type="text" name="blogkatnev" id="blogkatnev" class="form-control" value="<?php echo (isset($_SESSION["new_blog"]["blogkatnev"]) ? $_SESSION["new_blog"]["blogkatnev"] : ""); ?>" maxlength="200" required />
+						</div>
+						
+						<div>
+							<button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+							<a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=blog&thing=kategoriak"><span class="mdi mdi-arrow-left"></span> Vissza</a>
+						</div>
+					</form>
+				</div>
+			</div>';
 }
 
-function shop_uj_blog_mentes() {
+function shop_uj_blog_mentes() 
+{
     $DB = NULL;
     try {
         //adatok tisztítása és ellenőrzése
@@ -147,77 +158,8 @@ function shop_uj_blog_mentes() {
         shop_uj_blog_kategoria_nezet();
     }
 }
-
-function shop_gyarto_szerkeszt_nezet(){
-    $DB = NULL;
-    try{
-        if(!isset($_GET["id"]) || empty($_GET["id"]))
-            throw new Exception("Hiányzó gyártó azonosító!");
-        
-        $id = (int)$_GET["id"];
-        
-        if(!preg_match("/^[0-9]+$/", $id))
-            throw new Exception("Nem megfelelő gyártó azonosító!");
-        
-        $DB = connect(true);
-        
-        $sth = $DB->prepare("SELECT * FROM trs_shop_gyarto_hun WHERE gyartoid = :gyartoid LIMIT 1");
-        $sth->bindValue(":gyartoid", $id);
-        $sth->execute();
-        
-        $res = $sth->fetchAll();
-        
-        if(empty($res))
-            throw new Exception("Nem található adatok a megadott gyártó azonosító alapján!");
-        
-        $DB = NULL;
-        
-        //form megjelenítése
-        shop_gyarto_szerkesz_form($res[0]);
-        
-    }
-    catch(Exception $e){
-        $DB = NULL;
-        $_SESSION["php_err_notification"] = $e->getMessage();
-        webshop_gyarto_index();
-    }
-    
-}
-
-function shop_gyarto_szerkesz_form($db_data = false){ ?>
-    <h2 class="text-muted font-weight-bold mb-2"> Gyártó szerkesztése </h2>
-    <div class="card">
-        <div class="card-body">
-            <form action="/wp-admin/index.php?action=webshop&thing=gyartok&opt=szerkesztesmentes" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="gyartonev">Megnevezés</label>
-                    <input type="text" name="gyartonev" id="gyartonev" class="form-control" value="<?php echo (isset($_SESSION["edit_product_producer"]["gyartonev"]) ? $_SESSION["edit_product_producer"]["gyartonev"] : $db_data["gyartonev"]); ?>" maxlength="200" required />
-                </div>
-                <div class="form-group">
-                    <label for="gyartoleiras">Leírás</label>
-                    <textarea name="gyartoleiras" id="gyartoleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["edit_product_producer"]["gyartoleiras"]) ? $_SESSION["edit_product_producer"]["gyartoleiras"] : $db_data["gyartoleiras"]); ?></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="gyartologo">Gyártó kép cseréje</label>
-                    <input type="file" name="gyartologo" id="gyartologo" class="form-control" accept=".jpg, .jpeg, .png" />
-                </div>
-                <div>
-                    <p>Jelenlegi gyártó logó</p>
-                    <img src="/uploads/<?php echo (isset($_SESSION["edit_product_producer"]["current_image"]) ? $_SESSION["edit_product_producer"]["current_image"] : $db_data["gyartologo"]); ?>" class="col-lg-4 img-fluid" />
-                </div>
-                <div class="mt-2">
-                    <input type="hidden" name="current_image" value="/<?php echo (isset($_SESSION["edit_product_producer"]["current_image"]) ? $_SESSION["edit_product_producer"]["current_image"] : $db_data["gyartologo"]); ?>" />
-                    <input type="hidden" name="gyartoid" value="<?php echo (isset($_SESSION["edit_product_producer"]["gyartoid"]) ? $_SESSION["edit_product_producer"]["gyartoid"] : $db_data["gyartoid"]); ?>" />
-                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
-                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=gyartok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
-                </div>
-            </form>
-        </div>
-    </div>
-<?php
-}
-
-function shop_gyarto_szerkeszt_mentes(){
+function shop_gyarto_szerkeszt_mentes()
+{
     $DB = NULL;
     try {
         
@@ -319,3 +261,38 @@ function shop_gyarto_szerkeszt_mentes(){
         shop_gyarto_szerkesz_form();
     }   
 }
+
+function shop_gyarto_szerkesz_form($db_data = false){ ?>
+    <h2 class="text-muted font-weight-bold mb-2"> Gyártó szerkesztése </h2>
+    <div class="card">
+        <div class="card-body">
+            <form action="/wp-admin/index.php?action=webshop&thing=gyartok&opt=szerkesztesmentes" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="gyartonev">Megnevezés</label>
+                    <input type="text" name="gyartonev" id="gyartonev" class="form-control" value="<?php echo (isset($_SESSION["edit_product_producer"]["gyartonev"]) ? $_SESSION["edit_product_producer"]["gyartonev"] : $db_data["gyartonev"]); ?>" maxlength="200" required />
+                </div>
+                <div class="form-group">
+                    <label for="gyartoleiras">Leírás</label>
+                    <textarea name="gyartoleiras" id="gyartoleiras" class="form-control" rows="5" required><?php echo (isset($_SESSION["edit_product_producer"]["gyartoleiras"]) ? $_SESSION["edit_product_producer"]["gyartoleiras"] : $db_data["gyartoleiras"]); ?></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="gyartologo">Gyártó kép cseréje</label>
+                    <input type="file" name="gyartologo" id="gyartologo" class="form-control" accept=".jpg, .jpeg, .png" />
+                </div>
+                <div>
+                    <p>Jelenlegi gyártó logó</p>
+                    <img src="/uploads/<?php echo (isset($_SESSION["edit_product_producer"]["current_image"]) ? $_SESSION["edit_product_producer"]["current_image"] : $db_data["gyartologo"]); ?>" class="col-lg-4 img-fluid" />
+                </div>
+                <div class="mt-2">
+                    <input type="hidden" name="current_image" value="/<?php echo (isset($_SESSION["edit_product_producer"]["current_image"]) ? $_SESSION["edit_product_producer"]["current_image"] : $db_data["gyartologo"]); ?>" />
+                    <input type="hidden" name="gyartoid" value="<?php echo (isset($_SESSION["edit_product_producer"]["gyartoid"]) ? $_SESSION["edit_product_producer"]["gyartoid"] : $db_data["gyartoid"]); ?>" />
+                    <button class="btn btn-primary"><span class="mdi mdi-content-save"></span> Mentés</button>
+                    <a class="btn btn-secondary ms-2" href="/wp-admin/index.php?action=webshop&thing=gyartok"><span class="mdi mdi-arrow-left"></span> Vissza</a>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php
+}
+
+

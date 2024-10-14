@@ -318,7 +318,7 @@ else
 				$backupin=$DB->query("INSERT INTO ".$v."_bkp SELECT * FROM ".$v." ");
 			}
 			//végül a backupdate bejegyzése
-			$bkpdateinsert=$DB->query("INSERT INTO ".prefix."_parameters_hun_bkp (webparamname,webparamcont) values('bkpdate',now())");
+			$bkpdateinsert=$DB->query("update ".prefix."_parameters_hun_bkp webparamcont=now() where webparamname='bkpdate' ");
 			
 			$DB = NULL;
 			$_SESSION["php_notification"]="Sikeres művelet";

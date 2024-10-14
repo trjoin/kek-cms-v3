@@ -49,6 +49,8 @@
 	/*** KIJELENTKEZÉS LEKEZELÉSE ***/
 	if(isset($_REQUEST["out"]))
 	{
+		$pdo = connect();
+		$pdo->query("insert into ".prefix."_userlog_hun (userid,tevekenyseg,logdatum) values('".$_SESSION["userkod"]."','Kijelentkezett.',now())");
 		session_unset();
 		header("Location: /wp-admin/index.php");
 	}

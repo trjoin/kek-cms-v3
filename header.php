@@ -42,20 +42,20 @@
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-end p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
                 <div class="p-2">
-                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=profile">
-                    <span>Profil</span><!-- ide kerül az aktuális felhasználó adatainak kezelése (név, email, tel, pwd, profilkép) -->
+                  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=profile&thing=own">
+                    <span>Profil</span>
                     <i class="mdi mdi-account-outline ms-1"></i>
                   </a>
-				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=users">
-                    <span>Felhasználók</span><!-- ide kerül majd a felhasználó lista kezeléssel és az újak létrehozása -->
+				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=profile&thing=users">
+                    <span>Felhasználók</span>
                     <i class="mdi mdi-account-group"></i>
                   </a>
 				<?php
 					if(isset($_SESSION["jogkor"]) AND $_SESSION["jogkor"]=="3")
 					{
 				?>
-				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=modules">
-                    <span>Modulok</span><!-- ide kerül a modul lista, alap modulok telepitője, egyéni modulok irása, listázója -->
+				  <a class="dropdown-item py-1 d-flex align-items-center justify-content-between" href="./index.php?action=modules&thing=list">
+                    <span>Modulok</span>
                     <i class="mdi mdi-view-module"></i>
                   </a>
 				<?php
@@ -89,28 +89,6 @@
 						}
 					}
 				?>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="./index.php#" data-bs-toggle="dropdown">
-                <i class="mdi mdi-bell-outline"></i>
-                <span class="count-symbol bg-danger"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-			<!-- egyetlen értesitési sor -->
-                <a class="dropdown-item preview-item">
-                  <div class="preview-thumbnail">
-                    <div class="preview-icon bg-info">
-                      <i class="mdi mdi-cart-plus"></i>
-                    </div>
-                  </div>
-                  <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                    <h6 class="preview-subject font-weight-normal mb-1">Vásárlások</h6>
-                    <p class="text-gray ellipsis mb-0">5 új megrendelés érkezett!</p>
-                  </div>
-                </a>
-                <div class="dropdown-divider"></div>
-			<!-- egyetlen értesitési sor -->
               </div>
             </li>
           </ul>

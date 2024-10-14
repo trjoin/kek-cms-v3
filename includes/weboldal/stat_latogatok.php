@@ -10,7 +10,6 @@ else
 
 	function stat_lista()
 	{
-		$naplofajl="./error_log";
 		echo '<div class="card">
 				<div class="card-body">
 					<h2>Látogatói statisztika <small>(tárhely szintű)</small></h2>

@@ -13,12 +13,13 @@
 			$_SESSION["userkod"]=$egy_sor["uid"];
 			$_SESSION["jogkor"]=$egy_sor["jogkor"];
 			$_SESSION["munkamenet"]=date("Ymdhis");
+			$tovurl=$_POST["tovurl"];
 			
 			//naplózás bejegyzése
 			$pdo->query("insert into ".prefix."_userlog_hun (userid,tevekenyseg,logdatum) values('".$egy_sor["uid"]."','Bejelentkezett.',now())");
 			
 			//$support = telepitési idő az adatbázisból, ha lesz
-			$support="2024-02-01";
+			$support=$defaultwebdata["installdate"];
 			$datumt = strtotime($support); //telepítési idő
 			$finale = strtotime(date("Y-m-d", strtotime("+24 month", $datumt))); //telepítéstől számított +24 hónap - azaz a lejárat napja!
 			$ma = strtotime(date("Y-m-d"));
@@ -185,13 +186,14 @@
 						echo '<script>
 								function atiranyit()
 								{
-									location.href = "/wp-admin/index.php";
+									location.href = "'.$tovurl.'";
 								}
 								ID = window.setTimeout("atiranyit();", 1*3000);
 							</script>';
 					}
 				?>
                 <form class="pt-3" method="POST" autocomplete="off">
+					<input type="hidden" name="tovurl" value="<?php echo $fullurl; ?>">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg loginput" id="loginUsername" name="username" placeholder="Felhasználói neved" aria-label="Felhasználói név" autocomplete="off" required>
                   </div>

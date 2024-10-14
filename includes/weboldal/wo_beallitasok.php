@@ -139,7 +139,8 @@ else
 								"debugmod"=>"Hibafigyelő mód|checkbox",
 								"gmapskey"=>"Google térképhez cím|text",
 								"nyelvek"=>"Telepített nyelvek|nulla",
-								"bkpdate"=>"Utolsó adatbázis biztonsági mentés|nulla");
+								"bkpdate"=>"Utolsó adatbázis biztonsági mentés|nulla",
+								"installdate"=>"Telepítési dátum|nulla");
 		
 		echo '<div class="card">
 				<div class="card-body">

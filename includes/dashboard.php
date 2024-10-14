@@ -176,7 +176,7 @@
 						<h5 class="mb-2 font-weight-normal">Látogatók</h5>
 						<h2 class="mb-4 font-weight-bold"><?php echo $l["mennyiseg"]; ?> db egyedi</h2>
 						<div class="dashboard-progress dashboard-progress-latogatok-dark d-flex align-items-center justify-content-center item-parent"><i class="mdi mdi-account-circle icon-md absolute-center"></i></div>
-						<h4 class="mb-0 font-weight-bold mt-2"><?php echo $l["hanyszor"]; ?> db összesen</h4>
+						<h4 class="mb-0 font-weight-bold mt-2"><?php if($l["hanyszor"]==""){echo '0';}else{echo $l["hanyszor"];}; ?> db összesen</h4>
 						<p class="mt-4 mb-0 text-muted"> &nbsp; </p>
 					  </div>
 					</div>

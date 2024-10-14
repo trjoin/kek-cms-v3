@@ -1,7 +1,7 @@
 <?php
 
-DEFINE("targets","https://dev.adlepomed.hu/");
-DEFINE("fixtargets","/home/rzvgdubh/adlepomed.hu/test/");
+DEFINE("targets","https://kek.adlepomed.hu/");
+DEFINE("fixtargets","/home/rzvgdubh/adlepomed.hu/kek/");
 DEFINE("domain", "adlepomed.hu");
 
 if (defined("config.php"))	return;
@@ -15,7 +15,7 @@ DEFINE("DB_NAME", "rzvgdubh_trsadmin");
 DEFINE("prefix", "trs");
 DEFINE("lang", "hun");
 DEFINE("langcode", "HU");
-DEFINE("url", "https://test.adlepomed.hu");
+DEFINE("url", "https://kek.adlepomed.hu");
 DEFINE("adminurl", url."/wp-admin/");
 DEFINE("defaultmail", "noreply@adlepomed.hu");
 
@@ -29,7 +29,7 @@ $osszesnyelvkod=array("hun"=>"HU","eng"=>"GB","ger"=>"DE");
 DEFINE("SESSION_NAME", "trsdash");
 
 session_set_cookie_params(array(
-    'lifetime' => 28800,
+    'lifetime' => 36600,
     'path' => '/',
     'domain' => domain,
     'secure' => false,

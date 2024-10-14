@@ -43,8 +43,8 @@
 	  <div class="collapse <?php if(isset($_REQUEST["action"]) AND $_REQUEST["action"]=='stat'){echo'show';} ?>" id="page-stats">
 		<ul class="nav flex-column sub-menu">
 		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='latogatok'){echo'active';} ?>" href="./index.php?action=stat&thing=latogatok">Látogatók</a></li>
+		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='marketing'){echo'active';} ?>" href="./index.php?action=stat&thing=marketing">Marketing</a></li>
 		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='vasarlasok'){echo'active';} ?>" href="./index.php?action=stat&thing=vasarlasok">Vásárlások</a></li>
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='marketing'){echo'active';} ?>" href="./index.php?action=stat&thing=marketing">Marketing</a></li><!-- pop-up, google analytics meg egyéb faszságok -->
 		</ul>
 	  </div>
 	</li>
@@ -97,85 +97,30 @@
 	</li>
 
 	<li class="nav-item nav-category">Beépülő modulok</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='nyelvek'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok" aria-expanded="false" aria-controls="modulok">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Nyelvek</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='nyelvek'){echo'show';} ?>" id="modulok">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujnyelv'){echo'active';} ?>" href="./index.php?action=modulok&thing=nyelvek&op=ujnyelv">Új nyelv telepítése</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=nyelvek&op=listaz">Nyelvek megtekintése</a></li>
-		</ul>
-	  </div>
-	</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='kepvalto'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok1" aria-expanded="false" aria-controls="modulok1">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Képváltó</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='kepvalto'){echo'show';} ?>" id="modulok1">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujkepvalto'){echo'active';} ?>" href="./index.php?action=modulok&thing=kepvalto&op=ujkepvalto">Új hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=kepvalto&op=listaz">Megtekintés</a></li>
-		</ul>
-	  </div>
-	</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='galeria'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok2" aria-expanded="false" aria-controls="modulok2">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Galéria</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='galeria'){echo'show';} ?>" id="modulok2">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujkepfeltoltes'){echo'active';} ?>" href="./index.php?action=modulok&thing=galeria&op=ujkepfeltoltes">Új kép hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujgaleria'){echo'active';} ?>" href="./index.php?action=modulok&thing=galeria&op=ujgaleria">Új galéria létrehozása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=galeria&op=listaz">Megtekintés</a></li>
-		</ul>
-	  </div>
-	</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='videok'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok3" aria-expanded="false" aria-controls="modulok3">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Videók</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='videok'){echo'show';} ?>" id="modulok3">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujvideo'){echo'active';} ?>" href="./index.php?action=modulok&thing=videok&op=ujvideo">Új hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=videok&op=listaz">Megtekintés</a></li>
-		</ul>
-	  </div>
-	</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='blog'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok4" aria-expanded="false" aria-controls="modulok4">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Blog</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='blog'){echo'show';} ?>" id="modulok4">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujcikk'){echo'active';} ?>" href="./index.php?action=modulok&thing=blog&op=ujcikk">Új bejegyzés</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=blog&thing=blog&op=listaz">Megtekintés</a></li>
-		</ul>
-	  </div>
-	</li>
-	<li class="nav-item <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='letoltesek'){echo'active';} ?>">
-	  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok5" aria-expanded="false" aria-controls="modulok5">
-		<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
-		<span class="menu-title">Letöltések</span>
-		<i class="menu-arrow"></i>
-	  </a>
-	  <div class="collapse <?php if(isset($_REQUEST["thing"]) AND $_REQUEST["thing"]=='letoltesek'){echo'show';} ?>" id="modulok5">
-		<ul class="nav flex-column sub-menu">
-		  <li class="nav-item"> <a class="nav-link <?php if(isset($_REQUEST["op"]) AND $_REQUEST["op"]=='ujletoltes'){echo'active';} ?>" href="./index.php?action=modulok&thing=letoltesek&op=ujletoltes">Új hozzáadása</a></li>
-		  <li class="nav-item"> <a class="nav-link" href="./index.php?action=modulok&thing=letoltesek&op=listaz">Megtekintés</a></li>
-		</ul>
-	  </div>
-	</li>
+<!-- MODULOK MEGTEKINTÉSE, HOG YMELYIK VAN BEKAPCSOLVA MERT CSAK AZOKAT ENGEDÉLYEZZÜK IDE -->
+<?php
+	$DB = NULL;
+	$DB = connect(true);
+	$beloadmodules=$DB->query("select * from ".prefix."_modul_".$_SESSION["lang"]." where aktiv='1' AND modulcont='' OR aktiv='1' AND modulcont IS NULL");
+	while($modulok=$beloadmodules->fetch())
+	{
+		$modulnev=cserekari($modulok["modulnev"]);
+		echo '<li class="nav-item '.(isset($_REQUEST["thing"]) && $_REQUEST["thing"]==$modulnev ? 'active' : '').'">
+				  <a class="nav-link" data-bs-toggle="collapse" href="./index.php#modulok'.$modulok["modulid"].'" aria-expanded="false" aria-controls="modulok'.$modulok["modulid"].'">
+					<span class="icon-bg"><i class="mdi mdi-star-box menu-icon"></i></span>
+					<span class="menu-title">'.$modulok["modulnev"].'</span>
+					<i class="menu-arrow"></i>
+				  </a>
+				  <div class="collapse '.(isset($_REQUEST["thing"]) && $_REQUEST["thing"]==$modulnev ? 'show' : '').'" id="modulok'.$modulok["modulid"].'">
+					<ul class="nav flex-column sub-menu">
+					  <li class="nav-item"> <a class="nav-link '.(isset($_REQUEST["op"]) && $_REQUEST["op"]=='hozzaadas' ? 'active' : '').'" href="./index.php?action=modules&thing='.$modulnev.'&op=hozzaadas">Új hozzáadása</a></li>
+					  <li class="nav-item"> <a class="nav-link '.(isset($_REQUEST["op"]) && $_REQUEST["op"]=='lista' ? 'active' : '').'" href="./index.php?action=modules&thing='.$modulnev.'&op=lista">Megtekintés</a></li>
+					</ul>
+				  </div>
+				</li>';
+	}
+	$DB = NULL;
+?>
 	<li class="nav-item nav-category"><hr></li>
 	<li class="nav-item">
 	  <a class="nav-link" href="https://www.lootpack.hu/support.php" target="_blank">
